@@ -1,6 +1,117 @@
+{% doc %}
+  @prompt
+    Create a complete NEW product page section for a premium men's luxury footwear brand. Everything must use real Shopify Liquid data — no hardcoded or placeholder content.
+    
+    LAYOUT:
+    - Two column desktop layout: left column 55% for image gallery, right column 45% for product info
+    - Single column on mobile, images on top
+    - Cream/ivory background (#F5F2EE), charcoal text (#2C2C2C), gold accents (#C9A84C)
+    - Max width 1400px centered, 60px side padding desktop, 20px mobile
+    
+    LEFT COLUMN - IMAGE GALLERY:
+    - Main image using product.featured_image, aspect ratio 4:5, object-fit cover
+    - Thumbnail strip below showing all product.images, each 72x90px, border-radius 4px
+    - Clicking thumbnail swaps main image using JavaScript
+    - Sticky on desktop as user scrolls
+    
+    RIGHT COLUMN - PRODUCT INFO:
+    - Vendor: {{ product.vendor }} in small gold uppercase text
+    - Title: {{ product.title }} large serif font 32px
+    - Price: {{ product.selected_or_first_available_variant.price | money }}, show compare_at_price struck through if on sale
+    - Variant picker: loop through product.variants, show as pill buttons, clicking updates hidden form input
+    - Quantity stepper: minus/plus buttons with number input, minimum 1
+    - ADD TO CART: real working form with action="/cart/add" method="post", hidden input name="id" with variant id, quantity input, submit button with name="add"
+    - Accordions for: product.description, Shipping and Returns, Size and Fit — smooth open/close animation
+    - Trust badges row: Free Shipping, Easy Returns, Authenticity Guaranteed
+    
+    All JavaScript must be inline and functional. All data must come from Shopify Liquid objects.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% style %}
+  .ai-product-page-{{ ai_gen_id }} { display:block; width:100%; background:#F5F2EE; color:#2C2C2C; }
+  .ai-product-page-{{ ai_gen_id }}__inner { width:100%; max-width:1400px; margin:0 auto; padding:60px; display:grid; grid-template-columns:55% 45%; gap:48px; box-sizing:border-box; }
+  .ai-product-page-{{ ai_gen_id }}__gallery { min-width:0; position:sticky; top:24px; align-self:start; }
+  .ai-product-page-{{ ai_gen_id }}__main { aspect-ratio:4/5; overflow:hidden; background:transparent; border-radius:4px; }
+  .ai-product-page-{{ ai_gen_id }}__main img { width:100%; height:100%; object-fit:cover; display:block; }
+  .ai-product-page-{{ ai_gen_id }}__thumbs { display:flex; gap:10px; margin-top:14px; overflow-x:auto; padding-bottom:2px; }
+  .ai-product-page-{{ ai_gen_id }}__thumb { flex:0 0 72px; width:72px; height:90px; padding:0; border:1px solid transparent; border-radius:4px; background:transparent; cursor:pointer; overflow:hidden; }
+  .ai-product-page-{{ ai_gen_id }}__thumb.is-active { border-color:#C9A84C; }
+  .ai-product-page-{{ ai_gen_id }}__thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+  .ai-product-page-{{ ai_gen_id }}__info { padding-top:8px; }
+  .ai-product-page-{{ ai_gen_id }}__vendor { margin:0 0 14px; color:#8D702A; font-size:11px; letter-spacing:.16em; text-transform:uppercase; font-weight:700; }
+  .ai-product-page-{{ ai_gen_id }}__title { margin:0 0 18px; font-family:Georgia,serif; font-size:32px; line-height:1.15; font-weight:400; }
+  .ai-product-page-{{ ai_gen_id }}__price { display:flex; gap:12px; align-items:center; margin-bottom:28px; font-size:18px; }
+  .ai-product-page-{{ ai_gen_id }}__compare { color:#777; text-decoration:line-through; font-size:14px; }
+  .ai-product-page-{{ ai_gen_id }}__label { display:block; margin-bottom:10px; font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+  .ai-product-page-{{ ai_gen_id }}__variants { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px; }
+  .ai-product-page-{{ ai_gen_id }}__variant { border:1px solid #999; background:transparent; color:#2C2C2C; border-radius:14px; padding:10px 16px; cursor:pointer; }
+  .ai-product-page-{{ ai_gen_id }}__variant.is-selected { background:#2C2C2C; border-color:#2C2C2C; color:#F5F2EE; }
+  .ai-product-page-{{ ai_gen_id }}__quantity { display:flex; align-items:center; width:max-content; border:1px solid #999; border-radius:4px; margin-bottom:22px; }
+  .ai-product-page-{{ ai_gen_id }}__quantity button { width:38px; height:40px; border:0; background:transparent; color:#2C2C2C; cursor:pointer; font-size:18px; }
+  .ai-product-page-{{ ai_gen_id }}__quantity input { width:42px; height:40px; border:0; background:transparent; text-align:center; color:#2C2C2C; }
+  .ai-product-page-{{ ai_gen_id }}__add { width:100%; min-height:50px; border:0; border-radius:14px; background:#2C2C2C; color:#F5F2EE; cursor:pointer; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+  .ai-product-page-{{ ai_gen_id }}__add:disabled { opacity:.5; cursor:not-allowed; }
+  .ai-product-page-{{ ai_gen_id }}__accordions { margin-top:34px; border-top:1px solid #C9A84C; }
+  .ai-product-page-{{ ai_gen_id }}__accordion { border-bottom:1px solid #b9b1a5; }
+  .ai-product-page-{{ ai_gen_id }}__accordion summary { list-style:none; cursor:pointer; padding:18px 0; font-weight:700; display:flex; justify-content:space-between; }
+  .ai-product-page-{{ ai_gen_id }}__accordion summary::-webkit-details-marker { display:none; }
+  .ai-product-page-{{ ai_gen_id }}__accordion summary::after { content:'+'; color:#8D702A; font-size:20px; }
+  .ai-product-page-{{ ai_gen_id }}__accordion[open] summary::after { content:'−'; }
+  .ai-product-page-{{ ai_gen_id }}__accordion-content { padding:0 0 18px; line-height:1.6; }
+  .ai-product-page-{{ ai_gen_id }}__trust { display:flex; flex-wrap:wrap; gap:14px; margin-top:28px; color:#5C4A1D; font-size:11px; letter-spacing:.04em; }
+  @media (max-width:749px) { .ai-product-page-{{ ai_gen_id }}__inner { display:block; padding:20px; } .ai-product-page-{{ ai_gen_id }}__gallery { position:static; margin-bottom:30px; } .ai-product-page-{{ ai_gen_id }}__title { font-size:28px; } }
+{% endstyle %}
+
+<product-page-{{ ai_gen_id }} class="ai-product-page-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-product-page-{{ ai_gen_id }}__inner">
+    <div class="ai-product-page-{{ ai_gen_id }}__gallery">
+      <div class="ai-product-page-{{ ai_gen_id }}__main"><img data-main-image src="{{ product.featured_image | image_url: width: 1400 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}"></div>
+      <div class="ai-product-page-{{ ai_gen_id }}__thumbs" role="list">
+        {% for image in product.images %}<button type="button" class="ai-product-page-{{ ai_gen_id }}__thumb{% if forloop.first %} is-active{% endif %}" data-image-url="{{ image | image_url: width: 1400 }}" data-image-alt="{{ image.alt | default: product.title | escape }}" aria-label="View product image {{ forloop.index }}"><img src="{{ image | image_url: width: 180 }}" alt="{{ image.alt | default: product.title | escape }}" width="72" height="90" loading="lazy"></button>{% endfor %}
+      </div>
+    </div>
+    <div class="ai-product-page-{{ ai_gen_id }}__info">
+      <p class="ai-product-page-{{ ai_gen_id }}__vendor">{{ product.vendor }}</p>
+      <h1 class="ai-product-page-{{ ai_gen_id }}__title">{{ product.title }}</h1>
+      <div class="ai-product-page-{{ ai_gen_id }}__price"><span data-price>{{ current_variant.price | money }}</span>{% if current_variant.compare_at_price > current_variant.price %}<span class="ai-product-page-{{ ai_gen_id }}__compare" data-compare>{{ current_variant.compare_at_price | money }}</span>{% endif %}</div>
+      {% if product.variants.size > 1 %}<span class="ai-product-page-{{ ai_gen_id }}__label">Select option</span><div class="ai-product-page-{{ ai_gen_id }}__variants">{% for variant in product.variants %}<button type="button" class="ai-product-page-{{ ai_gen_id }}__variant{% if variant.id == current_variant.id %} is-selected{% endif %}" data-variant-id="{{ variant.id }}" data-price="{{ variant.price | money | escape }}" data-compare="{{ variant.compare_at_price | money | escape }}" data-available="{{ variant.available }}">{{ variant.title }}</button>{% endfor %}</div>{% endif %}
+      <form action="/cart/add" method="post" data-product-form>
+        <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-input>
+        <span class="ai-product-page-{{ ai_gen_id }}__label">Quantity</span>
+        <div class="ai-product-page-{{ ai_gen_id }}__quantity"><button type="button" data-minus aria-label="Decrease quantity">−</button><input type="number" name="quantity" value="1" min="1" aria-label="Quantity" data-quantity><button type="button" data-plus aria-label="Increase quantity">+</button></div>
+        <button type="submit" name="add" class="ai-product-page-{{ ai_gen_id }}__add"{% unless current_variant.available %} disabled{% endunless %} data-add>{% if current_variant.available %}Add to cart{% else %}Sold out{% endif %}</button>
+      </form>
+      <div class="ai-product-page-{{ ai_gen_id }}__accordions">
+        <details class="ai-product-page-{{ ai_gen_id }}__accordion"><summary>Product details</summary><div class="ai-product-page-{{ ai_gen_id }}__accordion-content">{{ product.description }}</div></details>
+        <details class="ai-product-page-{{ ai_gen_id }}__accordion"><summary>Shipping and returns</summary><div class="ai-product-page-{{ ai_gen_id }}__accordion-content">{{ product.metafields.custom.shipping_and_returns | metafield_tag }}</div></details>
+        <details class="ai-product-page-{{ ai_gen_id }}__accordion"><summary>Size and fit</summary><div class="ai-product-page-{{ ai_gen_id }}__accordion-content">{{ product.metafields.custom.size_and_fit | metafield_tag }}</div></details>
+      </div>
+      <div class="ai-product-page-{{ ai_gen_id }}__trust"><span>Free shipping</span><span>Easy returns</span><span>Authenticity guaranteed</span></div>
+    </div>
+  </div>
+</product-page-{{ ai_gen_id }}>
+
+<script>
+(function(){
+  class ProductPage{{ ai_gen_id }} extends HTMLElement {
+    connectedCallback(){
+      this.main=this.querySelector('[data-main-image]'); this.variantInput=this.querySelector('[data-variant-input]'); this.quantity=this.querySelector('[data-quantity]'); this.add=this.querySelector('[data-add]');
+      this.querySelectorAll('[data-image-url]').forEach(button=>button.addEventListener('click',()=>{this.main.src=button.dataset.imageUrl;this.main.alt=button.dataset.imageAlt;this.querySelectorAll('[data-image-url]').forEach(item=>item.classList.remove('is-active'));button.classList.add('is-active')}));
+      this.querySelectorAll('[data-variant-id]').forEach(button=>button.addEventListener('click',()=>{this.querySelectorAll('[data-variant-id]').forEach(item=>item.classList.remove('is-selected'));button.classList.add('is-selected');this.variantInput.value=button.dataset.variantId;this.querySelector('[data-price]').textContent=button.dataset.price;let compare=this.querySelector('[data-compare]');if(button.dataset.compare){if(!compare){compare=document.createElement('span');compare.className='ai-product-page-{{ ai_gen_id }}__compare';this.querySelector('[data-price]').after(compare)}compare.textContent=button.dataset.compare}else if(compare){compare.remove()}this.add.disabled=button.dataset.available!=='true';this.add.textContent=this.add.disabled?'Sold out':'Add to cart'}));
+      this.querySelector('[data-minus]').addEventListener('click',()=>{this.quantity.value=Math.max(1,parseInt(this.quantity.value||1,10)-1)});this.querySelector('[data-plus]').addEventListener('click',()=>{this.quantity.value=parseInt(this.quantity.value||1,10)+1});
+    }
+  }
+  customElements.define('product-page-{{ ai_gen_id }}',ProductPage{{ ai_gen_id }});
+})();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Luxury product page",
+  "settings": [],
+  "presets": [{"name": "Luxury product page"}],
+  "tag": null,
+  "class": "luxury-product-page-block"
+}
 {% endschema %}
