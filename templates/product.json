@@ -9,9 +9,20 @@
  */
 {
   "sections": {
-    "blocks_LVmdze": {
+    "1789773966d415e1ad": {
       "type": "_blocks",
-      "name": "Product",
+      "blocks": {
+        "ai_gen_block_66b8738_YxcGzj": {
+          "type": "ai_gen_block_66b8738",
+          "settings": {
+            "desktop_width_percent": 100
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_66b8738_YxcGzj"
+      ],
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -43,6 +54,6 @@
     }
   },
   "order": [
-    "blocks_LVmdze"
+    "1789773966d415e1ad"
   ]
 }
