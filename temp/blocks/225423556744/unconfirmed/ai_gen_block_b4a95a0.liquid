@@ -1,6 +1,110 @@
-{% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
-{% endschema %}
+{% doc %}
+  @prompt
+    Create a complete, fully functional Shopify product page section for a premium men's footwear and luxury lifestyle brand. The design should feel editorial, modern, and minimal with a charcoal, ivory, and gold color palette.
+    
+    Overall Layout:
+    
+    Two-column layout on desktop: product media gallery on the left (55% width), product details on the right (45% width)
+    Single column stacked layout on mobile with media on top, details below
+    Max content width of 1400px centered on the page
+    60px padding on desktop sides, 20px on mobile
+    Background color: ivory/cream (#F5F2EE)
+    Smooth scroll behavior throughout
+    Left Column — Media Gallery:
+    
+    Large primary product image at top, full width of the column
+    Aspect ratio 4:5 (portrait) for all images
+    Image fit: cover, with transparent background support for PNG products
+    Below the primary image, show a horizontal thumbnail strip with up to 8 thumbnails
+    Each thumbnail is 72px wide, 90px tall, border-radius 4px, with a 2px gold (#C9A84C) border on hover and when active
+    Clicking a thumbnail swaps the main image with a smooth crossfade transition (300ms ease)
+    On mobile, replace the thumbnail strip with a swipeable carousel with dot pagination indicators at the bottom
+    Include a zoom-on-hover effect for the main image on desktop (scale 1.08, overflow hidden, transition 400ms ease)
+    Support video thumbnails with a play icon overlay (gold circle, white triangle)
+    Sticky behavior: the media gallery sticks to the top of the viewport as the user scrolls through product details, stopping before the footer
+    Right Column — Product Details:
+    
+    Top of column: product vendor name in small uppercase gold (#C9A84C) lettering, letter-spacing 0.15em, font-size 11px
+    Product title: large serif or elegant sans-serif font, font-size 32px desktop / 24px mobile, color charcoal (#2C2C2C), font-weight 600, line-height 1.2
+    Star rating row: 5-star display using gold filled/empty stars, show numeric rating (e.g. 4.8) and review count (e.g. 142 reviews) as a clickable link that scrolls to reviews section
+    Price display: font-size 24px, font-weight 500, charcoal color; if on sale show original price struck through in muted gray (#999) and sale price in a warm red (#C0392B); show currency code beside price
+    Thin horizontal divider (1px, #E0DDD8) after price
+    Short product description: 2-3 lines max, font-size 14px, color #666, line-height 1.7; include a "Read more" toggle that expands the full description with smooth height animation
+    Variant picker for Size: display as a grid of pill-shaped buttons (min-width 48px, height 40px, border-radius 24px); unselected state: white background, 1px border #D0CCC6, charcoal text; selected state: charcoal (#2C2C2C) background, white text; sold-out state: white background, diagonal strikethrough line using CSS, muted text color; hover state: light gold background tint (#FAF4E8)
+    Size guide link: small text link in gold beside the "Size" label, opens a modal overlay with a size chart table
+    Color variant picker if applicable: circular swatches 32px diameter, 2px border on selected in gold, tooltip showing color name on hover
+    Quantity selector: minimal stepper with minus and plus buttons flanking a number input; buttons are 36px square, border 1px #D0CCC6, border-radius 4px; input width 48px centered
+    Add to Cart button: full width, height 52px, background charcoal (#2C2C2C), white text, font-size 15px uppercase letter-spacing 0.1em, border-radius 4px; on hover background shifts to #3D3D3D; loading state shows a spinner replacing the text; success state briefly shows a checkmark before reverting
+    Buy It Now button: full width, height 52px, background gold (#C9A84C), charcoal text, same typography as ATC button, border-radius 4px; hover darkens gold slightly
+    Both buttons have a subtle box-shadow: 0 2px 8px rgba(0,0,0,0.10)
+    Below buttons: a row of trust badges (icons + text) for Free Shipping, Easy Returns, Authenticity Guaranteed — icons in gold, text in #888, font-size 12px, evenly spaced
+    Thin divider
+    Accordion sections for: Product Details, Shipping & Returns, Size & Fit — each with a plus/minus toggle icon in gold, smooth height animation open/close, border-bottom 1px #E0DDD8, padding 16px 0
+    Social share row at the bottom: small icons for Instagram, Pinterest, Facebook, WhatsApp in charcoal, 24px each, spaced 12px apart, label "Share:" in muted text
+    Sticky Add to Cart Bar:
+    
+    Appears after user scrolls past the main ATC button
+    Fixed to bottom of viewport, full width, height 72px
+    Background: white with subtle top border 1px #E0DDD8 and box-shadow upward
+    Left side: product thumbnail (48px square, border-radius 4px) + product title truncated + selected variant
+    Right side: price + Add to Cart button (same style but smaller, height 40px, auto width min 140px)
+    Smooth slide-up animation on appear (translateY from 100% to 0, 300ms ease)
+    Hides when user scrolls back up to the ATC button
+    Below the Fold — Additional Sections:
+    
+    "You May Also Like" horizontal scroll row: show 4 product cards on desktop, 2 on
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+{% assign current_product = product %}
+{% assign first_media = current_product.media | first %}
+{% style %}
+  .ai-product-{{ ai_gen_id }}{display:block;background:#f5f2ee;color:#2c2c2c;scroll-behavior:smooth}
+  .ai-product-{{ ai_gen_id }}__wrap{max-width:1400px;margin:0 auto;padding:60px;display:grid;grid-template-columns:55fr 45fr;gap:56px}
+  .ai-product-{{ ai_gen_id }}__media{position:sticky;top:24px;align-self:start}
+  .ai-product-{{ ai_gen_id }}__main{aspect-ratio:4/5;overflow:hidden;background:transparent;border-radius:4px}
+  .ai-product-{{ ai_gen_id }}__main img,.ai-product-{{ ai_gen_id }}__main video{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .3s ease,transform .4s ease;background:transparent}
+  .ai-product-{{ ai_gen_id }}__main:hover img{transform:scale(1.08)}
+  .ai-product-{{ ai_gen_id }}__thumbs{display:flex;gap:10px;overflow:auto;padding-top:14px}
+  .ai-product-{{ ai_gen_id }}__thumb{flex:0 0 72px;height:90px;padding:0;border:2px solid transparent;border-radius:4px;overflow:hidden;background:transparent;cursor:pointer}
+  .ai-product-{{ ai_gen_id }}__thumb:hover,.ai-product-{{ ai_gen_id }}__thumb[aria-current=true]{border-color:#c9a84c}
+  .ai-product-{{ ai_gen_id }}__thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .ai-product-{{ ai_gen_id }}__vendor{margin:0 0 12px;color:#9b7b2e;font-size:11px;letter-spacing:.15em;text-transform:uppercase}
+  .ai-product-{{ ai_gen_id }} h1{margin:0 0 18px;font-size:32px;line-height:1.2;font-weight:600}
+  .ai-product-{{ ai_gen_id }}__rating{color:#c9a84c;margin-bottom:18px}.ai-product-{{ ai_gen_id }}__rating a{color:#666;font-size:13px;margin-left:8px}
+  .ai-product-{{ ai_gen_id }}__price{font-size:24px;margin-bottom:22px}.ai-product-{{ ai_gen_id }}__compare{color:#999;text-decoration:line-through;font-size:15px;margin-right:10px}.ai-product-{{ ai_gen_id }}__sale{color:#c0392b}
+  .ai-product-{{ ai_gen_id }}__rule{border:0;border-top:1px solid #e0ddd8;margin:20px 0}
+  .ai-product-{{ ai_gen_id }}__description{color:#666;font-size:14px;line-height:1.7;max-height:4.8em;overflow:hidden;transition:max-height .3s ease}.ai-product-{{ ai_gen_id }}__description.is-open{max-height:1000px}.ai-product-{{ ai_gen_id }}__read{border:0;background:none;color:#9b7b2e;padding:8px 0;text-decoration:underline;cursor:pointer}
+  .ai-product-{{ ai_gen_id }}__label{display:flex;justify-content:space-between;margin:22px 0 10px;font-size:13px;font-weight:600}.ai-product-{{ ai_gen_id }}__label a{color:#9b7b2e;font-weight:400}
+  .ai-product-{{ ai_gen_id }}__options{display:flex;flex-wrap:wrap;gap:8px}.ai-product-{{ ai_gen_id }}__option{position:relative}.ai-product-{{ ai_gen_id }}__option input{position:absolute;opacity:0}.ai-product-{{ ai_gen_id }}__option label{display:flex;align-items:center;justify-content:center;min-width:48px;height:40px;padding:0 14px;border:1px solid #d0ccc6;border-radius:24px;background:#fff;cursor:pointer}.ai-product-{{ ai_gen_id }}__option input:checked+label{background:#2c2c2c;color:#fff;border-color:#2c2c2c}.ai-product-{{ ai_gen_id }}__option input:disabled+label{color:#aaa;text-decoration:line-through;cursor:not-allowed;background:linear-gradient(to bottom right,transparent 49%,#aaa 50%,transparent 52%),#fff}
+  .ai-product-{{ ai_gen_id }}__qty{display:flex;width:max-content}.ai-product-{{ ai_gen_id }}__qty button,.ai-product-{{ ai_gen_id }}__qty input{width:36px;height:36px;border:1px solid #d0ccc6;background:#fff;text-align:center}.ai-product-{{ ai_gen_id }}__qty button{cursor:pointer;font-size:18px}.ai-product-{{ ai_gen_id }}__qty input{width:48px;border-left:0;border-right:0}
+  .ai-product-{{ ai_gen_id }}__button{width:100%;height:52px;border:0;border-radius:4px;cursor:pointer;letter-spacing:.1em;text-transform:uppercase;box-shadow:0 2px 8px #0000001a;font-size:15px;margin-top:12px}.ai-product-{{ ai_gen_id }}__button--cart{background:#2c2c2c;color:#fff}.ai-product-{{ ai_gen_id }}__button--buy{background:#c9a84c;color:#2c2c2c}.ai-product-{{ ai_gen_id }}__trust{display:flex;justify-content:space-between;gap:10px;color:#888;font-size:12px;padding:22px 0}.ai-product-{{ ai_gen_id }}__trust span{color:#9b7b2e;font-size:18px;display:block}
+  .ai-product-{{ ai_gen_id }}__accordion{border-bottom:1px solid #e0ddd8}.ai-product-{{ ai_gen_id }}__accordion button{width:100%;padding:16px 0;border:0;background:none;display:flex;justify-content:space-between;color:#2c2c2c;cursor:pointer;text-align:left}.ai-product-{{ ai_gen_id }}__panel{display:none;padding:0 0 16px;color:#666;font-size:14px;line-height:1.7}.ai-product-{{ ai_gen_id }}__accordion.is-open .ai-product-{{ ai_gen_id }}__panel{display:block}.ai-product-{{ ai_gen_id }}__share{padding-top:24px;color:#888;font-size:13px}.ai-product-{{ ai_gen_id }}__share a{color:#2c2c2c;margin-left:12px;text-decoration:none;font-size:18px}
+  .ai-product-{{ ai_gen_id }}__modal{display:none;position:fixed;inset:0;background:#0008;z-index:20;align-items:center;justify-content:center;padding:20px}.ai-product-{{ ai_gen_id }}__modal.is-open{display:flex}.ai-product-{{ ai_gen_id }}__modal-inner{background:#fff;padding:28px;max-width:560px;width:100%;position:relative}.ai-product-{{ ai_gen_id }}__modal-close{position:absolute;right:12px;top:8px;border:0;background:none;font-size:24px;cursor:pointer}.ai-product-{{ ai_gen_id }}__modal table{width:100%;border-collapse:collapse}.ai-product-{{ ai_gen_id }}__modal td,.ai-product-{{ ai_gen_id }}__modal th{padding:10px;border-bottom:1px solid #e0ddd8;text-align:left}
+  @media(max-width:749px){.ai-product-{{ ai_gen_id }}__wrap{display:block;padding:20px}.ai-product-{{ ai_gen_id }}__media{position:static;margin-bottom:36px}.ai-product-{{ ai_gen_id }}__thumbs{display:none}.ai-product-{{ ai_gen_id }}__main{scroll-snap-type:x mandatory;overflow-x:auto;display:flex}.ai-product-{{ ai_gen_id }}__main img,.ai-product-{{ ai_gen_id }}__main video{min-width:100%;scroll-snap-align:start}.ai-product-{{ ai_gen_id }} h1{font-size:24px}.ai-product-{{ ai_gen_id }}__trust{font-size:11px}}
+{% endstyle %}
+<product-page-{{ ai_gen_id }} class="ai-product-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-product-{{ ai_gen_id }}__wrap">
+    <div class="ai-product-{{ ai_gen_id }}__media">
+      <div class="ai-product-{{ ai_gen_id }}__main" data-main>
+        {% if current_product.media.size > 0 %}{% for media in current_product.media limit: 8 %}{% if media.media_type == 'image' %}<img src="{{ media | image_url: width: 1600 }}" alt="{{ media.alt | default: current_product.title | escape }}" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}" width="{{ media.width }}" height="{{ media.height }}" data-media-id="{{ media.id }}">{% elsif media.media_type == 'video' %}{{ media | video_tag: controls: true, image_size: '1600x', class: 'ai-product-video' }}{% endif %}{% endfor %}{% else %}<div>{{ 'product-apparel-1' | placeholder_svg_tag }}</div>{% endif %}
+      </div>
+      <div class="ai-product-{{ ai_gen_id }}__thumbs">{% for media in current_product.media limit: 8 %}<button class="ai-product-{{ ai_gen_id }}__thumb" type="button" data-index="{{ forloop.index0 }}" aria-label="View image {{ forloop.index }}" aria-current="{% if forloop.first %}true{% else %}false{% endif %}"><img src="{{ media.preview_image | image_url: width: 180 }}" alt="{{ media.alt | default: current_product.title | escape }}" loading="lazy"></button>{% endfor %}</div>
+    </div>
+    <div class="ai-product-{{ ai_gen_id }}__details">
+      {% if current_product.vendor != blank %}<p class="ai-product-{{ ai_gen_id }}__vendor">{{ current_product.vendor }}</p>{% endif %}
+      <h1>{{ current_product.title }}</h1>
+      <div class="ai-product-{{ ai_gen_id }}__rating" aria-label="{{ block.settings.rating }} out of 5 stars">★★★★★ <a href="#reviews-{{ ai_gen_id }}">{{ block.settings.rating }} · {{ block.settings.review_count }} reviews</a></div>
+      <div class="ai-product-{{ ai_gen_id }}__price">{% if current_product.compare_at_price > current_product.price %}<span class="ai-product-{{ ai_gen_id }}__compare">{{ current_product.compare_at_price | money }}</span><span class="ai-product-{{ ai_gen_id }}__sale">{{ current_product.price | money }}</span>{% else %}{{ current_product.price | money }}{% endif %}</div>
+      <hr class="ai-product-{{ ai_gen_id }}__rule">
+      <div class="ai-product-{{ ai_gen_id }}__description" data-description>{{ current_product.description }}</div><button class="ai-product-{{ ai_gen_id }}__read" type="button" data-read>Read more</button>
+      {% form 'product', current_product, data-product-form: '' %}<input type="hidden" name="id" value="{{ current_product.selected_or_first_available_variant.id }}"><div data-options>{% for option in current_product.options_with_values %}<div class="ai-product-{{ ai_gen_id }}__label"><span>{{ option.name }}</span>{% if option.name contains 'Size' %}<a href="#" data-size-guide>Size guide</a>{% endif %}</div><div class="ai-product-{{ ai_gen_id }}__options">{% for value in option.values %}<div class="ai-product-{{ ai_gen_id }}__option"><input type="radio" id="{{ ai_gen_id }}-{{ option.position }}-{{ forloop.index }}" name="option-{{ option.position }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %}><label for="{{ ai_gen_id }}-{{ option.position }}-{{ forloop.index }}">{{ value }}</label></div>{% endfor %}</div>{% endfor %}</div><div class="ai-product-{{ ai_gen_id }}__label"><span>Quantity</span></div><div class="ai-product-{{ ai_gen_id }}__qty"><button type="button" data-minus aria-label="Decrease quantity">−</button><input name="quantity" value="1" min="1" type="number" aria-label="Quantity"><button type="button" data-plus aria-label="Increase quantity">+</button></div><button class="ai-product-{{ ai_gen_id }}__button ai-product-{{ ai_gen_id }}__button--cart" type="submit">Add to cart</button>{% if block.settings.show_buy_now %}{{ form | payment_button }}{% endif %}{% endform %}
+      <div class="ai-product-{{ ai_gen_id }}__trust"><div><span>✦</span>Free shipping</div><div><span>↺</span>Easy returns</div><div><span>◆</span>Authenticity guaranteed</div></div>
+      {% assign accordion_titles = 'Product details|Shipping & returns|Size & fit' | split: '|' %}{% for title in accordion_titles %}<div class="ai-product-{{ ai_gen_id }}__accordion"><button type="button" aria-expanded="false">{{ title }} <b>+</b></button><div class="ai-product-{{ ai_gen_id }}__panel">{{ block.settings.accordion_text }}</div></div>{% endfor %}<div class="ai-product-{{ ai_gen_id }}__share">Share: <a href="https://www.facebook.com/sharer/sharer.php?u={{ shop.url }}{{ current_product.url | url_param_escape }}" target="_blank" rel="noopener">f</a><a href="https://wa.me/?text={{ current_product.title | url_param_escape }}%20{{ shop.url }}{{ current_product.url | url_param_escape }}" target="_blank" rel="noopener">◉</a><a href="https://pinterest.com/pin/create/button/?url={{ shop.url }}{{ current_product.url | url_param_escape }}" target="_blank" rel="noopener">p</a></div>
+    </div>
+  </div>
+  <div class="ai-product-{{ ai_gen_id }}__modal" data-modal><div class="ai-product-{{ ai_gen_id }}__modal-inner"><button class="ai-product-{{ ai_gen_id }}__modal-close" type="button" data-modal-close aria-label="Close">×</button><h2>Size guide</h2><table><tr><th>EU</th><th>UK</th><th>US</th></tr><tr><td>40</td><td>6</td><td>7</td></tr><tr><td>41</td><td>7</td><td>8</td></tr><tr><td>42</td><td>8</td><td>9</td></tr><tr><td>43</td><td>9</td><td>10</td></tr><tr><td>44</td><td>10</td><td>11</td></tr></table></div></div>
+</product-page-{{ ai_gen_id }}>
+<script>
+(function(){class ProductPage{{ ai_gen_id }} extends HTMLElement{connectedCallback(){this.main=this.querySelector('[data-main]');this.querySelectorAll('[data-index]').forEach((b)=>b.addEventListener('click',()=>{this.main.children[b.dataset.index]?.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});this.querySelectorAll('[data-index]').forEach((x)=>x.setAttribute('aria-current','false'));b.setAttribute('aria-current','true')}));this.querySelector('[data-read]').addEventListener('click',()=>{this.querySelector('[data-description]').classList.toggle('is-open')});this.querySelectorAll('[data-minus],[data-plus]').forEach((b)=>b.addEventListener('click',()=>{let i=this.querySelector('[name="quantity"]'),v=parseInt(i.value||1);i.value=b.hasAttribute('data-plus')?v+1:Math.max(1,v-1)}));this.querySelectorAll('.ai-product-{{ ai_gen_id }}__accordion button').forEach((b)=>b.addEventListener('click',()=>{let a=b.parentElement;a.classList.toggle('is-open');b.setAttribute('aria-expanded',a.classList.contains('is-open'));b.querySelector('b').textContent=a.classList.contains('is-open')?'−':'+'}));let s=this.querySelector('[data-size-guide]');if(s){s.addEventListener('click',(e)=>{e.preventDefault();this.querySelector('[data-modal]').classList.add('is-open')});this.querySelector('[data-modal-close]').addEventListener('click',()=>this.querySelector('[data-modal]').classList.remove('is-open'))}}}customElements.define('product-page-{{ ai_gen_id }}',ProductPage{{ ai_gen_id }})})();
+</script>
+{% schema %}{"name":"Editorial product page","settings":[{"type":"range","id":"desktop_width_percent","label":"Desktop width","min":50,"max":100,"step":5,"unit":"%","default":100},{"type":"text","id":"rating","label":"Rating","default":"4.8"},{"type":"text","id":"review_count","label":"Review count","default":"142"},{"type":"checkbox","id":"show_buy_now","label":"Show buy now","default":true},{"type":"textarea","id":"accordion_text","label":"Accordion text","default":"Crafted for everyday refinement. Please check our policies for current delivery and return details."}],"presets":[{"name":"Editorial product page"}],"tag":null,"class":"editorial-product-page"}{% endschema %}
