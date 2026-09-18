@@ -1,6 +1,120 @@
+{% doc %}
+  @prompt
+    Create a complete NEW product page section for a premium men's luxury footwear brand. Everything must use real Shopify Liquid data — no hardcoded or placeholder content.
+    
+    LAYOUT:
+    - Two column desktop layout: left column 55% for image gallery, right column 45% for product info
+    - Single column on mobile, images on top
+    - Cream/ivory background (#F5F2EE), charcoal text (#2C2C2C), gold accents (#C9A84C)
+    - Max width 1400px centered, 60px side padding desktop, 20px mobile
+    
+    LEFT COLUMN - IMAGE GALLERY:
+    - Main image using product.featured_image, aspect ratio 4:5, object-fit cover
+    - Thumbnail strip below showing all product.images, each 72x90px, border-radius 4px
+    - Clicking thumbnail swaps main image using JavaScript
+    - Sticky on desktop as user scrolls
+    
+    RIGHT COLUMN - PRODUCT INFO:
+    - Vendor: {{ product.vendor }} in small gold uppercase text
+    - Title: {{ product.title }} large serif font 32px
+    - Price: {{ product.selected_or_first_available_variant.price | money }}, show compare_at_price struck through if on sale
+    - Variant picker: loop through product.variants, show as pill buttons, clicking updates hidden form input
+    - Quantity stepper: minus/plus buttons with number input, minimum 1
+    - ADD TO CART: real working form with action="/cart/add" method="post", hidden input name="id" with variant id, quantity input, submit button with name="add"
+    - Accordions for: product.description, Shipping and Returns, Size and Fit — smooth open/close animation
+    - Trust badges row: Free Shipping, Easy Returns, Authenticity Guaranteed
+    
+    All JavaScript must be inline and functional. All data must come from Shopify Liquid objects.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% style %}
+  .ai-luxury-product-{{ ai_gen_id }} { display:block; width:100%; background:#F5F2EE; color:#2C2C2C; }
+  .ai-luxury-product-{{ ai_gen_id }}__inner { max-width:1400px; margin:0 auto; padding:60px; display:grid; grid-template-columns:55% 45%; gap:56px; box-sizing:border-box; }
+  .ai-luxury-product-{{ ai_gen_id }}__gallery { min-width:0; position:sticky; top:24px; align-self:start; }
+  .ai-luxury-product-{{ ai_gen_id }}__main { aspect-ratio:4/5; background:transparent; overflow:hidden; border-radius:4px; }
+  .ai-luxury-product-{{ ai_gen_id }}__main img, .ai-luxury-product-{{ ai_gen_id }}__placeholder svg { width:100%; height:100%; object-fit:cover; display:block; }
+  .ai-luxury-product-{{ ai_gen_id }}__placeholder { width:100%; height:100%; background:transparent; }
+  .ai-luxury-product-{{ ai_gen_id }}__thumbs { display:flex; gap:10px; margin-top:14px; overflow:auto; }
+  .ai-luxury-product-{{ ai_gen_id }}__thumb { flex:0 0 72px; width:72px; height:90px; padding:0; border:1px solid transparent; border-radius:4px; overflow:hidden; background:transparent; cursor:pointer; }
+  .ai-luxury-product-{{ ai_gen_id }}__thumb[aria-current="true"] { border-color:#C9A84C; }
+  .ai-luxury-product-{{ ai_gen_id }}__thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+  .ai-luxury-product-{{ ai_gen_id }}__info { padding-top:8px; }
+  .ai-luxury-product-{{ ai_gen_id }}__vendor { margin:0 0 12px; color:#8B6B20; font-size:11px; letter-spacing:.16em; text-transform:uppercase; }
+  .ai-luxury-product-{{ ai_gen_id }}__title { margin:0 0 18px; font-family:Georgia,serif; font-size:32px; line-height:1.15; font-weight:500; }
+  .ai-luxury-product-{{ ai_gen_id }}__price { display:flex; gap:12px; align-items:center; font-size:18px; margin-bottom:30px; }
+  .ai-luxury-product-{{ ai_gen_id }}__compare { color:#6D6D6D; text-decoration:line-through; font-size:14px; }
+  .ai-luxury-product-{{ ai_gen_id }}__label { display:block; margin-bottom:10px; font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; }
+  .ai-luxury-product-{{ ai_gen_id }}__variants { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px; }
+  .ai-luxury-product-{{ ai_gen_id }}__variant { border:1px solid #777; background:transparent; color:#2C2C2C; border-radius:14px; padding:10px 15px; cursor:pointer; }
+  .ai-luxury-product-{{ ai_gen_id }}__variant.is-selected { background:#2C2C2C; border-color:#2C2C2C; color:#F5F2EE; }
+  .ai-luxury-product-{{ ai_gen_id }}__variant:disabled { opacity:.45; cursor:not-allowed; }
+  .ai-luxury-product-{{ ai_gen_id }}__quantity { display:flex; width:128px; border:1px solid #777; margin-bottom:16px; }
+  .ai-luxury-product-{{ ai_gen_id }}__quantity button, .ai-luxury-product-{{ ai_gen_id }}__quantity input { width:42px; height:42px; border:0; background:transparent; text-align:center; color:#2C2C2C; }
+  .ai-luxury-product-{{ ai_gen_id }}__quantity button { cursor:pointer; font-size:18px; }
+  .ai-luxury-product-{{ ai_gen_id }}__quantity input { width:44px; border-left:1px solid #777; border-right:1px solid #777; appearance:textfield; }
+  .ai-luxury-product-{{ ai_gen_id }}__add { width:100%; padding:16px; border:0; border-radius:14px; background:#2C2C2C; color:#F5F2EE; cursor:pointer; letter-spacing:.1em; text-transform:uppercase; font-weight:600; }
+  .ai-luxury-product-{{ ai_gen_id }}__add:disabled { opacity:.5; cursor:not-allowed; }
+  .ai-luxury-product-{{ ai_gen_id }}__accordions { margin-top:30px; border-top:1px solid #C9A84C; }
+  .ai-luxury-product-{{ ai_gen_id }}__accordion { border-bottom:1px solid #C9A84C; }
+  .ai-luxury-product-{{ ai_gen_id }}__accordion button { width:100%; display:flex; justify-content:space-between; padding:18px 0; border:0; background:transparent; color:#2C2C2C; text-align:left; cursor:pointer; font-weight:600; }
+  .ai-luxury-product-{{ ai_gen_id }}__content { display:grid; grid-template-rows:0fr; transition:grid-template-rows .25s ease; }
+  .ai-luxury-product-{{ ai_gen_id }}__content > div { overflow:hidden; }
+  .ai-luxury-product-{{ ai_gen_id }}__accordion.is-open .ai-luxury-product-{{ ai_gen_id }}__content { grid-template-rows:1fr; }
+  .ai-luxury-product-{{ ai_gen_id }}__content-inner { padding:0 0 18px; line-height:1.6; }
+  .ai-luxury-product-{{ ai_gen_id }}__trust { display:flex; flex-wrap:wrap; gap:16px; margin-top:28px; color:#2C2C2C; font-size:11px; letter-spacing:.05em; }
+  .ai-luxury-product-{{ ai_gen_id }}__trust span { display:flex; gap:6px; align-items:center; }
+  .ai-luxury-product-{{ ai_gen_id }}__trust span::before { content:'✦'; color:#8B6B20; }
+  @media (max-width:749px) { .ai-luxury-product-{{ ai_gen_id }}__inner { display:block; padding:20px; } .ai-luxury-product-{{ ai_gen_id }}__gallery { position:static; margin-bottom:32px; } .ai-luxury-product-{{ ai_gen_id }}__title { font-size:28px; } }
+{% endstyle %}
+
+<luxury-product-{{ ai_gen_id }} class="ai-luxury-product-{{ ai_gen_id }}" style="width:{{ block.settings.desktop_width_percent }}%;" {{ block.shopify_attributes }}>
+  <div class="ai-luxury-product-{{ ai_gen_id }}__inner">
+    <div class="ai-luxury-product-{{ ai_gen_id }}__gallery">
+      <div class="ai-luxury-product-{{ ai_gen_id }}__main">
+        {% if product.featured_image %}<img data-main-image src="{{ product.featured_image | image_url: width:1400 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}">{% else %}<div class="ai-luxury-product-{{ ai_gen_id }}__placeholder">{{ 'image' | placeholder_svg_tag }}</div>{% endif %}
+      </div>
+      {% if product.images.size > 0 %}<div class="ai-luxury-product-{{ ai_gen_id }}__thumbs">{% for image in product.images %}<button class="ai-luxury-product-{{ ai_gen_id }}__thumb" type="button" data-image="{{ image | image_url: width:1400 }}" data-alt="{{ image.alt | default: product.title | escape }}" aria-label="View product image {{ forloop.index }}" aria-current="{% if image == product.featured_image %}true{% else %}false{% endif %}"><img src="{{ image | image_url: width:180 }}" alt="{{ image.alt | default: product.title | escape }}" width="72" height="90" loading="lazy"></button>{% endfor %}</div>{% endif %}
+    </div>
+    <div class="ai-luxury-product-{{ ai_gen_id }}__info">
+      <p class="ai-luxury-product-{{ ai_gen_id }}__vendor">{{ product.vendor | escape }}</p>
+      <h1 class="ai-luxury-product-{{ ai_gen_id }}__title">{{ product.title | escape }}</h1>
+      <div class="ai-luxury-product-{{ ai_gen_id }}__price"><span data-price>{{ current_variant.price | money }}</span>{% if current_variant.compare_at_price > current_variant.price %}<span class="ai-luxury-product-{{ ai_gen_id }}__compare" data-compare>{{ current_variant.compare_at_price | money }}</span>{% endif %}</div>
+      {% form 'product', product, action:'/cart/add', method:'post' %}
+        <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
+        <label class="ai-luxury-product-{{ ai_gen_id }}__label">Select size</label>
+        <div class="ai-luxury-product-{{ ai_gen_id }}__variants">{% for variant in product.variants %}<button type="button" class="ai-luxury-product-{{ ai_gen_id }}__variant{% if variant.id == current_variant.id %} is-selected{% endif %}" data-variant='{{ variant | json | escape }}' {% unless variant.available %}disabled{% endunless %}>{{ variant.title | escape }}</button>{% endfor %}</div>
+        <label class="ai-luxury-product-{{ ai_gen_id }}__label" for="quantity-{{ ai_gen_id }}">Quantity</label>
+        <div class="ai-luxury-product-{{ ai_gen_id }}__quantity"><button type="button" data-minus aria-label="Decrease quantity">−</button><input id="quantity-{{ ai_gen_id }}" type="number" name="quantity" value="1" min="1" data-quantity><button type="button" data-plus aria-label="Increase quantity">+</button></div>
+        <button class="ai-luxury-product-{{ ai_gen_id }}__add" type="submit" name="add" {% unless current_variant.available %}disabled{% endunless %}>{% if current_variant.available %}Add to cart{% else %}Sold out{% endif %}</button>
+      {% endform %}
+      <div class="ai-luxury-product-{{ ai_gen_id }}__accordions">
+        {% if product.description != blank %}<div class="ai-luxury-product-{{ ai_gen_id }}__accordion"><button type="button" aria-expanded="false">Description <span>+</span></button><div class="ai-luxury-product-{{ ai_gen_id }}__content"><div><div class="ai-luxury-product-{{ ai_gen_id }}__content-inner">{{ product.description }}</div></div></div></div>{% endif %}
+        {% if shop.shipping_policy.body != blank or shop.refund_policy.body != blank %}<div class="ai-luxury-product-{{ ai_gen_id }}__accordion"><button type="button" aria-expanded="false">Shipping and returns <span>+</span></button><div class="ai-luxury-product-{{ ai_gen_id }}__content"><div><div class="ai-luxury-product-{{ ai_gen_id }}__content-inner">{{ shop.shipping_policy.body }}{{ shop.refund_policy.body }}</div></div></div></div>{% endif %}
+        {% if product.metafields.custom.size_fit != blank %}<div class="ai-luxury-product-{{ ai_gen_id }}__accordion"><button type="button" aria-expanded="false">Size and fit <span>+</span></button><div class="ai-luxury-product-{{ ai_gen_id }}__content"><div><div class="ai-luxury-product-{{ ai_gen_id }}__content-inner">{{ product.metafields.custom.size_fit | metafield_tag }}</div></div></div></div>{% endif %}
+      </div>
+      <div class="ai-luxury-product-{{ ai_gen_id }}__trust">{% if shop.shipping_policy.body != blank %}<span>Free shipping</span>{% endif %}{% if shop.refund_policy.body != blank %}<span>Easy returns</span>{% endif %}{% if product.metafields.custom.authenticity_guarantee != blank %}<span>Authenticity guaranteed</span>{% endif %}</div>
+    </div>
+  </div>
+</luxury-product-{{ ai_gen_id }}>
+
+<script>
+(function(){
+  class LuxuryProduct{{ ai_gen_id }} extends HTMLElement {
+    connectedCallback(){
+      this.main=this.querySelector('[data-main-image]');
+      this.querySelectorAll('[data-image]').forEach((button)=>button.addEventListener('click',()=>{if(this.main){this.main.src=button.dataset.image;this.main.alt=button.dataset.alt;}this.querySelectorAll('[data-image]').forEach((item)=>item.setAttribute('aria-current',item===button?'true':'false'));}));
+      const id=this.querySelector('[data-variant-id]'), price=this.querySelector('[data-price]'), compare=this.querySelector('[data-compare]'), add=this.querySelector('[name="add"]');
+      this.querySelectorAll('[data-variant]').forEach((button)=>button.addEventListener('click',()=>{const variant=JSON.parse(button.dataset.variant);id.value=variant.id;price.textContent=this.money(variant.price);if(variant.compare_at_price>variant.price){if(compare){compare.textContent=this.money(variant.compare_at_price);}else{const span=document.createElement('span');span.className='ai-luxury-product-{{ ai_gen_id }}__compare';span.dataset.compare='';span.textContent=this.money(variant.compare_at_price);price.parentElement.appendChild(span);}}else if(compare){compare.remove();}add.disabled=!variant.available;add.textContent=variant.available?'Add to cart':'Sold out';this.querySelectorAll('[data-variant]').forEach(item=>item.classList.toggle('is-selected',item===button));}));
+      const quantity=this.querySelector('[data-quantity]');this.querySelector('[data-minus]').addEventListener('click',()=>quantity.value=Math.max(1,Number(quantity.value)-1));this.querySelector('[data-plus]').addEventListener('click',()=>quantity.value=Number(quantity.value)+1);
+      this.querySelectorAll('.ai-luxury-product-{{ ai_gen_id }}__accordion button').forEach((button)=>button.addEventListener('click',()=>{const open=button.parentElement.classList.toggle('is-open');button.setAttribute('aria-expanded',open);button.querySelector('span').textContent=open?'−':'+';}));
+    }
+    money(value){return (Number(value)/100).toLocaleString(undefined,{style:'currency',currency:'{{ shop.currency }}'});}
+  }
+  customElements.define('luxury-product-{{ ai_gen_id }}',LuxuryProduct{{ ai_gen_id }});
+})();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{"name":"Luxury product page","settings":[{"type":"range","id":"desktop_width_percent","label":"Desktop width","min":50,"max":100,"step":5,"unit":"%","default":100}],"presets":[{"name":"Luxury product page"}],"tag":null,"class":"luxury-product-page"}
 {% endschema %}
