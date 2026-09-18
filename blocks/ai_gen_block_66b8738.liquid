@@ -246,14 +246,12 @@
     }
 
     _money(cents) {
-      const fmt = window.Shopify && window.Shopify.money_format
-        ? window.Shopify.money_format
-        : '{{amount}} AED';
-      const amount = (cents / 100).toFixed(2);
-      return fmt.replace('{{amount}}', amount)
-                .replace('{{amount_no_decimals}}', Math.round(cents / 100))
-                .replace('{{amount_with_comma_separator}}', amount.replace('.', ','));
+      return (cents / 100).toLocaleString('en-AE', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }) + ' AED';
     }
+    
   }
 
   customElements.define('luxury-product-{{ ai_gen_id }}', LuxuryProduct{{ ai_gen_id }});
