@@ -1,6 +1,284 @@
+{% doc %}
+  @prompt
+    i need you to generate hight convesion product page section to show the main info we have insert on product CRUD page
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-product-detail-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    margin: 0 auto;
+    color: {{ block.settings.text_color }};
+    background: {{ block.settings.background_color }};
+  }
+
+  .ai-product-detail-{{ ai_gen_id }}__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(320px, .92fr);
+    gap: 48px;
+    align-items: start;
+  }
+
+  .ai-product-detail-{{ ai_gen_id }}__media {
+    display: grid;
+    gap: 12px;
+  }
+
+  .ai-product-detail-{{ ai_gen_id }}__main-image,
+  .ai-product-detail-{{ ai_gen_id }}__placeholder {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: transparent;
+  }
+
+  .ai-product-detail-{{ ai_gen_id }}__main-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .ai-product-detail-{{ ai_gen_id }}__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f4f4f2;
+  }
+
+  .ai-product-detail-{{ ai_gen_id }}__placeholder svg {
+    width: 65%;
+    height: 65%;
+    color: #777;
+  }
+
+  .ai-product-detail-{{ ai_gen_id }}__thumbs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+  }
+
+  .ai-product-detail-{{ ai_gen_id }}__thumb {
+    flex: 0 0 72px;
+    width: 72px;
+    height: 72px;
+    padding: 0;
+    border: 1px solid #d6d6d2;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .ai-product-detail-{{ ai_gen_id }}__thumb.is-active {
+    border: 2px solid {{ block.settings.text_color }};
+  }
+
+  .ai-product-detail-{{ ai_gen_id }}__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .ai-product-detail-{{ ai_gen_id }}__info {
+    position: sticky;
+    top: 24px;
+  }
+
+  .ai-product-detail-{{ ai_gen_id }}__vendor {
+    margin: 0 0 12px;
+    font-size: 12px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: #555;
+  }
+
+  .ai-product-detail-{{ ai_gen_id }}__title {
+    margin: 0 0 16px;
+    font-family: {{ settings.type_heading_font.family }};
+    font-size: clamp(30px, 4vw, 52px);
+    line-height: 1.05;
+  }
+
+  .ai-product-detail-{{ ai_gen_id }}__price {
+    margin: 0 0 24px;
+    font-size: 22px;
+    font-weight: 600;
+  }
+
+  .ai-product-detail-{{ ai_gen_id }}__compare {
+    margin-left: 8px;
+    color: #666;
+    font-size: 15px;
+    text-decoration: line-through;
+    font-weight: 400;
+  }
+
+  .ai-product-detail-{{ ai_gen_id }}__description {
+    margin-bottom: 28px;
+    color: #333;
+    line-height: 1.7;
+  }
+
+  .ai-product-detail-{{ ai_gen_id }}__option {
+    margin: 0 0 20px;
+  }
+
+  .ai-product-detail-{{ ai_gen_id }}__label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .ai-product-detail-{{ ai_gen_id }}__select,
+  .ai-product-detail-{{ ai_gen_id }}__quantity {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 14px;
+    border: 1px solid #333;
+    border-radius: {{ block.settings.input_radius }}px;
+    background: {{ block.settings.background_color }};
+    color: {{ block.settings.text_color }};
+    font: inherit;
+  }
+
+  .ai-product-detail-{{ ai_gen_id }}__quantity-wrap {
+    max-width: 130px;
+    margin-bottom: 16px;
+  }
+
+  .ai-product-detail-{{ ai_gen_id }}__submit {
+    width: 100%;
+    min-height: 54px;
+    padding: 14px 20px;
+    border: 0;
+    border-radius: {{ block.settings.button_radius }}px;
+    background: {{ block.settings.button_color }};
+    color: {{ block.settings.button_text_color }};
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .ai-product-detail-{{ ai_gen_id }}__submit:hover {
+    opacity: .88;
+  }
+
+  .ai-product-detail-{{ ai_gen_id }}__submit:focus-visible,
+  .ai-product-detail-{{ ai_gen_id }}__thumb:focus-visible,
+  .ai-product-detail-{{ ai_gen_id }}__select:focus-visible,
+  .ai-product-detail-{{ ai_gen_id }}__quantity:focus-visible {
+    outline: 3px solid #b38b35;
+    outline-offset: 3px;
+  }
+
+  .ai-product-detail-{{ ai_gen_id }}__note {
+    margin-top: 14px;
+    color: #555;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-product-detail-{{ ai_gen_id }}__grid { grid-template-columns: 1fr; gap: 28px; }
+    .ai-product-detail-{{ ai_gen_id }}__info { position: static; }
+  }
+{% endstyle %}
+
+<product-detail-{{ ai_gen_id }} class="ai-product-detail-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  {% if product != blank %}
+    <div class="ai-product-detail-{{ ai_gen_id }}__grid">
+      <div class="ai-product-detail-{{ ai_gen_id }}__media">
+        <div class="ai-product-detail-{{ ai_gen_id }}__main-image">
+          {% if product.featured_image %}
+            <img src="{{ product.featured_image | image_url: width: 1400 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" loading="eager">
+          {% else %}
+            <div class="ai-product-detail-{{ ai_gen_id }}__placeholder">{{ 'product-apparel-1' | placeholder_svg_tag }}</div>
+          {% endif %}
+        </div>
+        {% if product.images.size > 1 %}
+          <div class="ai-product-detail-{{ ai_gen_id }}__thumbs" aria-label="Product images">
+            {% for image in product.images limit: 6 %}
+              <button type="button" class="ai-product-detail-{{ ai_gen_id }}__thumb{% if forloop.first %} is-active{% endif %}" data-image="{{ image | image_url: width: 1400 }}" data-alt="{{ image.alt | default: product.title | escape }}" aria-label="View image {{ forloop.index }}">
+                <img src="{{ image | image_url: width: 180 }}" alt="" width="72" height="72" loading="lazy">
+              </button>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="ai-product-detail-{{ ai_gen_id }}__info">
+        {% if block.settings.show_vendor and product.vendor != blank %}<p class="ai-product-detail-{{ ai_gen_id }}__vendor">{{ product.vendor | escape }}</p>{% endif %}
+        <h1 class="ai-product-detail-{{ ai_gen_id }}__title">{{ product.title | escape }}</h1>
+        <p class="ai-product-detail-{{ ai_gen_id }}__price">{{ product.selected_or_first_available_variant.price | money }}{% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}<span class="ai-product-detail-{{ ai_gen_id }}__compare">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>{% endif %}</p>
+        {% if block.settings.show_description and product.description != blank %}<div class="ai-product-detail-{{ ai_gen_id }}__description">{{ product.description }}</div>{% endif %}
+
+        {% form 'product', product %}
+          {% unless product.has_only_default_variant %}
+            {% for option in product.options_with_values %}
+              <div class="ai-product-detail-{{ ai_gen_id }}__option">
+                <label class="ai-product-detail-{{ ai_gen_id }}__label" for="ai-option-{{ ai_gen_id }}-{{ forloop.index }}">{{ option.name }}</label>
+                <select class="ai-product-detail-{{ ai_gen_id }}__select" id="ai-option-{{ ai_gen_id }}-{{ forloop.index }}" name="options[{{ option.name | escape }}]">
+                  {% for value in option.values %}<option value="{{ value | escape }}"{% if option.selected_value == value %} selected{% endif %}>{{ value }}</option>{% endfor %}
+                </select>
+              </div>
+            {% endfor %}
+          {% endunless %}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          <div class="ai-product-detail-{{ ai_gen_id }}__quantity-wrap">
+            <label class="ai-product-detail-{{ ai_gen_id }}__label" for="ai-quantity-{{ ai_gen_id }}">Quantity</label>
+            <input class="ai-product-detail-{{ ai_gen_id }}__quantity" id="ai-quantity-{{ ai_gen_id }}" type="number" name="quantity" value="1" min="1">
+          </div>
+          <button class="ai-product-detail-{{ ai_gen_id }}__submit" type="submit"{% unless product.available %} disabled{% endunless %}>{% if product.available %}{{ block.settings.button_label }}{% else %}Sold out{% endif %}</button>
+          {% if block.settings.purchase_note != blank %}<p class="ai-product-detail-{{ ai_gen_id }}__note">{{ block.settings.purchase_note }}</p>{% endif %}
+        {% endform %}
+      </div>
+    </div>
+  {% else %}
+    <p>Add this block to a product page template to display product information.</p>
+  {% endif %}
+</product-detail-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class ProductDetail{{ ai_gen_id }} extends HTMLElement {
+      connectedCallback() {
+        const image = this.querySelector('.ai-product-detail-{{ ai_gen_id }}__main-image img');
+        this.querySelectorAll('.ai-product-detail-{{ ai_gen_id }}__thumb').forEach((button) => {
+          button.addEventListener('click', () => {
+            if (image) { image.src = button.dataset.image; image.alt = button.dataset.alt; }
+            this.querySelectorAll('.ai-product-detail-{{ ai_gen_id }}__thumb').forEach((item) => item.classList.remove('is-active'));
+            button.classList.add('is-active');
+          });
+        });
+      }
+    }
+    if (!customElements.get('product-detail-{{ ai_gen_id }}')) customElements.define('product-detail-{{ ai_gen_id }}', ProductDetail{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Product detail",
+  "settings": [
+    {"type":"header","content":"Content"},
+    {"type":"checkbox","id":"show_vendor","label":"Show vendor","default":true},
+    {"type":"checkbox","id":"show_description","label":"Show description","default":true},
+    {"type":"text","id":"button_label","label":"Button label","default":"Add to cart"},
+    {"type":"textarea","id":"purchase_note","label":"Purchase note","default":"Secure checkout and carefully packed delivery."},
+    {"type":"header","content":"Layout"},
+    {"type":"range","id":"desktop_width_percent","label":"Desktop width","min":50,"max":100,"step":5,"unit":"%","default":100},
+    {"type":"range","id":"input_radius","label":"Input radius","min":0,"max":32,"step":1,"unit":"px","default":4},
+    {"type":"range","id":"button_radius","label":"Button radius","min":0,"max":32,"step":1,"unit":"px","default":14},
+    {"type":"header","content":"Colors"},
+    {"type":"color","id":"background_color","label":"Background","default":"#FFFFFF"},
+    {"type":"color","id":"text_color","label":"Text","default":"#000000"},
+    {"type":"color","id":"button_color","label":"Button","default":"#000000"},
+    {"type":"color","id":"button_text_color","label":"Button text","default":"#FFFFFF"}
+  ],
+  "presets": [{"name":"Product detail"}],
+  "tag": null,
+  "class": "product-detail-block"
+}
 {% endschema %}
