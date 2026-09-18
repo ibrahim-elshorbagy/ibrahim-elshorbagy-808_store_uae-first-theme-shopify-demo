@@ -11,21 +11,6 @@
   "sections": {
     "blocks_LVmdze": {
       "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_5704130_4UCBhH": {
-          "type": "ai_gen_block_5704130",
-          "settings": {
-            "desktop_width_percent": 100,
-            "rating": "4.8",
-            "review_count": "142",
-            "accordion_text": "Crafted for everyday refinement. Please check our policies for current delivery and return details."
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_5704130_4UCBhH"
-      ],
       "name": "Product",
       "settings": {
         "content_direction": "column",
