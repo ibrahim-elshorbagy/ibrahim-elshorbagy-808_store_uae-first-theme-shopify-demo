@@ -1,0 +1,45 @@
+{% doc %}
+  @prompt
+    Create a complete NEW product page section for a premium men's luxury footwear brand. Everything must use real Shopify Liquid data — no hardcoded or placeholder content.
+    
+    LAYOUT:
+    - Two column desktop layout: left column 55% for image gallery, right column 45% for product info
+    - Single column on mobile, images on top
+    - Cream/ivory background (#F5F2EE), charcoal text (#2C2C2C), gold accents (#C9A84C)
+    - Max width 1400px centered, 60px side padding desktop, 20px mobile
+    
+    LEFT COLUMN - IMAGE GALLERY:
+    - Main image using product.featured_image, aspect ratio 4:5, object-fit cover
+    - Thumbnail strip below showing all product.images, each 72x90px, border-radius 4px
+    - Clicking thumbnail swaps main image using JavaScript
+    - Sticky on desktop as user scrolls
+    
+    RIGHT COLUMN - PRODUCT INFO:
+    - Vendor: {{ product.vendor }} in small gold uppercase text
+    - Title: {{ product.title }} large serif font 32px
+    - Price: {{ product.selected_or_first_available_variant.price | money }}, show compare_at_price struck through if on sale
+    - Variant picker: loop through product.variants, show as pill buttons, clicking updates hidden form input
+    - Quantity stepper: minus/plus buttons with number input, minimum 1
+    - ADD TO CART: real working form with action="/cart/add" method="post", hidden input name="id" with variant id, quantity input, submit button with name="add"
+    - Accordions for: product.description, Shipping and Returns, Size and Fit — smooth open/close animation
+    - Trust badges row: Free Shipping, Easy Returns, Authenticity Guaranteed
+    
+    All JavaScript must be inline and functional. All data must come from Shopify Liquid objects., delete section of  Shipping and returns and Size and fill And make the deesciotnio accordion, see the section of features make it more better look
+    , on the section you have here see the section of features make it more better look
+    , on the section you created here
+    rember you make the desciortion come from the CRUD of shopify NOT FUCKING HARDE CODEDE WRIE, on the section you created here again on the section you made
+    the Product Deatils please make it come from product info okey ?
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+{% style %}.ai-product-details-{{ ai_gen_id }}{display:block;width:{{ block.settings.desktop_width_percent }}%;max-width:100%;background:#F5F2EE;color:#2C2C2C;padding:28px}.ai-product-details-{{ ai_gen_id }}__vendor{margin:0 0 8px;color:#8D6E2F;font:600 12px/1.4 Arial,sans-serif;letter-spacing:.16em;text-transform:uppercase}.ai-product-details-{{ ai_gen_id }}__title{margin:0 0 12px;font:500 32px/1.15 Georgia,serif}.ai-product-details-{{ ai_gen_id }}__price{margin:0 0 24px;font:600 18px/1.4 Arial,sans-serif}.ai-product-details-{{ ai_gen_id }} details{border-top:1px solid #C9C2B8}.ai-product-details-{{ ai_gen_id }} details:last-child{border-bottom:1px solid #C9C2B8}.ai-product-details-{{ ai_gen_id }} summary{padding:18px 0;cursor:pointer;font:600 16px/1.4 Arial,sans-serif}.ai-product-details-{{ ai_gen_id }}__content{padding:0 0 22px;font:14px/1.7 Arial,sans-serif}.ai-product-details-{{ ai_gen_id }}__content img{max-width:100%;height:auto}@media(max-width:749px){.ai-product-details-{{ ai_gen_id }}{width:100%;padding:22px}.ai-product-details-{{ ai_gen_id }}__title{font-size:28px}}{% endstyle %}
+<div class="ai-product-details-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  {% if product.vendor != blank %}<p class="ai-product-details-{{ ai_gen_id }}__vendor">{{ product.vendor }}</p>{% endif %}
+  <h2 class="ai-product-details-{{ ai_gen_id }}__title">{{ product.title }}</h2>
+  {% assign current_variant = product.selected_or_first_available_variant %}
+  {% if current_variant != blank %}<p class="ai-product-details-{{ ai_gen_id }}__price">{{ current_variant.price | money }}{% if current_variant.compare_at_price > current_variant.price %} <s>{{ current_variant.compare_at_price | money }}</s>{% endif %}</p>{% endif %}
+  <details open>
+    <summary>Product details</summary>
+    <div class="ai-product-details-{{ ai_gen_id }}__content">{{ product.description }}</div>
+  </details>
+</div>
+{% schema %}{"name":"Product details","settings":[{"type":"range","id":"desktop_width_percent","label":"Desktop width","min":50,"max":100,"step":5,"unit":"%","default":100}],"presets":[{"name":"Product details"}],"tag":null,"class":"product-details-block"}{% endschema %}
