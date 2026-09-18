@@ -188,6 +188,7 @@
             "product_title_xiLBYA": {
               "type": "product-title",
               "name": "t:names.product_title",
+              "disabled": true,
               "settings": {
                 "width": "fit-content",
                 "max_width": "normal",
@@ -213,6 +214,7 @@
             "price_Mgc36E": {
               "type": "price",
               "name": "t:names.product_price",
+              "disabled": true,
               "settings": {
                 "show_sale_price_first": true,
                 "show_installments": false,
