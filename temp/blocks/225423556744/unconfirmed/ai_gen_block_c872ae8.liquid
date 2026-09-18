@@ -1,0 +1,69 @@
+{% doc %}
+  @prompt
+    Create a complete, fully functional Shopify product page section for a premium men's footwear and luxury lifestyle brand. The design should feel editorial, modern, and minimal with a charcoal, ivory, and gold color palette.
+    
+    Overall Layout:
+    
+    Two-column layout on desktop: product media gallery on the left (55% width), product details on the right (45% width)
+    Single column stacked layout on mobile with media on top, details below
+    Max content width of 1400px centered on the page
+    60px padding on desktop sides, 20px on mobile
+    Background color: ivory/cream (#F5F2EE)
+    Smooth scroll behavior throughout
+    Left Column — Media Gallery:
+    
+    Large primary product image at top, full width of the column
+    Aspect ratio 4:5 (portrait) for all images
+    Image fit: cover, with transparent background support for PNG products
+    Below the primary image, show a horizontal thumbnail strip with up to 8 thumbnails
+    Each thumbnail is 72px wide, 90px tall, border-radius 4px, with a 2px gold (#C9A84C) border on hover and when active
+    Clicking a thumbnail swaps the main image with a smooth crossfade transition (300ms ease)
+    On mobile, replace the thumbnail strip with a swipeable carousel with dot pagination indicators at the bottom
+    Include a zoom-on-hover effect for the main image on desktop (scale 1.08, overflow hidden, transition 400ms ease)
+    Support video thumbnails with a play icon overlay (gold circle, white triangle)
+    Sticky behavior: the media gallery sticks to the top of the viewport as the user scrolls through product details, stopping before the footer
+    Right Column — Product Details:
+    
+    Top of column: product vendor name in small uppercase gold (#C9A84C) lettering, letter-spacing 0.15em, font-size 11px
+    Product title: large serif or elegant sans-serif font, font-size 32px desktop / 24px mobile, color charcoal (#2C2C2C), font-weight 600, line-height 1.2
+    Star rating row: 5-star display using gold filled/empty stars, show numeric rating (e.g. 4.8) and review count (e.g. 142 reviews) as a clickable link that scrolls to reviews section
+    Price display: font-size 24px, font-weight 500, charcoal color; if on sale show original price struck through in muted gray (#999) and sale price in a warm red (#C0392B); show currency code beside price
+    Thin horizontal divider (1px, #E0DDD8) after price
+    Short product description: 2-3 lines max, font-size 14px, color #666, line-height 1.7; include a "Read more" toggle that expands the full description with smooth height animation
+    Variant picker for Size: display as a grid of pill-shaped buttons (min-width 48px, height 40px, border-radius 24px); unselected state: white background, 1px border #D0CCC6, charcoal text; selected state: charcoal (#2C2C2C) background, white text; sold-out state: white background, diagonal strikethrough line using CSS, muted text color; hover state: light gold background tint (#FAF4E8)
+    Size guide link: small text link in gold beside the "Size" label, opens a modal overlay with a size chart table
+    Color variant picker if applicable: circular swatches 32px diameter, 2px border on selected in gold, tooltip showing color name on hover
+    Quantity selector: minimal stepper with minus and plus buttons flanking a number input; buttons are 36px square, border 1px #D0CCC6, border-radius 4px; input width 48px centered
+    Add to Cart button: full width, height 52px, background charcoal (#2C2C2C), white text, font-size 15px uppercase letter-spacing 0.1em, border-radius 4px; on hover background shifts to #3D3D3D; loading state shows a spinner replacing the text; success state briefly shows a checkmark before reverting
+    Buy It Now button: full width, height 52px, background gold (#C9A84C), charcoal text, same typography as ATC button, border-radius 4px; hover darkens gold slightly
+    Both buttons have a subtle box-shadow: 0 2px 8px rgba(0,0,0,0.10)
+    Below buttons: a row of trust badges (icons + text) for Free Shipping, Easy Returns, Authenticity Guaranteed — icons in gold, text in #888, font-size 12px, evenly spaced
+    Thin divider
+    Accordion sections for: Product Details, Shipping & Returns, Size & Fit — each with a plus/minus toggle icon in gold, smooth height animation open/close, border-bottom 1px #E0DDD8, padding 16px 0
+    Social share row at the bottom: small icons for Instagram, Pinterest, Facebook, WhatsApp in charcoal, 24px each, spaced 12px apart, label "Share:" in muted text
+    Sticky Add to Cart Bar:
+    
+    Appears after user scrolls past the main ATC button
+    Fixed to bottom of viewport, full width, height 72px
+    Background: white with subtle top border 1px #E0DDD8 and box-shadow upward
+    Left side: product thumbnail (48px square, border-radius 4px) + product title truncated + selected variant
+    Right side: price + Add to Cart button (same style but smaller, height 40px, auto width min 140px)
+    Smooth slide-up animation on appear (translateY from 100% to 0, 300ms ease)
+    Hides when user scrolls back up to the ATC button
+    Below the Fold — Additional Sections:
+    
+    "You May Also Like" horizontal scroll row: show 4 product cards on desktop, 2 on, why the fucking hell there is fucking tow add to cart button and buy it now ? and why the fucking hell there is 
+    Title
+    Deafult Title bade ?
+    
+    fcukngi delete them, what the fucking hell is that 
+    share F dot P ?? are you fucking idior or what ??
+    fucking make a better share button , what the fucking hell is that svg of socail are you fucking kidding me ?
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+{% style %}
+.ai-share-{{ ai_gen_id }}{display:flex;align-items:center;gap:10px;padding:20px 0;color:#777;font-size:13px}.ai-share-{{ ai_gen_id }}__label{margin-right:4px}.ai-share-{{ ai_gen_id }} a,.ai-share-{{ ai_gen_id }} button{display:inline-flex;align-items:center;justify-content:center;min-width:38px;height:38px;padding:0 12px;border:1px solid #d0ccc6;border-radius:20px;background:#fff;color:#2c2c2c;text-decoration:none;font:inherit;cursor:pointer;transition:background-color .2s ease,color .2s ease,border-color .2s ease}.ai-share-{{ ai_gen_id }} a:hover,.ai-share-{{ ai_gen_id }} button:hover{background:#2c2c2c;color:#fff;border-color:#2c2c2c}@media(max-width:749px){.ai-share-{{ ai_gen_id }}{gap:6px}.ai-share-{{ ai_gen_id }} a,.ai-share-{{ ai_gen_id }} button{padding:0 9px;font-size:12px}}
+{% endstyle %}
+<div class="ai-share-{{ ai_gen_id }}" {{ block.shopify_attributes }}><span class="ai-share-{{ ai_gen_id }}__label">Share:</span><button type="button" data-copy aria-label="Copy product link">Copy link</button><a href="https://www.facebook.com/sharer/sharer.php?u={{ shop.url }}{{ product.url | url_param_escape }}" target="_blank" rel="noopener">Facebook</a><a href="https://wa.me/?text={{ product.title | append:' ' | append:shop.url | append:product.url | url_param_escape }}" target="_blank" rel="noopener">WhatsApp</a><a href="https://pinterest.com/pin/create/button/?url={{ shop.url }}{{ product.url | url_param_escape }}&description={{ product.title | url_param_escape }}" target="_blank" rel="noopener">Pinterest</a></div>
+<script>(function(){var root=document.querySelector('.ai-share-{{ ai_gen_id }}');if(!root)return;var button=root.querySelector('[data-copy]');button.addEventListener('click',function(){var url=window.location.href;if(navigator.clipboard){navigator.clipboard.writeText(url).then(function(){button.textContent='Copied';setTimeout(function(){button.textContent='Copy link'},1600)})}})})();</script>
+{% schema %}{"name":"Product share links","settings":[],"presets":[{"name":"Product share links"}],"tag":null,"class":"product-share-links"}{% endschema %}
