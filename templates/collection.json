@@ -23,7 +23,7 @@
             "show_swatch_label": false,
             "show_filter_label": false,
             "enable_sorting": true,
-            "enable_grid_density": true,
+            "enable_grid_density": false,
             "background_color": "",
             "text_color": "",
             "padding-block-start": 8,
