@@ -1,0 +1,340 @@
+{% doc %}
+  @prompt
+    MAKE COLLESCTION DIPLSAY CARDS LIKE THESE HERE  <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Collection 18 — Stagger Masonry</title><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;1,400&family=Inter:wght@400;600&display=swap" rel="stylesheet"><style>*{margin:0;box-sizing:border-box}body{font-family:Inter,sans-serif;background:#f4ead8;color:#3a2a1c}.s{max-width:1160px;margin:0 auto;padding:60px 24px}.s h2{font-family:Fraunces,serif;font-size:clamp(34px,5vw,58px)}.g{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:24px;align-items:start}.c{background:#fffdf6;border-radius:18px;overflow:hidden;box-shadow:0 16px 40px rgba(58,42,28,.12)}.c:nth-child(2){margin-top:36px}.c:nth-child(4){margin-top:56px}.c:nth-child(5){margin-top:-30px}.ph img{width:100%;object-fit:cover;display:block}.i{padding:12px;font-size:13px}@media(max-width:850px){.g{grid-template-columns:repeat(2,1fr)}.c:nth-child(n){margin-top:0}}</style></head><body><section class="s"><h2>Uneven, like real life.</h2><p>Different heights. Same quality.</p><div class="g">
+    <div class="c"><div class="ph"><img src="../Beige_sneakers_on_concrete_plinth_20260917221439.jpeg" alt="" style="height:280px" onerror="this.remove()"></div><div class="i"><b>Plinth beige · 349</b></div></div>
+    <div class="c"><div class="ph"><img src="../Navy_blue_suede_loafers_displayed_20260917221439.jpeg" alt="" style="height:200px" onerror="this.remove()"></div><div class="i"><b>Navy calm · 429</b></div></div>
+    <div class="c"><div class="ph"><img src="../White_leather_sandals_floating_20260917221439.jpeg" alt="" style="height:320px" onerror="this.remove()"></div><div class="i"><b>White float · 299</b></div></div>
+    <div class="c"><div class="ph"><img src="../Brown_suede_loafers_on_podium_20260917221440.jpeg" alt="" style="height:230px" onerror="this.remove()"></div><div class="i"><b>Podium brown · 429</b></div></div>
+    </div></section></body></html>
+    
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-collection-masonry-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: {{ block.settings.section_padding }}px 24px;
+    background: {{ block.settings.background_color }};
+    color: {{ block.settings.text_color }};
+  }
+
+  .ai-collection-masonry__inner-{{ ai_gen_id }} {
+    max-width: 1160px;
+    margin: 0 auto;
+  }
+
+  .ai-collection-masonry__heading-{{ ai_gen_id }} {
+    margin: 0;
+    color: {{ block.settings.text_color }};
+    font-family: {{ block.settings.heading_font.family }};
+    font-size: {{ block.settings.heading_size }}px;
+    line-height: 1.05;
+    font-weight: 600;
+  }
+
+  .ai-collection-masonry__intro-{{ ai_gen_id }} {
+    margin: 12px 0 0;
+    color: {{ block.settings.text_color }};
+    font-family: {{ block.settings.body_font.family }};
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .ai-collection-masonry__grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: {{ block.settings.card_gap }}px;
+    align-items: start;
+    margin-top: 28px;
+  }
+
+  .ai-collection-masonry__card-{{ ai_gen_id }} {
+    display: block;
+    overflow: hidden;
+    color: {{ block.settings.card_text_color }};
+    background: {{ block.settings.card_background }};
+    border-radius: {{ block.settings.card_radius }}px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+    text-decoration: none;
+  }
+
+  .ai-collection-masonry__card-{{ ai_gen_id }}:focus-visible {
+    outline: 3px solid {{ block.settings.text_color }};
+    outline-offset: 4px;
+  }
+
+  .ai-collection-masonry__card-{{ ai_gen_id }}:nth-child(2) {
+    margin-top: 36px;
+  }
+
+  .ai-collection-masonry__card-{{ ai_gen_id }}:nth-child(4) {
+    margin-top: 56px;
+  }
+
+  .ai-collection-masonry__card-{{ ai_gen_id }}:nth-child(5) {
+    margin-top: -30px;
+  }
+
+  .ai-collection-masonry__media-{{ ai_gen_id }} {
+    height: var(--ai-card-height);
+    background: {{ block.settings.placeholder_color }};
+  }
+
+  .ai-collection-masonry__media-{{ ai_gen_id }} img,
+  .ai-collection-masonry__media-{{ ai_gen_id }} svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-collection-masonry__info-{{ ai_gen_id }} {
+    padding: 14px;
+    font-family: {{ block.settings.body_font.family }};
+    font-size: 14px;
+    line-height: 1.35;
+  }
+
+  .ai-collection-masonry__title-{{ ai_gen_id }} {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .ai-collection-masonry__count-{{ ai_gen_id }} {
+    display: block;
+    margin-top: 4px;
+    opacity: 0.72;
+  }
+
+  @media screen and (max-width: 850px) {
+    .ai-collection-masonry__grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .ai-collection-masonry__card-{{ ai_gen_id }}:nth-child(n) {
+      margin-top: 0;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .ai-collection-masonry-{{ ai_gen_id }} {
+      padding-right: 16px;
+      padding-left: 16px;
+    }
+
+    .ai-collection-masonry__grid-{{ ai_gen_id }} {
+      gap: 12px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-collection-masonry-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-collection-masonry__inner-{{ ai_gen_id }}">
+    {% if block.settings.heading != blank %}
+      <h2 class="ai-collection-masonry__heading-{{ ai_gen_id }}">{{ block.settings.heading | escape }}</h2>
+    {% endif %}
+    {% if block.settings.description != blank %}
+      <p class="ai-collection-masonry__intro-{{ ai_gen_id }}">{{ block.settings.description | escape }}</p>
+    {% endif %}
+
+    {% if block.settings.collections != blank %}
+      <div class="ai-collection-masonry__grid-{{ ai_gen_id }}">
+        {% for collection in block.settings.collections %}
+          {% assign card_index = forloop.index | modulo: 4 %}
+          {% assign card_height = block.settings.card_height %}
+          {% if card_index == 2 %}
+            {% assign card_height = block.settings.card_height | minus: 50 %}
+          {% elsif card_index == 3 %}
+            {% assign card_height = block.settings.card_height | plus: 40 %}
+          {% endif %}
+          <a class="ai-collection-masonry__card-{{ ai_gen_id }}" href="{{ collection.url }}">
+            <div class="ai-collection-masonry__media-{{ ai_gen_id }}" style="--ai-card-height: {{ card_height }}px;">
+              {% if collection.featured_image %}
+                <img src="{{ collection.featured_image | image_url: width: 900 }}" alt="{{ collection.featured_image.alt | default: collection.title | escape }}" loading="lazy" width="900" height="{{ card_height }}">
+              {% else %}
+                {{ 'collection-apparel-1' | placeholder_svg_tag }}
+              {% endif %}
+            </div>
+            <div class="ai-collection-masonry__info-{{ ai_gen_id }}">
+              <p class="ai-collection-masonry__title-{{ ai_gen_id }}">{{ collection.title | escape }}</p>
+              {% if block.settings.show_count %}
+                <span class="ai-collection-masonry__count-{{ ai_gen_id }}">{{ collection.products_count }} products</span>
+              {% endif %}
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="ai-collection-masonry__grid-{{ ai_gen_id }}">
+        {% for i in (1..4) %}
+          <div class="ai-collection-masonry__card-{{ ai_gen_id }}">
+            <div class="ai-collection-masonry__media-{{ ai_gen_id }}" style="--ai-card-height: {{ block.settings.card_height }}px;">
+              {{ 'collection-apparel-1' | placeholder_svg_tag }}
+            </div>
+            <div class="ai-collection-masonry__info-{{ ai_gen_id }}">Choose collections in this block</div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collection cards",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Uneven, like real life."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Different heights. Same quality."
+    },
+    {
+      "type": "collection_list",
+      "id": "collections",
+      "label": "Collections",
+      "limit": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "show_count",
+      "label": "Show product count",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "card_height",
+      "label": "Card image height",
+      "min": 180,
+      "max": 360,
+      "step": 10,
+      "unit": "px",
+      "default": 280
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Card gap",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Section padding",
+      "min": 20,
+      "max": 100,
+      "step": 10,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#F4EAD8"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#3A2A1C"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#FFFDF6"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card text",
+      "default": "#3A2A1C"
+    },
+    {
+      "type": "color",
+      "id": "placeholder_color",
+      "label": "Placeholder",
+      "default": "#E7D9C3"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font",
+      "default": "inter_n7"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Body font",
+      "default": "inter_n4"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 28,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection cards"
+    }
+  ],
+  "tag": null,
+  "class": "collection-cards-block"
+}
+{% endschema %}

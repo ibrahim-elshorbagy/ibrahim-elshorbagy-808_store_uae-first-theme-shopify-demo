@@ -1,0 +1,200 @@
+{% doc %}
+  @prompt
+    Create a modern Arabic-inspired hero section for 808 Store, UAE men's shoe brand. Warm off-white background #FAF6F0 with subtle geometric pattern overlay (light opacity). Left side: brand name "808 Store" in elegant serif, decorative ornament divider, headline "جواتي رجالي | Men's Shoes" (bilingual), gold #C9A84C accents, CTA "Shop Now". Right: large shoe image placeholder. RTL-friendly layout feeling. Sophisticated UAE luxury brand style.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-arabic-hero-{{ ai_gen_id }} {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    background: {{ block.settings.background_color }};
+    color: {{ block.settings.text_color }};
+    isolation: isolate;
+  }
+
+  .ai-arabic-hero-{{ ai_gen_id }}::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: {{ block.settings.pattern_opacity | divided_by: 100.0 }};
+    background-image: linear-gradient(45deg, transparent 46%, {{ block.settings.accent_color }} 47%, {{ block.settings.accent_color }} 53%, transparent 54%), linear-gradient(-45deg, transparent 46%, {{ block.settings.accent_color }} 47%, {{ block.settings.accent_color }} 53%, transparent 54%);
+    background-size: 52px 52px;
+    pointer-events: none;
+  }
+
+  .ai-arabic-hero__inner-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: center;
+    gap: clamp(28px, 6vw, 96px);
+    min-height: {{ block.settings.hero_height }}px;
+    padding: clamp(36px, 7vw, 96px) clamp(24px, 7vw, 110px);
+  }
+
+  .ai-arabic-hero__content-{{ ai_gen_id }} {
+    max-width: 560px;
+    text-align: left;
+  }
+
+  .ai-arabic-hero__brand-{{ ai_gen_id }} {
+    margin: 0;
+    color: {{ block.settings.accent_color }};
+    font-family: {{ block.settings.serif_font.family }}, serif;
+    font-size: clamp(28px, 4vw, 54px);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  .ai-arabic-hero__ornament-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 190px;
+    margin: 22px 0 28px;
+    color: {{ block.settings.accent_color }};
+  }
+
+  .ai-arabic-hero__ornament-{{ ai_gen_id }}::before,
+  .ai-arabic-hero__ornament-{{ ai_gen_id }}::after {
+    content: '';
+    height: 1px;
+    flex: 1;
+    background: currentColor;
+  }
+
+  .ai-arabic-hero__ornament-{{ ai_gen_id }} span {
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .ai-arabic-hero__heading-{{ ai_gen_id }} {
+    margin: 0;
+    color: {{ block.settings.text_color }};
+    font-family: {{ block.settings.serif_font.family }}, serif;
+    font-size: clamp(34px, 5vw, 72px);
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+  }
+
+  .ai-arabic-hero__heading-{{ ai_gen_id }} span {
+    display: block;
+    margin-top: 10px;
+    font-family: {{ block.settings.sans_font.family }}, sans-serif;
+    font-size: 0.38em;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+
+  .ai-arabic-hero__button-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 150px;
+    margin-top: 34px;
+    padding: 15px 28px;
+    border: 1px solid {{ block.settings.accent_color }};
+    border-radius: {{ block.settings.button_radius }}px;
+    background: {{ block.settings.accent_color }};
+    color: #241f16;
+    font-family: {{ block.settings.sans_font.family }}, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .ai-arabic-hero__button-{{ ai_gen_id }}:hover,
+  .ai-arabic-hero__button-{{ ai_gen_id }}:focus-visible {
+    background: #a98735;
+    border-color: #a98735;
+  }
+
+  .ai-arabic-hero__media-{{ ai_gen_id }} {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 320px;
+  }
+
+  .ai-arabic-hero__media-{{ ai_gen_id }} img,
+  .ai-arabic-hero__placeholder-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    max-width: 680px;
+    aspect-ratio: 1.25;
+    object-fit: contain;
+  }
+
+  .ai-arabic-hero__placeholder-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(36, 31, 22, 0.14);
+    background: rgba(255, 255, 255, 0.32);
+    color: rgba(36, 31, 22, 0.55);
+  }
+
+  .ai-arabic-hero__placeholder-{{ ai_gen_id }} svg { width: 70%; height: 70%; }
+
+  @media screen and (max-width: 749px) {
+    .ai-arabic-hero__inner-{{ ai_gen_id }} { grid-template-columns: 1fr; min-height: auto; padding: 48px 24px 36px; }
+    .ai-arabic-hero__content-{{ ai_gen_id }} { text-align: center; margin: 0 auto; }
+    .ai-arabic-hero__ornament-{{ ai_gen_id }} { margin: 18px auto 24px; }
+    .ai-arabic-hero__media-{{ ai_gen_id }} { min-height: 220px; order: -1; }
+  }
+{% endstyle %}
+
+<div class="ai-arabic-hero-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-arabic-hero__inner-{{ ai_gen_id }}">
+    <div class="ai-arabic-hero__content-{{ ai_gen_id }}">
+      <p class="ai-arabic-hero__brand-{{ ai_gen_id }}">{{ block.settings.brand_name }}</p>
+      <div class="ai-arabic-hero__ornament-{{ ai_gen_id }}" aria-hidden="true"><span>◆</span></div>
+      <h1 class="ai-arabic-hero__heading-{{ ai_gen_id }}" dir="rtl">{{ block.settings.headline_arabic }}<span dir="ltr">{{ block.settings.headline_english }}</span></h1>
+      {% if block.settings.button_link != blank %}<a class="ai-arabic-hero__button-{{ ai_gen_id }}" href="{{ block.settings.button_link }}">{{ block.settings.button_label }}</a>{% endif %}
+    </div>
+    <div class="ai-arabic-hero__media-{{ ai_gen_id }}">
+      {% if block.settings.shoe_image %}
+        <img src="{{ block.settings.shoe_image | image_url: width: 1200 }}" alt="{{ block.settings.shoe_image.alt | escape }}" loading="lazy" width="{{ block.settings.shoe_image.width }}" height="{{ block.settings.shoe_image.height }}">
+      {% else %}
+        <div class="ai-arabic-hero__placeholder-{{ ai_gen_id }}">{{ 'product-apparel-1' | placeholder_svg_tag }}</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Arabic luxury hero",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "brand_name", "label": "Brand name", "default": "808 Store" },
+    { "type": "text", "id": "headline_arabic", "label": "Arabic headline", "default": "جواتي رجالي" },
+    { "type": "text", "id": "headline_english", "label": "English headline", "default": "Men's Shoes" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop Now" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "image_picker", "id": "shoe_image", "label": "Shoe image" },
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "desktop_width_percent", "label": "Desktop width", "min": 50, "max": 100, "step": 5, "unit": "%", "default": 100 },
+    { "type": "range", "id": "hero_height", "label": "Hero height", "min": 400, "max": 900, "step": 50, "unit": "px", "default": 650 },
+    { "type": "range", "id": "pattern_opacity", "label": "Pattern opacity", "min": 0, "max": 20, "step": 1, "unit": "%", "default": 5 },
+    { "type": "header", "content": "Style" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#FAF6F0" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#241F16" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#C9A84C" },
+    { "type": "font_picker", "id": "serif_font", "label": "Serif font", "default": "serif" },
+    { "type": "font_picker", "id": "sans_font", "label": "Sans font", "default": "sans-serif" },
+    { "type": "range", "id": "button_radius", "label": "Button radius", "min": 0, "max": 30, "step": 2, "unit": "px", "default": 0 }
+  ],
+  "presets": [{ "name": "Arabic luxury hero" }],
+  "tag": null,
+  "class": "arabic-luxury-hero"
+}
+{% endschema %}

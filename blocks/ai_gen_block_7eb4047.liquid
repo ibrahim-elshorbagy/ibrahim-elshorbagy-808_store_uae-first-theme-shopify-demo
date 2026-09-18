@@ -1,0 +1,403 @@
+{% doc %}
+  @prompt
+    can you make this desgin but into sohpify <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>808 Store - Dynamic Diagonal</title>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+        <style>
+            :root { --brand-brown: #8B5A2B; --brand-offwhite: #FDFBF7; --brand-charcoal: #2C2C2C; }
+            body { margin: 0; font-family: 'Inter', sans-serif; background-color: var(--brand-offwhite); color: var(--brand-charcoal); }
+            .hero { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; }
+            .diagonal-bg { position: absolute; top: 0; right: 0; width: 55%; height: 100%; background-color: var(--brand-charcoal); clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%); z-index: 1; }
+            .hero-content { flex: 1; z-index: 3; padding: 0 8%; max-width: 500px; }
+            .logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 600; letter-spacing: 1px; margin-bottom: 2rem; }
+            .logo span { font-size: 0.7rem; display: block; letter-spacing: 3px; font-family: 'Inter', sans-serif; font-weight: 400; margin-top: -5px; }
+            h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; line-height: 1.1; margin-bottom: 1.5rem; }
+            p { font-size: 1.1rem; line-height: 1.6; color: #666; margin-bottom: 2.5rem; }
+            .btn { display: inline-block; background-color: var(--brand-charcoal); color: #fff; padding: 1rem 2.5rem; text-decoration: none; font-weight: 600; border-radius: 4px; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; }
+            .btn:hover { background-color: var(--brand-brown); }
+            .hero-image { flex: 1; z-index: 2; display: flex; justify-content: center; align-items: center; position: relative; }
+            .hero-image img { width: 140%; max-width: 800px; transform: rotate(-20deg) translateX(-20px); filter: drop-shadow(0 40px 50px rgba(0,0,0,0.4)); }
+            @media (max-width: 900px) { 
+                .hero { flex-direction: column; text-align: center; padding: 4rem 5%; } 
+                .diagonal-bg { width: 100%; height: 40%; top: auto; bottom: 0; clip-path: polygon(0 20%, 100% 0, 100% 100%, 0% 100%); } 
+                .hero-image img { width: 100%; margin-top: 3rem; transform: rotate(-5deg); } 
+            }
+        </style>
+    </head>
+    <body>
+        <section class="hero">
+            <div class="diagonal-bg"></div>
+            <div class="hero-content">
+                <div class="logo">808 Store<span>MEN SHOES</span></div>
+                <h1>Premium Styles,<br>Everyday Class.</h1>
+                <p>Discover the finest collection of men's shoes in the UAE. Crafted for comfort, designed for distinction.</p>
+                <a href="#" class="btn">Shop Now</a>
+            </div>
+            <div class="hero-image">
+                <img src="https://i.ibb.co/6Pq2Q7Z/shoe.png" alt="808 Store Suede Loafer">
+            </div>
+        </section>
+    </body>
+    </html>
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-diagonal-hero-{{ ai_gen_id }} {
+    display: block;
+    position: relative;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    min-height: {{ block.settings.hero_height }}px;
+    overflow: hidden;
+    background: {{ block.settings.background_color }};
+    color: {{ block.settings.text_color }};
+  }
+
+  .ai-diagonal-hero-{{ ai_gen_id }}__shape {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    right: 0;
+    width: 58%;
+    height: 100%;
+    background: {{ block.settings.accent_color }};
+    clip-path: polygon(18% 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .ai-diagonal-hero-{{ ai_gen_id }}__inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: center;
+    min-height: {{ block.settings.hero_height }}px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 64px 7%;
+    gap: 24px;
+  }
+
+  .ai-diagonal-hero-{{ ai_gen_id }}__content {
+    max-width: 540px;
+  }
+
+  .ai-diagonal-hero-{{ ai_gen_id }}__eyebrow {
+    margin: 0 0 28px;
+    font-family: {{ settings.type_subheading_font.family }}, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .ai-diagonal-hero-{{ ai_gen_id }}__heading {
+    margin: 0 0 22px;
+    font-family: {{ settings.type_heading_font.family }}, sans-serif;
+    font-size: clamp(42px, 5vw, 72px);
+    line-height: 1.03;
+    letter-spacing: -0.04em;
+    color: {{ block.settings.heading_color }};
+  }
+
+  .ai-diagonal-hero-{{ ai_gen_id }}__text {
+    max-width: 470px;
+    margin: 0 0 34px;
+    font-family: {{ settings.type_body_font.family }}, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    color: {{ block.settings.muted_text_color }};
+  }
+
+  .ai-diagonal-hero-{{ ai_gen_id }}__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    padding: 0 32px;
+    border-radius: {{ settings.button_border_radius_primary }}px;
+    background: {{ block.settings.button_color }};
+    color: {{ block.settings.button_text_color }};
+    font-family: {{ settings.type_body_font.family }}, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background-color 180ms ease, color 180ms ease;
+  }
+
+  .ai-diagonal-hero-{{ ai_gen_id }}__button:hover,
+  .ai-diagonal-hero-{{ ai_gen_id }}__button:focus-visible {
+    background: {{ block.settings.button_hover_color }};
+    color: {{ block.settings.button_hover_text_color }};
+  }
+
+  .ai-diagonal-hero-{{ ai_gen_id }}__media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  .ai-diagonal-hero-{{ ai_gen_id }}__image {
+    display: block;
+    width: min(125%, 760px);
+    max-width: none;
+    transform: rotate(-14deg) translateX(-4%);
+    filter: drop-shadow(0 32px 34px rgba(0, 0, 0, 0.3));
+  }
+
+  .ai-diagonal-hero-{{ ai_gen_id }}__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: min(100%, 620px);
+    aspect-ratio: 1.25;
+    color: {{ block.settings.placeholder_color }};
+  }
+
+  .ai-diagonal-hero-{{ ai_gen_id }}__placeholder svg {
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+  }
+
+  .ai-diagonal-hero-{{ ai_gen_id }}__empty-state {
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    width: 90%;
+    transform: translateX(-50%);
+    color: {{ block.settings.placeholder_color }};
+    font-size: 13px;
+    text-align: center;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-diagonal-hero-{{ ai_gen_id }} {
+      min-height: auto;
+    }
+
+    .ai-diagonal-hero-{{ ai_gen_id }}__shape {
+      top: auto;
+      bottom: 0;
+      width: 100%;
+      height: 42%;
+      clip-path: polygon(0 18%, 100% 0, 100% 100%, 0 100%);
+    }
+
+    .ai-diagonal-hero-{{ ai_gen_id }}__inner {
+      display: flex;
+      flex-direction: column;
+      min-height: auto;
+      padding: 56px 24px 44px;
+      text-align: center;
+    }
+
+    .ai-diagonal-hero-{{ ai_gen_id }}__content {
+      max-width: 620px;
+    }
+
+    .ai-diagonal-hero-{{ ai_gen_id }}__eyebrow {
+      margin-bottom: 22px;
+    }
+
+    .ai-diagonal-hero-{{ ai_gen_id }}__heading {
+      font-size: clamp(40px, 12vw, 60px);
+    }
+
+    .ai-diagonal-hero-{{ ai_gen_id }}__text {
+      margin-right: auto;
+      margin-left: auto;
+      font-size: 16px;
+    }
+
+    .ai-diagonal-hero-{{ ai_gen_id }}__image {
+      width: 112%;
+      transform: rotate(-7deg) translateX(-2%);
+    }
+  }
+{% endstyle %}
+
+<div class="ai-diagonal-hero-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-diagonal-hero-{{ ai_gen_id }}__shape"></div>
+  <div class="ai-diagonal-hero-{{ ai_gen_id }}__inner">
+    <div class="ai-diagonal-hero-{{ ai_gen_id }}__content">
+      {% if block.settings.eyebrow != blank %}
+        <p class="ai-diagonal-hero-{{ ai_gen_id }}__eyebrow">{{ block.settings.eyebrow | escape }}</p>
+      {% endif %}
+      <h1 class="ai-diagonal-hero-{{ ai_gen_id }}__heading">{{ block.settings.heading | escape | newline_to_br }}</h1>
+      {% if block.settings.description != blank %}
+        <div class="ai-diagonal-hero-{{ ai_gen_id }}__text">{{ block.settings.description }}</div>
+      {% endif %}
+      {% if block.settings.button_label != blank and block.settings.button_link != blank %}
+        <a class="ai-diagonal-hero-{{ ai_gen_id }}__button" href="{{ block.settings.button_link }}">
+          {{ block.settings.button_label | escape }}
+        </a>
+      {% endif %}
+    </div>
+    <div class="ai-diagonal-hero-{{ ai_gen_id }}__media">
+      {% if block.settings.image != blank %}
+        <img
+          class="ai-diagonal-hero-{{ ai_gen_id }}__image"
+          src="{{ block.settings.image | image_url: width: 1600 }}"
+          alt="{{ block.settings.image.alt | default: block.settings.heading | escape }}"
+          width="{{ block.settings.image.width }}"
+          height="{{ block.settings.image.height }}"
+          loading="eager"
+        >
+      {% else %}
+        <div class="ai-diagonal-hero-{{ ai_gen_id }}__placeholder">
+          {{ 'image' | placeholder_svg_tag }}
+          <span class="ai-diagonal-hero-{{ ai_gen_id }}__empty-state">Add a hero image to complete this design</span>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Diagonal shoe hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "808 Store · Men shoes"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Premium styles, everyday class."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Discover the finest collection of men's shoes in the UAE. Crafted for comfort, designed for distinction.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero image"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "hero_height",
+      "label": "Hero height",
+      "min": 480,
+      "max": 900,
+      "step": 20,
+      "unit": "px",
+      "default": 680
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FDFBF7"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Diagonal panel",
+      "default": "#2C2C2C"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#2C2C2C"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#2C2C2C"
+    },
+    {
+      "type": "color",
+      "id": "muted_text_color",
+      "label": "Description",
+      "default": "#555555"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button",
+      "default": "#2C2C2C"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_color",
+      "label": "Button hover",
+      "default": "#8B5A2B"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Hover text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "placeholder_color",
+      "label": "Placeholder",
+      "default": "#777777"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Diagonal shoe hero"
+    }
+  ],
+  "tag": null,
+  "class": "diagonal-shoe-hero-block"
+}
+{% endschema %}

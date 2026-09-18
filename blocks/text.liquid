@@ -1,0 +1,149 @@
+{% stylesheet %}
+  .text-block {
+    color: var(--color, inherit);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.text",
+  "tag": null,
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "t:settings.content",
+      "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+    },
+    {
+      "type": "select",
+      "id": "type_preset",
+      "label": "t:settings.type_preset",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.default"
+        },
+        {
+          "value": "paragraph",
+          "label": "t:options.paragraph"
+        },
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        }
+      ],
+      "default": "paragraph",
+      "info": "t:info.edit_presets_in_theme_settings"
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "t:settings.color",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "t:settings.alignment",
+      "options": [
+        {
+          "value": "start",
+          "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "end",
+          "label": "t:options.right"
+        }
+      ],
+      "default": "start"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.text",
+      "category": "t:categories.text"
+    }
+  ]
+}
+{% endschema %}
+
+<div
+  class="text-block spacing-style {{ block.settings.type_preset }}"
+  style="
+    {% render 'spacing-style', settings: block.settings %}
+    text-align: {{ block.settings.text_align }};
+    {% if block.settings.color != blank %}--color: {{ block.settings.color }};{% endif %}
+  "
+  {{ block.shopify_attributes }}
+>
+  {{ block.settings.content }}
+</div>
