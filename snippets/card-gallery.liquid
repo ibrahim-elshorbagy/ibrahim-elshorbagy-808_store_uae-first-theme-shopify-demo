@@ -1,8 +1,5 @@
 {%- doc -%}
   Displays product images in a carousel.
-  Settings allow for a full slideshow, showing only the first image, or showing the second image when hovering.
-  Note: When the product card itself is in a carousel layout, the card-gallery's carousel is disabled with JavaScript.
-
   @param [children] - Additional content rendered below the card gallery
   @param [section] - The section object the snippet is rendered in
   @param [block] - The block object the snippet is rendered in
@@ -81,15 +78,6 @@
   data-image-ratio="{{ block_settings.image_ratio }}"
   {{ block.shopify_attributes }}
 >
-  {%- unless product == blank -%}
-    <div class="cg-hover-top">
-      <b class="cg-hover-top__title">{{ product.title | escape }}</b>
-      <span class="cg-hover-top__price">
-        {{ product.price | money }}
-      </span>
-    </div>
-  {%- endunless -%}
-
   {%- if product.media.size > 0 -%}
     <a
       class="contents"
@@ -99,7 +87,6 @@
     >
       {% liquid
         assign featured_media = product.featured_media
-
         assign featured_media_loading = 'lazy'
         assign featured_media_sizes = 'auto, ' | append: image_sizes
         if section.index == null or section.index < 5
@@ -112,7 +99,6 @@
         if constrain_to_viewport
           assign media_class_suffix = ' constrain-height'
         endif
-
         assign featured_media_class = media_class | replace: '[media_type]', featured_media.media_type | append: media_class_suffix
       %}
       {%- if product.media.size == 1 -%}
@@ -131,7 +117,6 @@
         {% liquid
           assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src'
           assign generic_media_size = product.media.size | minus: variant_images.size
-
           assign other_media = product.media | reject: 'src', product.featured_media
           assign media_list_to_show = product.featured_media | concat: other_media
 
@@ -152,7 +137,6 @@
               assign attributes = ''
               if variant_images contains media.src
                 assign attributes = 'variant-image'
-
                 if forloop.first == false
                   assign hidden = true
                 endif
@@ -203,11 +187,7 @@
     </a>
   {% elsif product != blank and product.media.size == 0 %}
     <div class="product-card-gallery__title-placeholder">
-      <a
-        class="contents"
-        ref="cardGalleryLink"
-        href="{{ product.url }}"
-      >
+      <a class="contents" ref="cardGalleryLink" href="{{ product.url }}">
         <span class="title-text">{{- product.title -}}</span>
       </a>
     </div>
@@ -228,11 +208,21 @@
   {%- endif -%}
 
   {%- unless product == blank -%}
+    {%- assign first_variant = product.selected_or_first_available_variant -%}
     <div class="cg-hover-bottom">
-      <b class="cg-hover-bottom__title">{{ product.title | escape }}</b>
-      <a href="{{ product.url }}" class="cg-hover-bottom__btn">
-        {{- 'actions.add_to_cart' | t | default: 'Add to bag' -}}
-      </a>
+      {%- if product.available -%}
+        <form action="/cart/add" method="post" class="cg-atc-form">
+          <input type="hidden" name="id" value="{{ first_variant.id }}">
+          <input type="hidden" name="quantity" value="1">
+          <button type="submit" class="cg-hover-bottom__btn">
+            {{ 'products.product.add_to_cart' | t | default: 'Add to bag' }}
+          </button>
+        </form>
+      {%- else -%}
+        <span class="cg-hover-bottom__btn cg-hover-bottom__btn--soldout">
+          {{ 'products.product.sold_out' | t | default: 'Sold out' }}
+        </span>
+      {%- endif -%}
     </div>
   {%- endunless -%}
 
@@ -252,34 +242,25 @@
     container-name: card-gallery-container;
   }
 
-  /* ── Hover top bar: title + price ── */
-  .cg-hover-top {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 3;
-    padding: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    color: #fff;
-    text-shadow: 0 1px 8px rgba(0,0,0,.5);
-    font-family: Arial, sans-serif;
-    font-size: 13px;
-    pointer-events: none;
+  /* Hide quick-add cart icon */
+  .card-gallery quick-add-component,
+  .card-gallery .quick-add,
+  .card-gallery .quick-add__button,
+  .card-gallery [class*='quick-add'] {
+    display: none !important;
   }
 
-  .cg-hover-top__title {
-    font-weight: 700;
+  /* Image zoom on hover */
+  .product-media-container img,
+  .product-media-container video {
+    transition: transform .5s ease;
+  }
+  .card-gallery:hover .product-media-container img,
+  .card-gallery:hover .product-media-container video {
+    transform: scale(1.06);
   }
 
-  .cg-hover-top__price {
-    font-weight: 500;
-    white-space: nowrap;
-  }
-
-  /* ── Hover bottom reveal: full title + CTA ── */
+  /* Bottom hover reveal */
   .cg-hover-bottom {
     position: absolute;
     bottom: 0;
@@ -288,8 +269,6 @@
     z-index: 3;
     padding: 36px 18px 18px;
     background: linear-gradient(transparent, rgba(0,0,0,.78));
-    color: #fff;
-    font-family: Arial, sans-serif;
     opacity: 0;
     transform: translateY(12px);
     transition: opacity .35s, transform .35s;
@@ -303,11 +282,8 @@
     pointer-events: auto;
   }
 
-  .cg-hover-bottom__title {
-    display: block;
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 10px;
+  .cg-atc-form {
+    margin: 0;
   }
 
   .cg-hover-bottom__btn {
@@ -319,26 +295,20 @@
     padding: 11px 22px;
     border-radius: 100px;
     text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
     transition: opacity .2s;
-    pointer-events: auto;
   }
 
-  .cg-hover-bottom__btn:hover {
-    opacity: 0.85;
+  .cg-hover-bottom__btn:hover { opacity: 0.85; }
+
+  .cg-hover-bottom__btn--soldout {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 
-  /* Image zoom on hover */
-  .card-gallery:hover .product-media-container img,
-  .card-gallery:hover .product-media-container video {
-    transform: scale(1.06);
-  }
-
-  .product-media-container img,
-  .product-media-container video {
-    transition: transform .5s ease;
-  }
-
-  /* Touch devices — always show bottom overlay */
+  /* Touch devices — always show */
   @media (hover: none) {
     .cg-hover-bottom {
       opacity: 1;
@@ -347,20 +317,19 @@
     }
   }
 
-  @container (max-width: 70px) {
-    .card-gallery:hover .quick-add__button {
-      display: none;
+  /* 4 columns on desktop */
+  @media screen and (min-width: 750px) {
+    .product-grid {
+      grid-template-columns: repeat(4, 1fr) !important;
     }
   }
 
-  .card-gallery__placeholder svg {
-    height: 100%;
-    width: 100%;
+  @container (max-width: 70px) {
+    .card-gallery:hover .quick-add__button { display: none; }
   }
 
-  .card-gallery svg {
-    aspect-ratio: var(--gallery-aspect-ratio, var(--ratio));
-  }
+  .card-gallery__placeholder svg { height: 100%; width: 100%; }
+  .card-gallery svg { aspect-ratio: var(--gallery-aspect-ratio, var(--ratio)); }
 
   .product-card-gallery__title-placeholder {
     padding: var(--padding-md);
@@ -382,49 +351,14 @@
     overflow: hidden;
   }
 
-  .card-gallery[data-image-ratio='landscape'] .product-card-gallery__title-placeholder .title-text {
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-  }
-
-  @media screen and (min-width: 750px) {
-    .product-grid[data-product-card-size='extra-large'] .product-card-gallery__title-placeholder {
-      padding: var(--padding-3xl);
-      font-size: var(--font-size--3xl);
-    }
-    .product-grid[data-product-card-size='large'] .product-card-gallery__title-placeholder {
-      padding: var(--padding-2xl);
-      font-size: var(--font-size--2xl);
-    }
-    .product-grid[data-product-card-size='medium'] .product-card-gallery__title-placeholder {
-      padding: var(--padding-xl);
-      font-size: var(--font-size--xl);
-    }
-    .product-grid[data-product-card-size='small'] .product-card-gallery__title-placeholder {
-      padding: var(--padding-sm);
-      font-size: var(--font-size--lg);
-    }
-  }
-
-  @media screen and (max-width: 749px) {
-    .product-card-gallery__title-placeholder {
-      font-size: var(--font-size--xl);
-      padding: var(--padding-md);
-    }
-  }
-
   [product-grid-view='zoom-out'] .card-gallery .product-card-gallery__title-placeholder {
     padding: var(--padding-xs) !important;
     font-size: var(--font-size--xs);
   }
 
-  [product-grid-view='zoom-out'] .card-gallery .slideshow-control {
-    min-width: auto;
-  }
+  [product-grid-view='zoom-out'] .card-gallery .slideshow-control { min-width: auto; }
 
-  ul[product-grid-view='zoom-out'] .product-grid__card .card-gallery {
-    display: block;
-  }
+  ul[product-grid-view='zoom-out'] .product-grid__card .card-gallery { display: block; }
 
   [product-grid-view='zoom-out']
     .card-gallery
@@ -432,19 +366,14 @@
     display: none;
   }
 
-  ul[product-grid-view='zoom-out'] .card-gallery > img {
-    display: block;
-  }
+  ul[product-grid-view='zoom-out'] .card-gallery > img { display: block; }
 
   .card-gallery slideshow-arrows .slideshow-control {
     padding-inline: var(--padding-xl);
 
     @container (max-width: 249px) {
       padding-inline: 0 var(--padding-sm);
-
-      [dir='rtl'] & {
-        padding-inline: var(--padding-sm) 0;
-      }
+      [dir='rtl'] & { padding-inline: var(--padding-sm) 0; }
     }
   }
 
@@ -454,9 +383,6 @@
       slideshow-slide[aria-hidden='false'] + slideshow-slide
     ) {
     content-visibility: auto;
-
-    slideshow-component[actioned] & {
-      content-visibility: visible;
-    }
+    slideshow-component[actioned] & { content-visibility: visible; }
   }
 {% endstylesheet %}
