@@ -78,6 +78,14 @@
   data-image-ratio="{{ block_settings.image_ratio }}"
   {{ block.shopify_attributes }}
 >
+
+  {%- unless product == blank -%}
+    {%- assign first_variant = product.selected_or_first_available_variant -%}
+    <div class="cg-hover-top">
+      <span class="cg-hover-top__price">{{ first_variant.price | money }}</span>
+    </div>
+  {%- endunless -%}
+
   {%- if product.media.size > 0 -%}
     <a
       class="contents"
@@ -210,6 +218,7 @@
   {%- unless product == blank -%}
     {%- assign first_variant = product.selected_or_first_available_variant -%}
     <div class="cg-hover-bottom">
+      <b class="cg-hover-bottom__title">{{ product.title | escape }}</b>
       {%- if product.available -%}
         <form action="/cart/add" method="post" class="cg-atc-form">
           <input type="hidden" name="id" value="{{ first_variant.id }}">
@@ -260,7 +269,27 @@
     transform: scale(1.06);
   }
 
-  /* Bottom hover reveal */
+  /* Price — top right */
+  .cg-hover-top {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 3;
+    padding: 12px 14px;
+    pointer-events: none;
+  }
+
+  .cg-hover-top__price {
+    background: rgba(0,0,0,.45);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 5px 10px;
+    border-radius: 100px;
+    font-family: inherit;
+  }
+
+  /* Bottom hover: name + add to cart */
   .cg-hover-bottom {
     position: absolute;
     bottom: 0;
@@ -282,9 +311,16 @@
     pointer-events: auto;
   }
 
-  .cg-atc-form {
-    margin: 0;
+  .cg-hover-bottom__title {
+    display: block;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    font-family: inherit;
   }
+
+  .cg-atc-form { margin: 0; }
 
   .cg-hover-bottom__btn {
     display: inline-block;
@@ -308,7 +344,7 @@
     cursor: not-allowed;
   }
 
-  /* Touch devices — always show */
+  /* Touch devices — always show bottom */
   @media (hover: none) {
     .cg-hover-bottom {
       opacity: 1;
@@ -357,7 +393,6 @@
   }
 
   [product-grid-view='zoom-out'] .card-gallery .slideshow-control { min-width: auto; }
-
   ul[product-grid-view='zoom-out'] .product-grid__card .card-gallery { display: block; }
 
   [product-grid-view='zoom-out']
