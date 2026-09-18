@@ -1,0 +1,80 @@
+{% doc %}
+  @prompt
+    Create a complete NEW product page section for a premium men's luxury footwear brand. Everything must use real Shopify Liquid data — no hardcoded or placeholder content.
+    
+    LAYOUT:
+    - Two column desktop layout: left column 55% for image gallery, right column 45% for product info
+    - Single column on mobile, images on top
+    - Cream/ivory background (#F5F2EE), charcoal text (#2C2C2C), gold accents (#C9A84C)
+    - Max width 1400px centered, 60px side padding desktop, 20px mobile
+    
+    LEFT COLUMN - IMAGE GALLERY:
+    - Main image using product.featured_image, aspect ratio 4:5, object-fit cover
+    - Thumbnail strip below showing all product.images, each 72x90px, border-radius 4px
+    - Clicking thumbnail swaps main image using JavaScript
+    - Sticky on desktop as user scrolls
+    
+    RIGHT COLUMN - PRODUCT INFO:
+    - Vendor: {{ product.vendor }} in small gold uppercase text
+    - Title: {{ product.title }} large serif font 32px
+    - Price: {{ product.selected_or_first_available_variant.price | money }}, show compare_at_price struck through if on sale
+    - Variant picker: loop through product.variants, show as pill buttons, clicking updates hidden form input
+    - Quantity stepper: minus/plus buttons with number input, minimum 1
+    - ADD TO CART: real working form with action="/cart/add" method="post", hidden input name="id" with variant id, quantity input, submit button with name="add"
+    - Accordions for: product.description, Shipping and Returns, Size and Fit — smooth open/close animation
+    - Trust badges row: Free Shipping, Easy Returns, Authenticity Guaranteed
+    
+    All JavaScript must be inline and functional. All data must come from Shopify Liquid objects., delete section of  Shipping and returns and Size and fill And make the deesciotnio accordion, see the section of features make it more better look
+    , on the section you have here see the section of features make it more better look
+    , on the section you created here
+    rember you make the desciortion come from the CRUD of shopify NOT FUCKING HARDE CODEDE WRIE, on the section you created here again on the section you made
+    the Product Deatils please make it come from product info okey ?, see see the sction of
+    ---
+    Product details
+    A lace-up sneaker in beige with a white ridged sole. Light, soft and easy to match with everyday clothes.
+    
+    Lace-up fit with soft upper
+    Beige colour with white ridged sole
+    Comfortable for long daily walks
+    Delivery available across the UAE
+    ----
+    
+    
+    it's data must come from product info NOT A HARD CODED DATA, i need edit 
+    see see the sction of
+    ---
+    Product details
+    A lace-up sneaker in beige with a white ridged sole. Light, soft and easy to match with everyday clothes.
+    
+    Lace-up fit with soft upper
+    Beige colour with white ridged sole
+    Comfortable for long daily walks
+    Delivery available across the UAE
+    ----
+    
+    
+    it's data must come from product info NOT A HARD CODED DATA, where is the product show ?, i need edit deleted section of  Product details
+    A lace-up sneaker in beige with a white ridged sole. Light, soft and easy to match with everyday clothes.
+    
+    Lace-up fit with soft upper
+    Beige colour with white ridged sole
+    Comfortable for long daily walks
+    Delivery available across the UAE, delete section of  Shipping and returns and Size and fill And make the deesciotnio accordion
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+{% style %}
+  .ai-description-accordion-{{ ai_gen_id }} { display: block; width: {{ block.settings.desktop_width_percent }}%; max-width: 100%; color: #2C2C2C; background: #F5F2EE; }
+  .ai-description-accordion-{{ ai_gen_id }} details { border-top: 1px solid #C9A84C; border-bottom: 1px solid #C9A84C; }
+  .ai-description-accordion-{{ ai_gen_id }} summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; cursor: pointer; padding: 18px 0; font-family: Georgia, serif; font-size: 20px; list-style: none; }
+  .ai-description-accordion-{{ ai_gen_id }} summary::-webkit-details-marker { display: none; }
+  .ai-description-accordion-{{ ai_gen_id }} summary::after { content: '+'; color: #C9A84C; font-family: Arial, sans-serif; font-size: 24px; line-height: 1; }
+  .ai-description-accordion-{{ ai_gen_id }} details[open] summary::after { content: '−'; }
+  .ai-description-accordion-{{ ai_gen_id }}__content { padding: 0 0 22px; font-size: 15px; line-height: 1.7; }
+  .ai-description-accordion-{{ ai_gen_id }}__content p { margin: 0 0 12px; }
+  .ai-description-accordion-{{ ai_gen_id }}__content ul, .ai-description-accordion-{{ ai_gen_id }}__content ol { margin: 0 0 12px; padding-left: 22px; }
+  @media screen and (max-width: 749px) { .ai-description-accordion-{{ ai_gen_id }} { width: 100%; } }
+{% endstyle %}
+{% if product.description != blank %}<section class="ai-description-accordion-{{ ai_gen_id }}" {{ block.shopify_attributes }}><details><summary>{{ block.settings.heading }}</summary><div class="ai-description-accordion-{{ ai_gen_id }}__content">{{ product.description }}</div></details></section>{% endif %}
+{% schema %}
+{"name":"Description accordion","settings":[{"type":"text","id":"heading","label":"Heading","default":"Product details"},{"type":"range","id":"desktop_width_percent","label":"Desktop width","min":50,"max":100,"step":5,"unit":"%","default":100}],"presets":[{"name":"Description accordion"}],"tag":null,"class":"product-description-accordion-block"}
+{% endschema %}
