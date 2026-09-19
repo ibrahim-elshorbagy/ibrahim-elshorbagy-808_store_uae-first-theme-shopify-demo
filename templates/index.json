@@ -61,7 +61,6 @@
       "block_order": [
         "ai_gen_block_4e6c284_7DKjcE"
       ],
-      "disabled": true,
       "name": "Carsoual",
       "settings": {
         "content_direction": "column",
@@ -230,6 +229,8 @@
         "heading_font": "inter_n7",
         "heading_size": 52,
         "mobile_heading_size": 34,
+        "card_width": 280,
+        "mobile_card_width": 220,
         "image_height": 280,
         "mobile_image_height": 300,
         "card_gap": 18,
