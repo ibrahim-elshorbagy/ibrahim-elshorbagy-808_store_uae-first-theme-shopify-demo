@@ -46,6 +46,7 @@
 
 <script>
   window['luxuryVariants_{{ ai_gen_id }}'] = {{ product.variants | json }};
+  window['luxuryMoneyFormat_{{ ai_gen_id }}'] = {{ shop.money_format | json }};
 </script>
 
 <luxury-product-{{ ai_gen_id }} class="ai-luxury-product-{{ ai_gen_id }}" {{ section.shopify_attributes }}>
@@ -192,6 +193,7 @@
 <script>
 (function () {
   const ALL_VARIANTS = window['luxuryVariants_{{ ai_gen_id }}'] || [];
+  const MONEY_FORMAT = window['luxuryMoneyFormat_{{ ai_gen_id }}'] || '{{amount}}';
 
   class LuxuryProduct extends HTMLElement {
     connectedCallback() {
@@ -261,10 +263,14 @@
     }
 
     _money(cents) {
-      return (cents / 100).toLocaleString('en-AE', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      }) + ' AED';
+      const amount        = (cents / 100).toFixed(2);
+      const amountNoDec   = String(Math.floor(cents / 100));
+      const amountComma   = amount.replace('.', ',');
+      return MONEY_FORMAT
+        .replace('{{amount}}', amount)
+        .replace('{{amount_no_decimals}}', amountNoDec)
+        .replace('{{amount_with_comma_separator}}', amountComma)
+        .replace('{{amount_no_decimals_with_comma_separator}}', amountNoDecComma);
     }
   }
 
