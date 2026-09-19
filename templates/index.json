@@ -32,6 +32,56 @@
         "image_placeholder_color": "#6b4a35"
       }
     },
+    "masonry_product_carousel_jyDdWr": {
+      "type": "masonry-product-carousel",
+      "name": "Masonry product carousel",
+      "settings": {
+        "collection": "home",
+        "product_limit": 12,
+        "heading": "Uneven, like real life.",
+        "description": "Different heights. Same quality.",
+        "heading_font": "inter_n7",
+        "heading_size": 52,
+        "mobile_heading_size": 34,
+        "image_height": 280,
+        "mobile_image_height": 300,
+        "card_gap": 18,
+        "card_radius": 18,
+        "vertical_padding": 60,
+        "desktop_width_percent": 100,
+        "background_color": "#f4ead8",
+        "card_color": "#fffdf6",
+        "text_color": "#3a2a1c"
+      }
+    },
+    "about_brand_split_XmtqJe": {
+      "type": "about-brand-split",
+      "name": "About brand split",
+      "settings": {
+        "brand_name": "808 Store UAE",
+        "logo": "shopify://shop_images/logo.webp",
+        "heading_before": "BUILT TO",
+        "heading_accent": "FLOAT.",
+        "button_text": "Shop Collection",
+        "button_link": "",
+        "description": "808 Store UAE — men's grey sneakers with a white ridged sole. Light for metro days, sharp for nights. Premium styles, everyday class.",
+        "photo": "shopify://shop_images/vertical.jpg",
+        "photo_alt": "Grey sneakers floating",
+        "desktop_width_percent": 100,
+        "section_height": 680,
+        "button_background": "#c6ff00",
+        "button_text_color": "#111111",
+        "button_radius": 0,
+        "background_color": "#201812",
+        "text_color": "#ffffff",
+        "muted_text_color": "#b8b8b8",
+        "accent_color": "#c6ff00",
+        "image_background_color": "#222222",
+        "placeholder_color": "#333333",
+        "heading_font": "inter_n7",
+        "body_font": "inter_n4"
+      }
+    },
     "1789682764d266a6ce": {
       "type": "_blocks",
       "blocks": {
@@ -92,62 +142,12 @@
         "padding-block-start": 0,
         "padding-block-end": 0
       }
-    },
-    "masonry_product_carousel_zdBqqj": {
-      "type": "masonry-product-carousel",
-      "name": "Masonry product carousel",
-      "settings": {
-        "collection": "home",
-        "product_limit": 12,
-        "heading": "Uneven, like real life.",
-        "description": "Different heights. Same quality.",
-        "heading_font": "inter_n7",
-        "heading_size": 52,
-        "mobile_heading_size": 34,
-        "image_height": 280,
-        "mobile_image_height": 300,
-        "card_gap": 18,
-        "card_radius": 18,
-        "vertical_padding": 60,
-        "desktop_width_percent": 100,
-        "background_color": "#f4ead8",
-        "card_color": "#fffdf6",
-        "text_color": "#3a2a1c"
-      }
-    },
-    "about_brand_split_XmtqJe": {
-      "type": "about-brand-split",
-      "name": "About brand split",
-      "settings": {
-        "brand_name": "808 Store UAE",
-        "logo": "shopify://shop_images/logo.webp",
-        "heading_before": "BUILT TO",
-        "heading_accent": "FLOAT.",
-        "button_text": "Shop Collection",
-        "button_link": "",
-        "description": "808 Store UAE — men's grey sneakers with a white ridged sole. Light for metro days, sharp for nights. Premium styles, everyday class.",
-        "photo": "shopify://shop_images/vertical.jpg",
-        "photo_alt": "Grey sneakers floating",
-        "desktop_width_percent": 100,
-        "section_height": 680,
-        "button_background": "#c6ff00",
-        "button_text_color": "#111111",
-        "button_radius": 0,
-        "background_color": "#201812",
-        "text_color": "#ffffff",
-        "muted_text_color": "#b8b8b8",
-        "accent_color": "#c6ff00",
-        "image_background_color": "#222222",
-        "placeholder_color": "#333333",
-        "heading_font": "inter_n7",
-        "body_font": "inter_n4"
-      }
     }
   },
   "order": [
     "leather_slash_hero_d7zWDH",
-    "1789682764d266a6ce",
-    "masonry_product_carousel_zdBqqj",
-    "about_brand_split_XmtqJe"
+    "masonry_product_carousel_jyDdWr",
+    "about_brand_split_XmtqJe",
+    "1789682764d266a6ce"
   ]
 }
