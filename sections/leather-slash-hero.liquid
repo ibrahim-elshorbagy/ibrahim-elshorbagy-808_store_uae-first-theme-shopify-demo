@@ -1,0 +1,109 @@
+{% assign ai_gen_id = section.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-leather-hero-{{ ai_gen_id }} { display:block; width:100%; max-width:100%; min-height:min(760px,100svh); background:{{ section.settings.background_color }}; color:{{ section.settings.text_color }}; }
+  .ai-leather-hero-{{ ai_gen_id }}__inner { display:grid; grid-template-columns:1fr 1fr; min-height:min(760px,100svh); }
+  .ai-leather-hero-{{ ai_gen_id }}__copy { display:flex; flex-direction:column; justify-content:center; align-items:flex-start; padding:64px 54px; }
+  .ai-leather-hero-{{ ai_gen_id }}__eyebrow { margin:0 0 22px; color:{{ section.settings.accent_color }}; font-family:{{ settings.type_accent_font.family }},sans-serif; font-size:11px; font-weight:700; letter-spacing:.35em; line-height:1.4; text-transform:uppercase; }
+  .ai-leather-hero-{{ ai_gen_id }}__heading { max-width:680px; margin:0; color:{{ section.settings.heading_color }}; font-family:{{ settings.type_heading_font.family }},sans-serif; font-size:clamp(52px,6.5vw,96px); font-weight:700; letter-spacing:-.045em; line-height:.92; text-transform:uppercase; }
+  .ai-leather-hero-{{ ai_gen_id }}__heading-accent { color:{{ section.settings.accent_color }}; }
+  .ai-leather-hero-{{ ai_gen_id }}__description { max-width:450px; margin:18px 0 0; color:{{ section.settings.muted_text_color }}; font-family:{{ settings.type_body_font.family }},sans-serif; font-size:14px; font-style:italic; line-height:1.6; }
+  .ai-leather-hero-{{ ai_gen_id }}__button { display:inline-flex; align-items:center; justify-content:center; min-height:52px; margin-top:26px; padding:15px 30px; background:{{ section.settings.accent_color }}; color:{{ section.settings.button_text_color }}; font-family:{{ settings.type_accent_font.family }},sans-serif; font-size:14px; font-weight:700; letter-spacing:.06em; text-decoration:none; text-transform:uppercase; }
+  .ai-leather-hero-{{ ai_gen_id }}__button:focus-visible { outline:3px solid {{ section.settings.focus_color }}; outline-offset:4px; }
+  .ai-leather-hero-{{ ai_gen_id }}__media { position:relative; min-height:400px; overflow:hidden; background:{{ section.settings.image_placeholder_color }}; clip-path:polygon(14% 0,100% 0,100% 100%,0 100%); }
+  .ai-leather-hero-{{ ai_gen_id }}__media img { display:block; width:100%; height:100%; min-height:min(760px,100svh); object-fit:cover; filter:sepia(.25) contrast(1.05); }
+  .ai-leather-hero-{{ ai_gen_id }}__placeholder { display:flex; align-items:center; justify-content:center; width:100%; height:100%; min-height:min(760px,100svh); }
+  .ai-leather-hero-{{ ai_gen_id }}__placeholder svg { width:55%; height:55%; opacity:.35; }
+  .ai-leather-hero-{{ ai_gen_id }}__empty-state { position:absolute; right:24px; bottom:24px; left:24px; color:{{ section.settings.muted_text_color }}; font-family:{{ settings.type_body_font.family }},sans-serif; font-size:13px; text-align:center; }
+  @media screen and (max-width:850px) {
+    .ai-leather-hero-{{ ai_gen_id }}__inner { grid-template-columns:1fr; }
+    .ai-leather-hero-{{ ai_gen_id }}__copy { min-height:520px; padding:48px 28px; }
+    .ai-leather-hero-{{ ai_gen_id }}__media { min-height:52vh; clip-path:none; }
+    .ai-leather-hero-{{ ai_gen_id }}__media img,
+    .ai-leather-hero-{{ ai_gen_id }}__placeholder { min-height:52vh; }
+  }
+{% endstyle %}
+
+<div class="ai-leather-hero-{{ ai_gen_id }}" {{ section.shopify_attributes }}>
+  <div class="ai-leather-hero-{{ ai_gen_id }}__inner">
+
+    <div class="ai-leather-hero-{{ ai_gen_id }}__copy">
+      {% if section.settings.eyebrow != blank %}
+        <p class="ai-leather-hero-{{ ai_gen_id }}__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {% endif %}
+      <h1 class="ai-leather-hero-{{ ai_gen_id }}__heading">
+        {{ section.settings.heading_line_one | escape }}<br>
+        <span class="ai-leather-hero-{{ ai_gen_id }}__heading-accent">{{ section.settings.heading_line_two | escape }}</span><br>
+        {{ section.settings.heading_line_three | escape }}
+      </h1>
+      {% if section.settings.description != blank %}
+        <p class="ai-leather-hero-{{ ai_gen_id }}__description">{{ section.settings.description | escape }}</p>
+      {% endif %}
+      {% if section.settings.button_link != blank %}
+        <a class="ai-leather-hero-{{ ai_gen_id }}__button" href="{{ section.settings.button_link }}">
+          {{ section.settings.button_label | escape }}
+          {% if section.settings.product != blank %} — {{ section.settings.product.price | money }}{% endif %}
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="ai-leather-hero-{{ ai_gen_id }}__media">
+      {% if section.settings.image != blank %}
+        <img
+          src="{{ section.settings.image | image_url: width: 1200 }}"
+          srcset="
+            {{ section.settings.image | image_url: width: 600 }} 600w,
+            {{ section.settings.image | image_url: width: 900 }} 900w,
+            {{ section.settings.image | image_url: width: 1200 }} 1200w,
+            {{ section.settings.image | image_url: width: 1600 }} 1600w
+          "
+          sizes="(max-width: 850px) 100vw, 50vw"
+          alt="{{ section.settings.image.alt | default: section.settings.heading_line_one | escape }}"
+          width="{{ section.settings.image.width }}"
+          height="{{ section.settings.image.height }}"
+          loading="eager"
+          fetchpriority="high"
+        >
+      {% else %}
+        <div class="ai-leather-hero-{{ ai_gen_id }}__placeholder">
+          {{ 'image' | placeholder_svg_tag }}
+          <span class="ai-leather-hero-{{ ai_gen_id }}__empty-state">Add an image to showcase your leather collection.</span>
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Leather slash hero",
+  "tag": "section",
+  "class": "leather-slash-hero-section",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Cut N°17 — Full grain" },
+    { "type": "text", "id": "heading_line_one", "label": "First line", "default": "Hand" },
+    { "type": "text", "id": "heading_line_two", "label": "Accent line", "default": "Burnished." },
+    { "type": "text", "id": "heading_line_three", "label": "Third line", "default": "Machine none." },
+    { "type": "textarea", "id": "description", "label": "Description", "default": "Tan leather, hand-rubbed edges. Ages like a good story." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop leather" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "product", "id": "product", "label": "Product price" },
+    { "type": "header", "content": "Media" },
+    { "type": "image_picker", "id": "image", "label": "Hero image" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#201812" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#F3E7D3" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#F3E7D3" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#E0A458" },
+    { "type": "color", "id": "muted_text_color", "label": "Muted text", "default": "#C9B797" },
+    { "type": "color", "id": "button_text_color", "label": "Button text", "default": "#201812" },
+    { "type": "color", "id": "focus_color", "label": "Focus outline", "default": "#FFFFFF" },
+    { "type": "color", "id": "image_placeholder_color", "label": "Image placeholder", "default": "#6B4A35" }
+  ],
+  "presets": [
+    { "name": "Leather slash hero" }
+  ]
+}
+{% endschema %}
