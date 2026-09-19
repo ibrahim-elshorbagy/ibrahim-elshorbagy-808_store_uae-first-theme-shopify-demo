@@ -19,7 +19,7 @@
         "heading_line_three": "Machine none.",
         "description": "Tan leather, hand-rubbed edges. Ages like a good story.",
         "button_label": "Shop leather",
-        "button_link": "",
+        "button_link": "shopify://collections/all",
         "product": "beige-lace-up-sneaker",
         "image": "shopify://shop_images/dark-brown-suede-loafer.webp",
         "background_color": "#201812",
@@ -91,18 +91,18 @@
         "tag_text": "EVERYDAY · 3 LOOKS",
         "meta_text": "Sneakers · Sandals",
         "cta_text": "Explore the Style",
-        "cta_link": "",
+        "cta_link": "shopify://collections/all",
         "image_one": "shopify://shop_images/grey-lace-up-sneaker.jpg",
         "image_two": "shopify://shop_images/beige-lace-up-sneaker-side.jpg",
         "image_three": "shopify://shop_images/navy-blue-suede-loafer-interior.jpg",
         "desktop_width_percent": 100,
         "outline_width": 2.5,
-        "background_color": "#F2EFE6",
+        "background_color": "#f2efe6",
         "text_color": "#111111",
         "muted_text_color": "#777777",
         "tag_background": "#111111",
-        "tag_text_color": "#FFFFFF",
-        "placeholder_color": "#DDDDDD"
+        "tag_text_color": "#ffffff",
+        "placeholder_color": "#dddddd"
       }
     }
   },
