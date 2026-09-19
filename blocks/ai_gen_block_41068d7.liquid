@@ -1,18 +1,7 @@
-{% doc %}
-  @prompt
-    Giant-type lookbook collage section.
-    Full-bleed background, oversized Anton display heading with an outlined
-    second word, three overlapping/rotated product images layered on top of
-    the heading, a small label tag, and a footer CTA + category line.
-    Cloned 1:1 from a static HTML/CSS reference (fonts, exact pixel offsets,
-    rotation angles, z-index stacking, full-bleed background, mobile stack).
-{% enddoc %}
 
 {% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
 
 {% style %}
-  @import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600&display=swap');
-
   .ai-lookbook-{{ ai_gen_id }} {
     display: block;
     position: relative;
