@@ -142,12 +142,33 @@
         "padding-block-start": 0,
         "padding-block-end": 0
       }
+    },
+    "giant_type_lookbook_zNDarw": {
+      "type": "giant-type-lookbook",
+      "name": "Giant type lookbook",
+      "settings": {
+        "title_text": "EVERY",
+        "outline_text": "DAY",
+        "tag_text": "EVERYDAY · 3 LOOKS",
+        "meta_text": "Sneakers · Sandals",
+        "cta_text": "Explore the Style",
+        "cta_link": "",
+        "desktop_width_percent": 100,
+        "outline_width": 2.5,
+        "background_color": "#F2EFE6",
+        "text_color": "#111111",
+        "muted_text_color": "#777777",
+        "tag_background": "#111111",
+        "tag_text_color": "#FFFFFF",
+        "placeholder_color": "#DDDDDD"
+      }
     }
   },
   "order": [
     "leather_slash_hero_d7zWDH",
     "masonry_product_carousel_jyDdWr",
     "about_brand_split_XmtqJe",
-    "1789682764d266a6ce"
+    "1789682764d266a6ce",
+    "giant_type_lookbook_zNDarw"
   ]
 }
