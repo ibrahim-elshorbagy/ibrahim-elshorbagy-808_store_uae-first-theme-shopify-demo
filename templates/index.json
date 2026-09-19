@@ -32,67 +32,6 @@
         "image_placeholder_color": "#6B4A35"
       }
     },
-    "178967494396f8eb10": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_d96948a_C4Az4J": {
-          "type": "ai_gen_block_d96948a",
-          "settings": {
-            "eyebrow": "Handmade real leather",
-            "heading_line_one": "Made",
-            "heading_line_two": "with care",
-            "heading_line_three": "Made to last",
-            "description": "Shop strong leather goods made by hand. Built for daily use and made to last. Find your next favorite piece.",
-            "button_label": "Shop all products",
-            "button_link": "/collections/all",
-            "product": "",
-            "image": "shopify://shop_images/Brown_suede_loafers_on_podium_20260917221440.jpg",
-            "desktop_width_percent": 100,
-            "background_color": "#201812",
-            "text_color": "#f3e7d3",
-            "heading_color": "#f3e7d3",
-            "accent_color": "#e0a458",
-            "muted_text_color": "#c9b797",
-            "button_text_color": "#201812",
-            "focus_color": "#ffffff",
-            "image_placeholder_color": "#6b4a35"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_d96948a_C4Az4J"
-      ],
-      "name": "Hero",
-      "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
-        "section_width": "full-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "background_media": "none",
-        "background_color": "",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_color": "",
-        "border_radius": 0,
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
-    },
     "1789680265a98e213a": {
       "type": "_blocks",
       "blocks": {
@@ -122,6 +61,7 @@
       "block_order": [
         "ai_gen_block_4e6c284_7DKjcE"
       ],
+      "disabled": true,
       "name": "Carsoual",
       "settings": {
         "content_direction": "column",
@@ -187,6 +127,7 @@
       "block_order": [
         "ai_gen_block_736344d_QLTWNF"
       ],
+      "disabled": true,
       "name": "About",
       "settings": {
         "content_direction": "column",
@@ -247,6 +188,7 @@
       "block_order": [
         "ai_gen_block_41068d7_WzALcL"
       ],
+      "disabled": true,
       "name": "Everyday",
       "settings": {
         "content_direction": "column",
@@ -280,7 +222,6 @@
   },
   "order": [
     "leather_slash_hero_d7zWDH",
-    "178967494396f8eb10",
     "1789680265a98e213a",
     "1789681889f8fdcc77",
     "1789682764d266a6ce"
