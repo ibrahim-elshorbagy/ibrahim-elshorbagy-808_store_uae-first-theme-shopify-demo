@@ -39,8 +39,6 @@
     line-height: .85;
     letter-spacing: -.01em;
     text-transform: uppercase;
-    overflow-wrap: normal;
-    white-space: normal;
   }
 
   .ai-lookbook-{{ ai_gen_id }}__outline {
@@ -63,102 +61,89 @@
     background: {{ section.settings.placeholder_color }};
     box-shadow: 0 24px 60px rgba(0,0,0,.18);
   }
-
   .ai-lookbook-{{ ai_gen_id }}__image img,
   .ai-lookbook-{{ ai_gen_id }}__placeholder,
   .ai-lookbook-{{ ai_gen_id }}__placeholder svg {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    display: block; width: 100%; height: 100%; object-fit: cover;
   }
-
-  .ai-lookbook-{{ ai_gen_id }}__placeholder { width: 100%; height: 100%; }
   .ai-lookbook-{{ ai_gen_id }}__placeholder svg { color: #777; }
 
-  .ai-lookbook-{{ ai_gen_id }}__image--one  { width:300px; height:380px; left:4%;  top:0;    transform:rotate(-4deg); z-index:2; }
-  .ai-lookbook-{{ ai_gen_id }}__image--two  { width:340px; height:280px; left:36%; top:60px; transform:rotate(2deg);  z-index:3; }
-  .ai-lookbook-{{ ai_gen_id }}__image--three{ width:260px; height:340px; right:6%; top:-30px;transform:rotate(5deg);  z-index:2; }
+  .ai-lookbook-{{ ai_gen_id }}__image--one   { width:300px; height:380px; left:4%;  top:0;     transform:rotate(-4deg); z-index:2; }
+  .ai-lookbook-{{ ai_gen_id }}__image--two   { width:340px; height:280px; left:36%; top:60px;  transform:rotate(2deg);  z-index:3; }
+  .ai-lookbook-{{ ai_gen_id }}__image--three { width:260px; height:340px; right:6%; top:-30px; transform:rotate(5deg);  z-index:2; }
 
   .ai-lookbook-{{ ai_gen_id }}__tag {
     position: absolute;
-    left: 30%;
-    bottom: 40px;
-    z-index: 4;
+    left: 30%; bottom: 40px; z-index: 4;
     max-width: calc(100% - 40px);
     padding: 10px 18px;
     background: {{ section.settings.tag_background }};
     color: {{ section.settings.tag_text_color }};
     font-family: 'Inter', sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: .25em;
-    line-height: 1.2;
-    border-radius: 999px;
-    white-space: nowrap;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: .25em; line-height: 1.2;
+    border-radius: 999px; white-space: nowrap;
   }
 
+  /* FOOTER */
   .ai-lookbook-{{ ai_gen_id }}__footer {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     flex-wrap: wrap;
-    gap: 20px;
-    margin-top: 24px;
+    gap: 16px;
+    margin-top: 32px;
     font-family: 'Inter', sans-serif;
     font-size: 13px;
     font-weight: 600;
   }
 
-  .ai-lookbook-{{ ai_gen_id }}__cta {
+  .ai-lookbook-{{ ai_gen_id }}__meta {
+    color: {{ section.settings.muted_text_color }};
+    font-size: 13px;
+  }
+
+  /* CTA BUTTON */
+  .ai-lookbook-{{ ai_gen_id }}__cta-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    color: {{ section.settings.text_color }};
+    gap: 8px;
+    padding: 16px 36px;
+    background: {{ section.settings.cta_background }};
+    color: {{ section.settings.cta_text_color }};
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: .04em;
     text-decoration: none;
-    transition: transform .15s ease, opacity .15s ease;
+    text-transform: uppercase;
+    border-radius: {{ section.settings.cta_radius }}px;
+    transition: opacity .2s ease, transform .2s ease;
+    white-space: nowrap;
   }
-  .ai-lookbook-{{ ai_gen_id }}__cta:active { transform: scale(.97); opacity: .85; }
-  .ai-lookbook-{{ ai_gen_id }}__cta-arrow { display: inline-block; transition: transform .2s ease; }
-  .ai-lookbook-{{ ai_gen_id }}__cta:hover .ai-lookbook-{{ ai_gen_id }}__cta-arrow,
-  .ai-lookbook-{{ ai_gen_id }}__cta:focus-visible .ai-lookbook-{{ ai_gen_id }}__cta-arrow { transform: translateX(4px); }
-  .ai-lookbook-{{ ai_gen_id }}__meta { color: {{ section.settings.muted_text_color }}; }
+  .ai-lookbook-{{ ai_gen_id }}__cta-btn:hover { opacity: .85; transform: translateY(-2px); }
+  .ai-lookbook-{{ ai_gen_id }}__cta-btn:active { transform: scale(.97); opacity: .9; }
+  .ai-lookbook-{{ ai_gen_id }}__cta-btn:focus-visible { outline: 2px solid {{ section.settings.cta_background }}; outline-offset: 4px; }
+  .ai-lookbook-{{ ai_gen_id }}__cta-arrow { transition: transform .2s ease; }
+  .ai-lookbook-{{ ai_gen_id }}__cta-btn:hover .ai-lookbook-{{ ai_gen_id }}__cta-arrow { transform: translateX(4px); }
 
-  /* ── TABLET / MOBILE ── */
+  /* MOBILE */
   @media screen and (max-width: 800px) {
-    .ai-lookbook-{{ ai_gen_id }}__inner {
-      width: 100%;
-      max-width: 100%;
-      padding: 56px 0 64px; /* 0 أفقي — الـ scroller يكسر الـ padding */
-    }
+    .ai-lookbook-{{ ai_gen_id }}__inner { width: 100%; max-width: 100%; padding: 56px 0 64px; }
+    .ai-lookbook-{{ ai_gen_id }}__title { font-size: clamp(56px, 18vw, 96px); padding: 0 20px; }
 
-    .ai-lookbook-{{ ai_gen_id }}__title {
-      font-size: clamp(56px, 18vw, 96px);
-      padding: 0 20px; /* padding منفصل عشان الـ scroller يوصل للأطراف */
-    }
-
-    .ai-lookbook-{{ ai_gen_id }}__collage {
-      display: block;
-      width: 100%;
-      height: auto;
-      margin-top: 28px;
-    }
+    .ai-lookbook-{{ ai_gen_id }}__collage { display: block; width: 100%; height: auto; margin-top: 28px; }
 
     .ai-lookbook-{{ ai_gen_id }}__scroller {
-      display: flex;
-      flex-wrap: nowrap;
-      align-items: flex-start;
-      gap: 14px;
-      width: 100%;
-      overflow-x: auto;
-      overflow-y: visible;
+      display: flex; flex-wrap: nowrap; align-items: flex-start;
+      gap: 14px; width: 100%;
+      overflow-x: auto; overflow-y: visible;
       scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      touch-action: pan-x;
-      padding: 4px 20px 12px; /* 20px على الجنبين = space قبل وبعد الصور */
+      -webkit-overflow-scrolling: touch; touch-action: pan-x;
+      padding: 4px 20px 12px;
       scroll-padding-left: 20px;
-      -ms-overflow-style: none;
-      scrollbar-width: thin;
+      -ms-overflow-style: none; scrollbar-width: thin;
     }
     .ai-lookbook-{{ ai_gen_id }}__scroller::-webkit-scrollbar { height: 4px; }
 
@@ -166,85 +151,50 @@
     .ai-lookbook-{{ ai_gen_id }}__image--one,
     .ai-lookbook-{{ ai_gen_id }}__image--two,
     .ai-lookbook-{{ ai_gen_id }}__image--three {
-      position: relative;
-      inset: auto;
-      flex: 0 0 78%;
-      width: 78%;
-      max-width: 78%;
-      height: 340px;
-      transform: none;
-      scroll-snap-align: start;
-      border-radius: 12px;
+      position: relative; inset: auto;
+      flex: 0 0 78%; width: 78%; max-width: 78%;
+      height: 340px; transform: none;
+      scroll-snap-align: start; border-radius: 12px;
     }
 
     .ai-lookbook-{{ ai_gen_id }}__tag {
-      position: relative;
-      inset: auto;
-      display: block;
-      width: max-content;
-      max-width: 90%;
-      margin: 18px auto 0;
-      text-align: center;
+      position: relative; inset: auto;
+      display: block; width: max-content; max-width: 90%;
+      margin: 18px auto 0; text-align: center;
     }
 
     .ai-lookbook-{{ ai_gen_id }}__footer {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 12px;
-      margin-top: 28px;
-      padding: 0 20px;
+      flex-direction: column; align-items: stretch;
+      gap: 12px; margin-top: 28px; padding: 0 20px;
     }
 
-    .ai-lookbook-{{ ai_gen_id }}__cta {
-      order: 1;
+    .ai-lookbook-{{ ai_gen_id }}__cta-btn {
       width: 100%;
-      padding: 16px 24px;
-      background: {{ section.settings.tag_background }};
-      color: {{ section.settings.tag_text_color }};
+      padding: 18px 24px;
+      font-size: 15px;
       border-radius: 999px;
-      font-size: 14px;
-      letter-spacing: .02em;
+      justify-content: center;
     }
 
-    .ai-lookbook-{{ ai_gen_id }}__meta {
-      order: 2;
-      width: 100%;
-      font-size: 12px;
-      text-align: center;
-    }
+    .ai-lookbook-{{ ai_gen_id }}__meta { font-size: 12px; text-align: center; }
   }
 
-  /* ── SMALL MOBILE ── */
   @media screen and (max-width: 480px) {
-    .ai-lookbook-{{ ai_gen_id }}__title {
-      font-size: clamp(48px, 16vw, 72px);
-      padding: 0 16px;
-    }
-
-    .ai-lookbook-{{ ai_gen_id }}__scroller {
-      padding: 4px 16px 12px;
-      scroll-padding-left: 16px;
-    }
-
+    .ai-lookbook-{{ ai_gen_id }}__title { font-size: clamp(48px, 16vw, 72px); padding: 0 16px; }
+    .ai-lookbook-{{ ai_gen_id }}__scroller { padding: 4px 16px 12px; scroll-padding-left: 16px; }
     .ai-lookbook-{{ ai_gen_id }}__image,
     .ai-lookbook-{{ ai_gen_id }}__image--one,
     .ai-lookbook-{{ ai_gen_id }}__image--two,
-    .ai-lookbook-{{ ai_gen_id }}__image--three {
-      flex: 0 0 84%;
-      width: 84%;
-      max-width: 84%;
-      height: 300px;
-    }
-
+    .ai-lookbook-{{ ai_gen_id }}__image--three { flex: 0 0 84%; width: 84%; max-width: 84%; height: 300px; }
     .ai-lookbook-{{ ai_gen_id }}__footer { padding: 0 16px; }
     .ai-lookbook-{{ ai_gen_id }}__tag { font-size: 10px; letter-spacing: .18em; padding: 9px 14px; }
-    .ai-lookbook-{{ ai_gen_id }}__cta { padding: 15px 22px; font-size: 13px; }
+    .ai-lookbook-{{ ai_gen_id }}__cta-btn { padding: 16px 22px; font-size: 14px; }
   }
 {% endstyle %}
 
-
 <section class="ai-lookbook-{{ ai_gen_id }}" {{ section.shopify_attributes }}>
   <div class="ai-lookbook-{{ ai_gen_id }}__inner">
+
     <h2 class="ai-lookbook-{{ ai_gen_id }}__title">
       {{ section.settings.title_text | escape }}<span class="ai-lookbook-{{ ai_gen_id }}__outline">{{ section.settings.outline_text | escape }}</span>
     </h2>
@@ -256,11 +206,7 @@
           {% if section.settings.image_one %}
             <img
               src="{{ section.settings.image_one | image_url: width: 700 }}"
-              srcset="
-                {{ section.settings.image_one | image_url: width: 400 }} 400w,
-                {{ section.settings.image_one | image_url: width: 700 }} 700w,
-                {{ section.settings.image_one | image_url: width: 900 }} 900w
-              "
+              srcset="{{ section.settings.image_one | image_url: width: 400 }} 400w, {{ section.settings.image_one | image_url: width: 700 }} 700w, {{ section.settings.image_one | image_url: width: 900 }} 900w"
               sizes="(max-width: 800px) 78vw, 300px"
               alt="{{ section.settings.image_one.alt | default: section.settings.title_text | escape }}"
               width="{{ section.settings.image_one.width }}"
@@ -276,11 +222,7 @@
           {% if section.settings.image_two %}
             <img
               src="{{ section.settings.image_two | image_url: width: 700 }}"
-              srcset="
-                {{ section.settings.image_two | image_url: width: 400 }} 400w,
-                {{ section.settings.image_two | image_url: width: 700 }} 700w,
-                {{ section.settings.image_two | image_url: width: 900 }} 900w
-              "
+              srcset="{{ section.settings.image_two | image_url: width: 400 }} 400w, {{ section.settings.image_two | image_url: width: 700 }} 700w, {{ section.settings.image_two | image_url: width: 900 }} 900w"
               sizes="(max-width: 800px) 78vw, 340px"
               alt="{{ section.settings.image_two.alt | default: section.settings.title_text | escape }}"
               width="{{ section.settings.image_two.width }}"
@@ -296,11 +238,7 @@
           {% if section.settings.image_three %}
             <img
               src="{{ section.settings.image_three | image_url: width: 700 }}"
-              srcset="
-                {{ section.settings.image_three | image_url: width: 400 }} 400w,
-                {{ section.settings.image_three | image_url: width: 700 }} 700w,
-                {{ section.settings.image_three | image_url: width: 900 }} 900w
-              "
+              srcset="{{ section.settings.image_three | image_url: width: 400 }} 400w, {{ section.settings.image_three | image_url: width: 700 }} 700w, {{ section.settings.image_three | image_url: width: 900 }} 900w"
               sizes="(max-width: 800px) 78vw, 260px"
               alt="{{ section.settings.image_three.alt | default: section.settings.title_text | escape }}"
               width="{{ section.settings.image_three.width }}"
@@ -317,14 +255,15 @@
     </div>
 
     <div class="ai-lookbook-{{ ai_gen_id }}__footer">
+      <span class="ai-lookbook-{{ ai_gen_id }}__meta">{{ section.settings.meta_text | escape }}</span>
       {% if section.settings.cta_link != blank %}
-        <a class="ai-lookbook-{{ ai_gen_id }}__cta" href="{{ section.settings.cta_link }}">
+        <a class="ai-lookbook-{{ ai_gen_id }}__cta-btn" href="{{ section.settings.cta_link }}">
           {{ section.settings.cta_text | escape }}
           <span class="ai-lookbook-{{ ai_gen_id }}__cta-arrow" aria-hidden="true">→</span>
         </a>
       {% endif %}
-      <span class="ai-lookbook-{{ ai_gen_id }}__meta">{{ section.settings.meta_text | escape }}</span>
     </div>
+
   </div>
 </section>
 
@@ -339,8 +278,12 @@
     { "type": "text", "id": "outline_text", "label": "Outline title", "default": "DAY" },
     { "type": "text", "id": "tag_text", "label": "Collage label", "default": "EVERYDAY · 3 LOOKS" },
     { "type": "text", "id": "meta_text", "label": "Category text", "default": "Sneakers · Sandals" },
-    { "type": "text", "id": "cta_text", "label": "CTA label", "default": "Explore the Style" },
-    { "type": "url", "id": "cta_link", "label": "CTA link" },
+    { "type": "header", "content": "CTA Button" },
+    { "type": "text", "id": "cta_text", "label": "Button text", "default": "Shop the Collection" },
+    { "type": "url", "id": "cta_link", "label": "Button link" },
+    { "type": "color", "id": "cta_background", "label": "Button background", "default": "#111111" },
+    { "type": "color", "id": "cta_text_color", "label": "Button text color", "default": "#FFFFFF" },
+    { "type": "range", "id": "cta_radius", "label": "Button radius", "min": 0, "max": 50, "step": 1, "unit": "px", "default": 0 },
     { "type": "header", "content": "Images" },
     { "type": "image_picker", "id": "image_one", "label": "Left image" },
     { "type": "image_picker", "id": "image_two", "label": "Center image" },
