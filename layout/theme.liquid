@@ -29,78 +29,7 @@
       {%- render 'theme-editor' -%}
     {% endif %}
 
-    {% comment %} {{ content_for_header }} {% endcomment %}
-
-    <!-- Start of Shopioso speed boost -->
-{% capture modified_content_for_header %}
-  {{ content_for_header }}
-{% endcapture %}
-
-{% assign domcontentloadeda = "document.addEventListener('DOMContentLoaded'" %}
-{% assign startasyncLoadinga = "document.addEventListener('StartAsyncLoading'" %}
-{% assign domcontentloaded = 'e.addEventListener("DOMContentLoaded"' %}
-{% assign startasyncLoading = "e.addEventListener('StartAsyncLoading'" %}
-{% assign rapp = ", asyncLoad" %}
-{% assign napp = ", function(){}" %}
-{% assign rappload = "if(window.attachEvent)" %}
-{% assign nappload = "document.addEventListener('StartAsyncLoading',function(event){asyncLoad();});if(window.attachEvent)" %}
-{% assign rstorefrontload = "var customDocumentWrite = function(content)" %}
-{% assign nstorefrontload = "document.addEventListener('StartKernelLoading', function() { document.dispatchEvent(new CustomEvent('StartShopifyLoading')); var customDocumentWrite = function(content)" %}
-{% assign rstorefront = "document.getElementsByTagName('head')[0].appendChild(eventsListenerScript)" %}
-{% assign nstorefront = "document.getElementsByTagName('head')[0].appendChild(eventsListenerScript);})" %}
-
-{% if template == 'cart' %}
-  {{ modified_content_for_header
-      | replace: 'src=', 'data-src='
-      | replace: domcontentloadeda, startasyncLoadinga
-      | replace: domcontentloaded, startasyncLoading
-      | replace: rapp, napp
-      | replace: rappload, nappload
-  }}
-{% else %}
-  {{ modified_content_for_header
-      | replace: 'src=', 'data-src='
-      | replace: domcontentloadeda, startasyncLoadinga
-      | replace: domcontentloaded, startasyncLoading
-      | replace: rapp, napp
-      | replace: rappload, nappload
-      | replace: rstorefrontload, nstorefrontload
-      | replace: rstorefront, nstorefront
-  }}
-{% endif %}
-
-<script>
-var script_loaded = !1;
-
-function loadJSscripts(){
-  setTimeout(function(){
-    if(!script_loaded){
-      script_loaded = !0;
-      var t = document.getElementsByTagName("script");
-      for(i=0; i<t.length; i++)
-        null !== t[i].getAttribute("data-src") &&
-          (t[i].setAttribute("src", t[i].getAttribute("data-src")), delete t[i].dataset.src);
-
-      var e = document.getElementsByTagName("link");
-      for(i=0; i<e.length; i++)
-        null !== e[i].getAttribute("data-href") &&
-          (e[i].setAttribute("href", e[i].getAttribute("data-href")), delete e[i].dataset.href);
-
-      setTimeout(function(){
-        document.dispatchEvent(new CustomEvent("StartAsyncLoading")),
-        document.dispatchEvent(new CustomEvent("StartKernelLoading"))
-      }, 400)
-    }
-    console.log("Shopioso 12s wait")
-  }, 12e3)
-}
-
-function loadJSscriptsNow(){
-  if(!script_loaded){
-    console.log("Shopioso scripts have loaded."),
-    script_loaded = !0;
-    var
-</script>
+    {{ content_for_header }}
   </head>
 
   <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
