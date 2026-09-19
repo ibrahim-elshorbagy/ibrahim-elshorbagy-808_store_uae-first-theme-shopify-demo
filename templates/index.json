@@ -32,71 +32,6 @@
         "image_placeholder_color": "#6b4a35"
       }
     },
-    "1789681889f8fdcc77": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_736344d_QLTWNF": {
-          "type": "ai_gen_block_736344d",
-          "settings": {
-            "brand_name": "808 Store UAE",
-            "logo": "shopify://shop_images/logo.webp",
-            "heading_before": "BUILT TO",
-            "heading_accent": "FLOAT.",
-            "button_text": "Shop Collection",
-            "button_link": "shopify://collections/all",
-            "description": "808 Store UAE —  Premium men’s footwear, selected for style, comfort, and everyday life in the UAE.",
-            "photo": "shopify://shop_images/vertical.jpg",
-            "photo_alt": "Grey sneakers floating",
-            "desktop_width_percent": 100,
-            "section_height": 680,
-            "button_background": "#c6ff00",
-            "button_text_color": "#111111",
-            "button_radius": 0,
-            "background_color": "#201812",
-            "text_color": "#ffffff",
-            "muted_text_color": "#b8b8b8",
-            "accent_color": "#c6ff00",
-            "image_background_color": "#222222",
-            "placeholder_color": "#333333",
-            "heading_font": "inter_n7",
-            "body_font": "inter_n4"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_736344d_QLTWNF"
-      ],
-      "name": "About",
-      "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "background_media": "none",
-        "background_color": "",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_color": "",
-        "border_radius": 0,
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
-    },
     "1789682764d266a6ce": {
       "type": "_blocks",
       "blocks": {
@@ -195,13 +130,13 @@
         "photo_alt": "Grey sneakers floating",
         "desktop_width_percent": 100,
         "section_height": 680,
-        "button_background": "#C6FF00",
+        "button_background": "#c6ff00",
         "button_text_color": "#111111",
         "button_radius": 0,
         "background_color": "#201812",
-        "text_color": "#FFFFFF",
-        "muted_text_color": "#B8B8B8",
-        "accent_color": "#C6FF00",
+        "text_color": "#ffffff",
+        "muted_text_color": "#b8b8b8",
+        "accent_color": "#c6ff00",
         "image_background_color": "#222222",
         "placeholder_color": "#333333",
         "heading_font": "inter_n7",
@@ -211,7 +146,6 @@
   },
   "order": [
     "leather_slash_hero_d7zWDH",
-    "1789681889f8fdcc77",
     "1789682764d266a6ce",
     "masonry_product_carousel_zdBqqj",
     "about_brand_split_XmtqJe"
