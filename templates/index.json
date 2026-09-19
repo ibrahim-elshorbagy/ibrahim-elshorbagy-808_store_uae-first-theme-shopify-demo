@@ -82,67 +82,6 @@
         "body_font": "inter_n4"
       }
     },
-    "1789682764d266a6ce": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_41068d7_WzALcL": {
-          "type": "ai_gen_block_41068d7",
-          "settings": {
-            "title_text": "EVERY",
-            "outline_text": "DAY",
-            "tag_text": "EVERYDAY · 3 LOOKS",
-            "meta_text": "Sneakers · Sandals",
-            "cta_text": "Explore the Style",
-            "cta_link": "",
-            "image_one": "shopify://shop_images/grey-lace-up-sneaker.jpg",
-            "image_two": "shopify://shop_images/beige-lace-up-sneaker-side.jpg",
-            "image_three": "shopify://shop_images/navy-blue-suede-loafer-pair.jpg",
-            "desktop_width_percent": 100,
-            "outline_width": 2,
-            "background_color": "#f2efe6",
-            "text_color": "#111111",
-            "muted_text_color": "#777777",
-            "tag_background": "#111111",
-            "tag_text_color": "#ffffff",
-            "placeholder_color": "#dddddd"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_41068d7_WzALcL"
-      ],
-      "disabled": true,
-      "name": "Everyday",
-      "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "background_media": "none",
-        "background_color": "",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_color": "",
-        "border_radius": 0,
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
-    },
     "giant_type_lookbook_zNDarw": {
       "type": "giant-type-lookbook",
       "name": "Giant type lookbook",
@@ -153,6 +92,9 @@
         "meta_text": "Sneakers · Sandals",
         "cta_text": "Explore the Style",
         "cta_link": "",
+        "image_one": "shopify://shop_images/grey-lace-up-sneaker.jpg",
+        "image_two": "shopify://shop_images/beige-lace-up-sneaker-side.jpg",
+        "image_three": "shopify://shop_images/navy-blue-suede-loafer-interior.jpg",
         "desktop_width_percent": 100,
         "outline_width": 2.5,
         "background_color": "#F2EFE6",
@@ -168,7 +110,6 @@
     "leather_slash_hero_d7zWDH",
     "masonry_product_carousel_jyDdWr",
     "about_brand_split_XmtqJe",
-    "1789682764d266a6ce",
     "giant_type_lookbook_zNDarw"
   ]
 }
