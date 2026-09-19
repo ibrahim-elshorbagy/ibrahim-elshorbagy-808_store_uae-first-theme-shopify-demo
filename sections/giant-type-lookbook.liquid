@@ -18,6 +18,7 @@
   .ai-lookbook-{{ ai_gen_id }} *,
   .ai-lookbook-{{ ai_gen_id }} *::before,
   .ai-lookbook-{{ ai_gen_id }} *::after { box-sizing: border-box; }
+
   .ai-lookbook-{{ ai_gen_id }}__inner {
     position: relative;
     width: {{ section.settings.desktop_width_percent }}%;
@@ -26,11 +27,11 @@
     margin-right: auto;
     padding: 88px 32px 96px;
   }
+
   .ai-lookbook-{{ ai_gen_id }}__title {
     position: relative;
     z-index: 1;
     width: 100%;
-    max-width: 100%;
     margin: 0;
     font-family: 'Anton', sans-serif;
     font-size: clamp(88px, 17vw, 250px);
@@ -41,25 +42,28 @@
     overflow-wrap: normal;
     white-space: normal;
   }
+
   .ai-lookbook-{{ ai_gen_id }}__outline {
     background: transparent;
     color: transparent;
     -webkit-text-stroke: {{ section.settings.outline_width }}px {{ section.settings.text_color }};
     text-stroke: {{ section.settings.outline_width }}px {{ section.settings.text_color }};
   }
+
   .ai-lookbook-{{ ai_gen_id }}__collage {
     position: relative;
     width: 100%;
-    max-width: 100%;
     height: 480px;
     margin-top: -40px;
   }
+
   .ai-lookbook-{{ ai_gen_id }}__image {
     position: absolute;
     overflow: hidden;
     background: {{ section.settings.placeholder_color }};
     box-shadow: 0 24px 60px rgba(0,0,0,.18);
   }
+
   .ai-lookbook-{{ ai_gen_id }}__image img,
   .ai-lookbook-{{ ai_gen_id }}__placeholder,
   .ai-lookbook-{{ ai_gen_id }}__placeholder svg {
@@ -68,11 +72,14 @@
     height: 100%;
     object-fit: cover;
   }
+
   .ai-lookbook-{{ ai_gen_id }}__placeholder { width: 100%; height: 100%; }
   .ai-lookbook-{{ ai_gen_id }}__placeholder svg { color: #777; }
-  .ai-lookbook-{{ ai_gen_id }}__image--one { width:300px; height:380px; left:4%; top:0; transform:rotate(-4deg); z-index:2; }
-  .ai-lookbook-{{ ai_gen_id }}__image--two { width:340px; height:280px; left:36%; top:60px; transform:rotate(2deg); z-index:3; }
-  .ai-lookbook-{{ ai_gen_id }}__image--three { width:260px; height:340px; right:6%; top:-30px; transform:rotate(5deg); z-index:2; }
+
+  .ai-lookbook-{{ ai_gen_id }}__image--one  { width:300px; height:380px; left:4%;  top:0;    transform:rotate(-4deg); z-index:2; }
+  .ai-lookbook-{{ ai_gen_id }}__image--two  { width:340px; height:280px; left:36%; top:60px; transform:rotate(2deg);  z-index:3; }
+  .ai-lookbook-{{ ai_gen_id }}__image--three{ width:260px; height:340px; right:6%; top:-30px;transform:rotate(5deg);  z-index:2; }
+
   .ai-lookbook-{{ ai_gen_id }}__tag {
     position: absolute;
     left: 30%;
@@ -90,6 +97,7 @@
     border-radius: 999px;
     white-space: nowrap;
   }
+
   .ai-lookbook-{{ ai_gen_id }}__footer {
     display: flex;
     align-items: center;
@@ -100,6 +108,7 @@
     font-size: 13px;
     font-weight: 600;
   }
+
   .ai-lookbook-{{ ai_gen_id }}__cta {
     display: inline-flex;
     align-items: center;
@@ -115,10 +124,26 @@
   .ai-lookbook-{{ ai_gen_id }}__cta:focus-visible .ai-lookbook-{{ ai_gen_id }}__cta-arrow { transform: translateX(4px); }
   .ai-lookbook-{{ ai_gen_id }}__meta { color: {{ section.settings.muted_text_color }}; }
 
+  /* ── TABLET / MOBILE ── */
   @media screen and (max-width: 800px) {
-    .ai-lookbook-{{ ai_gen_id }}__inner { width:100%; max-width:100%; padding:56px 20px 64px; }
-    .ai-lookbook-{{ ai_gen_id }}__title { font-size: clamp(38px, 11vw, 72px); }
-    .ai-lookbook-{{ ai_gen_id }}__collage { display:block; width:100%; height:auto; margin-top:28px; }
+    .ai-lookbook-{{ ai_gen_id }}__inner {
+      width: 100%;
+      max-width: 100%;
+      padding: 56px 0 64px; /* 0 أفقي — الـ scroller يكسر الـ padding */
+    }
+
+    .ai-lookbook-{{ ai_gen_id }}__title {
+      font-size: clamp(56px, 18vw, 96px);
+      padding: 0 20px; /* padding منفصل عشان الـ scroller يوصل للأطراف */
+    }
+
+    .ai-lookbook-{{ ai_gen_id }}__collage {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin-top: 28px;
+    }
+
     .ai-lookbook-{{ ai_gen_id }}__scroller {
       display: flex;
       flex-wrap: nowrap;
@@ -130,53 +155,93 @@
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
       touch-action: pan-x;
-      padding-bottom: 8px;
-      padding-top: 4px;
+      padding: 4px 20px 12px; /* 20px على الجنبين = space قبل وبعد الصور */
+      scroll-padding-left: 20px;
       -ms-overflow-style: none;
       scrollbar-width: thin;
     }
     .ai-lookbook-{{ ai_gen_id }}__scroller::-webkit-scrollbar { height: 4px; }
+
     .ai-lookbook-{{ ai_gen_id }}__image,
     .ai-lookbook-{{ ai_gen_id }}__image--one,
     .ai-lookbook-{{ ai_gen_id }}__image--two,
     .ai-lookbook-{{ ai_gen_id }}__image--three {
       position: relative;
-      left: auto; right: auto; top: auto; bottom: auto; inset: auto;
+      inset: auto;
       flex: 0 0 78%;
-      width: 78%; max-width: 78%;
-      height: 320px;
+      width: 78%;
+      max-width: 78%;
+      height: 340px;
       transform: none;
-      scroll-snap-align: center;
+      scroll-snap-align: start;
+      border-radius: 12px;
     }
+
     .ai-lookbook-{{ ai_gen_id }}__tag {
       position: relative;
-      left: auto; right: auto; bottom: auto;
+      inset: auto;
       display: block;
       width: max-content;
       max-width: 90%;
       margin: 18px auto 0;
       text-align: center;
     }
-    .ai-lookbook-{{ ai_gen_id }}__footer { flex-direction: column; align-items: stretch; gap: 12px; margin-top: 28px; }
+
+    .ai-lookbook-{{ ai_gen_id }}__footer {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+      margin-top: 28px;
+      padding: 0 20px;
+    }
+
     .ai-lookbook-{{ ai_gen_id }}__cta {
-      order: 1; width: 100%; padding: 16px 24px;
+      order: 1;
+      width: 100%;
+      padding: 16px 24px;
       background: {{ section.settings.tag_background }};
       color: {{ section.settings.tag_text_color }};
-      border-radius: 999px; font-size: 14px; letter-spacing: .02em;
+      border-radius: 999px;
+      font-size: 14px;
+      letter-spacing: .02em;
     }
-    .ai-lookbook-{{ ai_gen_id }}__meta { order: 2; width: 100%; font-size: 12px; text-align: center; }
+
+    .ai-lookbook-{{ ai_gen_id }}__meta {
+      order: 2;
+      width: 100%;
+      font-size: 12px;
+      text-align: center;
+    }
   }
+
+  /* ── SMALL MOBILE ── */
   @media screen and (max-width: 480px) {
-    .ai-lookbook-{{ ai_gen_id }}__inner { padding-left: 16px; padding-right: 16px; }
-    .ai-lookbook-{{ ai_gen_id }}__title { font-size: clamp(30px, 9.5vw, 56px); }
+    .ai-lookbook-{{ ai_gen_id }}__title {
+      font-size: clamp(48px, 16vw, 72px);
+      padding: 0 16px;
+    }
+
+    .ai-lookbook-{{ ai_gen_id }}__scroller {
+      padding: 4px 16px 12px;
+      scroll-padding-left: 16px;
+    }
+
     .ai-lookbook-{{ ai_gen_id }}__image,
     .ai-lookbook-{{ ai_gen_id }}__image--one,
     .ai-lookbook-{{ ai_gen_id }}__image--two,
-    .ai-lookbook-{{ ai_gen_id }}__image--three { flex: 0 0 84%; width: 84%; max-width: 84%; height: 280px; }
+    .ai-lookbook-{{ ai_gen_id }}__image--three {
+      flex: 0 0 84%;
+      width: 84%;
+      max-width: 84%;
+      height: 300px;
+    }
+
+    .ai-lookbook-{{ ai_gen_id }}__footer { padding: 0 16px; }
     .ai-lookbook-{{ ai_gen_id }}__tag { font-size: 10px; letter-spacing: .18em; padding: 9px 14px; }
     .ai-lookbook-{{ ai_gen_id }}__cta { padding: 15px 22px; font-size: 13px; }
   }
 {% endstyle %}
+
 
 <section class="ai-lookbook-{{ ai_gen_id }}" {{ section.shopify_attributes }}>
   <div class="ai-lookbook-{{ ai_gen_id }}__inner">
