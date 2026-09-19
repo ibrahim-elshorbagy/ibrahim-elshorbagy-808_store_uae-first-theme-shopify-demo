@@ -32,65 +32,6 @@
         "image_placeholder_color": "#6b4a35"
       }
     },
-    "1789680265a98e213a": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_4e6c284_7DKjcE": {
-          "type": "ai_gen_block_4e6c284",
-          "settings": {
-            "collection": "home",
-            "product_limit": 12,
-            "heading": "Discover Your Next Favorite",
-            "description": "Explore the collection and find something made for you.",
-            "heading_font": "inter_n7",
-            "heading_size": 52,
-            "mobile_heading_size": 34,
-            "image_height": 280,
-            "mobile_image_height": 300,
-            "card_gap": 18,
-            "card_radius": 18,
-            "vertical_padding": 60,
-            "desktop_width_percent": 100,
-            "background_color": "#f4ead8",
-            "card_color": "#fffdf6",
-            "text_color": "#3a2a1c"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_4e6c284_7DKjcE"
-      ],
-      "name": "Carsoual",
-      "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
-        "section_width": "full-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "background_media": "none",
-        "background_color": "",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_color": "",
-        "border_radius": 0,
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
-    },
     "1789681889f8fdcc77": {
       "type": "_blocks",
       "blocks": {
@@ -229,8 +170,6 @@
         "heading_font": "inter_n7",
         "heading_size": 52,
         "mobile_heading_size": 34,
-        "card_width": 280,
-        "mobile_card_width": 220,
         "image_height": 280,
         "mobile_image_height": 300,
         "card_gap": 18,
@@ -245,7 +184,6 @@
   },
   "order": [
     "leather_slash_hero_d7zWDH",
-    "1789680265a98e213a",
     "1789681889f8fdcc77",
     "1789682764d266a6ce",
     "masonry_product_carousel_zdBqqj"
