@@ -8,8 +8,13 @@
   .ai-leather-hero-{{ ai_gen_id }}__heading { max-width:680px; margin:0; color:{{ section.settings.heading_color }}; font-family:{{ settings.type_heading_font.family }},sans-serif; font-size:clamp(52px,6.5vw,96px); font-weight:700; letter-spacing:-.045em; line-height:.92; text-transform:uppercase; }
   .ai-leather-hero-{{ ai_gen_id }}__heading-accent { color:{{ section.settings.accent_color }}; }
   .ai-leather-hero-{{ ai_gen_id }}__description { max-width:450px; margin:18px 0 0; color:{{ section.settings.muted_text_color }}; font-family:{{ settings.type_body_font.family }},sans-serif; font-size:14px; font-style:italic; line-height:1.6; }
-  .ai-leather-hero-{{ ai_gen_id }}__button { display:inline-flex; align-items:center; justify-content:center; min-height:52px; margin-top:26px; padding:15px 30px; background:{{ section.settings.accent_color }}; color:{{ section.settings.button_text_color }}; font-family:{{ settings.type_accent_font.family }},sans-serif; font-size:14px; font-weight:700; letter-spacing:.06em; text-decoration:none; text-transform:uppercase; }
+  .ai-leather-hero-{{ ai_gen_id }}__button { display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:52px; margin-top:26px; padding:16px 34px; background:{{ section.settings.accent_color }}; color:{{ section.settings.button_text_color }}; font-family:{{ settings.type_accent_font.family }},sans-serif; font-size:14px; font-weight:700; letter-spacing:.06em; text-decoration:none; text-transform:uppercase; border-radius:2px; box-shadow:0 10px 24px rgba(0,0,0,.28); transition:transform .18s ease, box-shadow .18s ease, opacity .18s ease; will-change:transform; }
+  .ai-leather-hero-{{ ai_gen_id }}__button:hover { transform:translateY(-2px); box-shadow:0 14px 30px rgba(0,0,0,.34); }
+  .ai-leather-hero-{{ ai_gen_id }}__button:active { transform:translateY(0) scale(.98); opacity:.92; }
   .ai-leather-hero-{{ ai_gen_id }}__button:focus-visible { outline:3px solid {{ section.settings.focus_color }}; outline-offset:4px; }
+  .ai-leather-hero-{{ ai_gen_id }}__button-arrow { display:inline-block; transition:transform .2s ease; }
+  .ai-leather-hero-{{ ai_gen_id }}__button:hover .ai-leather-hero-{{ ai_gen_id }}__button-arrow,
+  .ai-leather-hero-{{ ai_gen_id }}__button:focus-visible .ai-leather-hero-{{ ai_gen_id }}__button-arrow { transform:translateX(4px); }
   .ai-leather-hero-{{ ai_gen_id }}__media { position:relative; min-height:400px; overflow:hidden; background:{{ section.settings.image_placeholder_color }}; clip-path:polygon(14% 0,100% 0,100% 100%,0 100%); }
   .ai-leather-hero-{{ ai_gen_id }}__media img { display:block; width:100%; height:100%; min-height:min(760px,100svh); object-fit:cover; filter:sepia(.25) contrast(1.05); }
   .ai-leather-hero-{{ ai_gen_id }}__placeholder { display:flex; align-items:center; justify-content:center; width:100%; height:100%; min-height:min(760px,100svh); }
@@ -21,6 +26,7 @@
     .ai-leather-hero-{{ ai_gen_id }}__media { min-height:52vh; clip-path:none; }
     .ai-leather-hero-{{ ai_gen_id }}__media img,
     .ai-leather-hero-{{ ai_gen_id }}__placeholder { min-height:52vh; }
+    .ai-leather-hero-{{ ai_gen_id }}__button { width:100%; margin-top:24px; padding:16px 24px; }
   }
 {% endstyle %}
 
@@ -43,6 +49,7 @@
         <a class="ai-leather-hero-{{ ai_gen_id }}__button" href="{{ section.settings.button_link }}">
           {{ section.settings.button_label | escape }}
           {% if section.settings.product != blank %} — {{ section.settings.product.price | money }}{% endif %}
+          <span class="ai-leather-hero-{{ ai_gen_id }}__button-arrow" aria-hidden="true">→</span>
         </a>
       {% endif %}
     </div>
@@ -88,7 +95,7 @@
     { "type": "text", "id": "heading_line_three", "label": "Third line", "default": "Machine none." },
     { "type": "textarea", "id": "description", "label": "Description", "default": "Tan leather, hand-rubbed edges. Ages like a good story." },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop leather" },
-    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "url", "id": "button_link", "label": "Button link", "default": "/collections/all" },
     { "type": "product", "id": "product", "label": "Product price" },
     { "type": "header", "content": "Media" },
     { "type": "image_picker", "id": "image", "label": "Hero image" },
