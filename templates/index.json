@@ -21,15 +21,15 @@
         "button_label": "Shop leather",
         "button_link": "",
         "product": "beige-lace-up-sneaker",
-        "image": "shopify://shop_images/dark-brown-suede-loafer.jpg",
+        "image": "shopify://shop_images/dark-brown-suede-loafer.webp",
         "background_color": "#201812",
-        "text_color": "#F3E7D3",
-        "heading_color": "#F3E7D3",
-        "accent_color": "#E0A458",
-        "muted_text_color": "#C9B797",
+        "text_color": "#f3e7d3",
+        "heading_color": "#f3e7d3",
+        "accent_color": "#e0a458",
+        "muted_text_color": "#c9b797",
         "button_text_color": "#201812",
-        "focus_color": "#FFFFFF",
-        "image_placeholder_color": "#6B4A35"
+        "focus_color": "#ffffff",
+        "image_placeholder_color": "#6b4a35"
       }
     },
     "1789680265a98e213a": {
