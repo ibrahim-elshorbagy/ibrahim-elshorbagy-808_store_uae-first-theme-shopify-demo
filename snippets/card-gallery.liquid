@@ -242,89 +242,145 @@
 {% render 'product-media-container-styles' %}
 
 
+
 {% stylesheet %}
-/* =========================================================
-   PRODUCT CARD + RESPONSIVE MASONRY GRID
-   Natural image dimensions — no forced card height
-   ========================================================= */
 
-/* ---------- Product grid: masonry layout ---------- */
-
-/*
-  CSS columns allow cards with different image heights to
-  flow without the large empty row gaps in your screenshot.
-
-  Note: items flow down each column before moving to the next.
-*/
-
-ul.product-grid,
-.product-grid {
-  display: block !important;
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
-
-  columns: 4;
-  column-gap: var(--product-grid-horizontal-spacing, 16px);
-
-  /* Override theme grid sizing */
-  grid-template-columns: none !important;
-  grid-auto-rows: auto !important;
-  align-items: start;
-}
-
-/* Masonry items */
-ul.product-grid > li,
-.product-grid > li,
-.product-grid > .product-grid__item {
-  display: inline-block !important;
-  vertical-align: top;
-
-  width: 100% !important;
-  max-width: 100%;
-  min-width: 0;
-
-  margin: 0 0 var(--product-grid-vertical-spacing, 16px) !important;
-  padding: 0;
-
-  break-inside: avoid;
-  page-break-inside: avoid;
-}
-
-/* ---------- Card base ---------- */
+/* =========================================
+   PRODUCT CARD — BASE
+========================================= */
 
 .card-gallery {
   position: relative;
   display: block;
-
   width: 100%;
-  max-width: 100%;
+  height: auto;
   min-width: 0;
-
-  height: auto !important;
-  min-height: 0;
-
+  max-width: 100%;
+  align-self: start;
   overflow: hidden;
-  border-radius: 18px;
+  border-radius: 16px;
   background: #e9e2d0;
-
   container-type: inline-size;
   container-name: card-gallery-container;
-
-  /* Do not force a uniform image ratio */
-  aspect-ratio: auto !important;
 }
 
-/* Keep card contents from creating horizontal overflow */
+.card-gallery,
 .card-gallery *,
 .card-gallery *::before,
 .card-gallery *::after {
   box-sizing: border-box;
-  min-width: 0;
 }
 
-/* ---------- Hide theme quick-add ---------- */
+/* Prevent content from stretching cards */
+.product-grid__card,
+.product-grid__item,
+.card-gallery {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* =========================================
+   MASONRY PRODUCT GRID
+   Natural card heights, no forced rows
+========================================= */
+
+/* Desktop: 4 columns */
+@media screen and (min-width: 990px) {
+  .product-grid,
+  ul.product-grid {
+    display: block !important;
+    columns: 4 !important;
+    column-gap: 16px !important;
+    column-fill: balance;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    grid-template-columns: none !important;
+    grid-auto-rows: auto !important;
+    align-items: initial !important;
+  }
+}
+
+/* Tablet: 3 columns */
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .product-grid,
+  ul.product-grid {
+    display: block !important;
+    columns: 3 !important;
+    column-gap: 14px !important;
+    column-fill: balance;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    grid-template-columns: none !important;
+    grid-auto-rows: auto !important;
+  }
+}
+
+/* Mobile: 2 columns */
+@media screen and (max-width: 749px) {
+  .product-grid,
+  ul.product-grid {
+    display: block !important;
+    columns: 2 !important;
+    column-gap: 10px !important;
+    column-fill: balance;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    grid-template-columns: none !important;
+    grid-auto-rows: auto !important;
+  }
+}
+
+/* Keep each product together inside its column */
+.product-grid > *,
+ul.product-grid > * {
+  vertical-align: top;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  height: auto !important;
+  margin: 0 0 16px !important;
+  padding: 0 !important;
+  break-inside: avoid !important;
+  -webkit-column-break-inside: avoid !important;
+  page-break-inside: avoid !important;
+}
+
+/* Do not force card heights */
+.product-grid .product-grid__card,
+.product-grid .card-gallery,
+ul.product-grid .product-grid__card,
+ul.product-grid .card-gallery {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  align-self: auto !important;
+}
+
+/* Small mobile spacing */
+@media screen and (max-width: 400px) {
+  .product-grid,
+  ul.product-grid {
+    column-gap: 8px !important;
+  }
+
+  .product-grid > *,
+  ul.product-grid > * {
+    margin-bottom: 10px !important;
+  }
+
+  .card-gallery {
+    border-radius: 10px;
+  }
+}
+
+/* =========================================
+   HIDE THEME QUICK-ADD ICONS
+========================================= */
 
 .card-gallery quick-add-component,
 .card-gallery .quick-add,
@@ -333,54 +389,39 @@ ul.product-grid > li,
   display: none !important;
 }
 
-/* ---------- Media sizing: preserve image proportions ---------- */
+/* =========================================
+   PRODUCT MEDIA
+========================================= */
 
-/* Remove forced height and aspect ratios from media wrappers */
-.card-gallery .product-media-container,
-.card-gallery slideshow-component,
-.card-gallery slideshow-slide {
-  min-width: 0;
-  min-height: 0;
-  height: auto !important;
-  aspect-ratio: auto !important;
-}
-
-/* Keep the gallery link from imposing a fixed height */
-.card-gallery > a.contents {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  height: auto !important;
-}
-
-/* Product images should determine their own height */
-.card-gallery .product-media-container img,
-.card-gallery slideshow-slide img,
-.card-gallery .product-media-container video,
-.card-gallery slideshow-slide video {
-  display: block;
-
-  width: 100%;
-  max-width: 100%;
-  height: auto !important;
-
-  object-fit: contain;
-}
-
-/* Prevent media from stretching the card */
 .card-gallery .product-media-container {
+  position: relative;
+  display: block;
   width: 100%;
   max-width: 100%;
+  min-width: 0;
+  height: auto;
   overflow: hidden;
 }
 
-/* ---------- Image zoom ---------- */
-
-.card-gallery .product-media-container img,
-.card-gallery .product-media-container video {
-  transition: transform 0.5s ease;
+/* Preserve image proportions when media allows it */
+.card-gallery .product-media-container img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform 0.45s ease;
 }
 
+.card-gallery .product-media-container video {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  transition: transform 0.45s ease;
+}
+
+/* Hover zoom only for devices with a mouse */
 @media (hover: hover) and (pointer: fine) {
   .card-gallery:hover .product-media-container img,
   .card-gallery:hover .product-media-container video {
@@ -388,30 +429,27 @@ ul.product-grid > li,
   }
 }
 
-/* ---------- Price badge ---------- */
+/* =========================================
+   PRICE BADGE — TOP RIGHT
+========================================= */
 
 .cg-hover-top {
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 3;
-
+  z-index: 4;
+  padding: 10px;
   max-width: 100%;
-  padding: 10px 12px;
-
   pointer-events: none;
 }
 
 .cg-hover-top__price {
   display: inline-block;
   max-width: 100%;
-
-  padding: 5px 10px;
+  padding: 5px 9px;
   border-radius: 100px;
-
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.58);
   color: #fff;
-
   font-family: inherit;
   font-size: 12px;
   font-weight: 700;
@@ -419,36 +457,43 @@ ul.product-grid > li,
   white-space: nowrap;
 }
 
-/* ---------- Bottom overlay ---------- */
+/* Smaller price badge on mobile */
+@media screen and (max-width: 749px) {
+  .cg-hover-top {
+    padding: 7px;
+  }
+
+  .cg-hover-top__price {
+    padding: 4px 7px;
+    font-size: 10px;
+  }
+}
+
+/* =========================================
+   BOTTOM OVERLAY — TITLE + ADD TO CART
+========================================= */
 
 .cg-hover-bottom {
   position: absolute;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 3;
-
-  width: 100%;
-  max-width: 100%;
-  padding: 42px 16px 16px;
-
+  z-index: 5;
+  padding: 36px 16px 16px;
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    rgba(0, 0, 0, 0.72) 100%
+    rgba(0, 0, 0, 0.78) 100%
   );
-
   opacity: 0;
   transform: translateY(8px);
-
   transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
-
+    opacity 0.25s ease,
+    transform 0.25s ease;
   pointer-events: none;
 }
 
-/* Show on hover for mouse users */
+/* Show overlay on hover */
 @media (hover: hover) and (pointer: fine) {
   .card-gallery:hover .cg-hover-bottom,
   .cg-hover-bottom:focus-within {
@@ -458,56 +503,45 @@ ul.product-grid > li,
   }
 }
 
-/* Product title in overlay */
 .cg-hover-bottom__title {
   display: block;
-
-  max-width: 100%;
   margin: 0 0 10px;
-
   color: #fff;
   font-family: inherit;
   font-size: 14px;
   font-weight: 700;
   line-height: 1.4;
-
   overflow-wrap: anywhere;
 }
 
-/* ---------- Add to cart ---------- */
-
 .cg-atc-form {
+  display: block;
   width: 100%;
-  max-width: 100%;
   margin: 0;
 }
 
 .cg-hover-bottom__btn {
   display: inline-flex;
-  justify-content: center;
   align-items: center;
-
+  justify-content: center;
   max-width: 100%;
-  min-height: 42px;
-  padding: 11px 20px;
-
+  min-height: 40px;
+  padding: 10px 18px;
   border: 0;
   border-radius: 100px;
-
   background: #fff;
   color: #111;
-
   font-family: inherit;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   line-height: 1.3;
   text-align: center;
   text-decoration: none;
-
   cursor: pointer;
-  overflow-wrap: anywhere;
-
-  transition: opacity 0.2s ease;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .cg-hover-bottom__btn:hover {
@@ -515,44 +549,39 @@ ul.product-grid > li,
 }
 
 .cg-hover-bottom__btn:focus-visible {
-  outline: 3px solid #fff;
+  outline: 2px solid #fff;
   outline-offset: 3px;
 }
 
 .cg-hover-bottom__btn--soldout {
-  opacity: 0.6;
+  opacity: 0.65;
   cursor: not-allowed;
 }
 
-/* ---------- Touch devices ---------- */
-
+/* Touch devices: always show the overlay */
 @media (hover: none), (pointer: coarse) {
   .cg-hover-bottom {
     opacity: 1;
     transform: none;
     pointer-events: auto;
+    padding: 30px 10px 10px;
   }
 
   .cg-hover-bottom__title {
     font-size: 12px;
+    margin-bottom: 7px;
   }
 
   .cg-hover-bottom__btn {
-    min-height: 38px;
-    padding: 9px 14px;
-    font-size: 12px;
+    min-height: 36px;
+    padding: 8px 12px;
+    font-size: 11px;
   }
 }
 
-/* ---------- Placeholder card ---------- */
-
-.card-gallery__placeholder {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  height: auto !important;
-  aspect-ratio: auto !important;
-}
+/* =========================================
+   PLACEHOLDER CARDS
+========================================= */
 
 .card-gallery__placeholder svg {
   display: block;
@@ -560,29 +589,23 @@ ul.product-grid > li,
   height: auto;
 }
 
-/* ---------- Product without an image ---------- */
+.card-gallery svg {
+  max-width: 100%;
+  aspect-ratio: var(--gallery-aspect-ratio, var(--ratio));
+}
 
 .product-card-gallery__title-placeholder {
   display: block;
-
   width: 100%;
-  max-width: 100%;
   min-width: 0;
-  height: auto !important;
-
   padding: var(--padding-md);
-
-  color: var(--color-foreground);
+  border-radius: var(--product-corner-radius);
   background-color: rgb(
     var(--color-foreground-rgb) / var(--opacity-5)
   );
-
-  aspect-ratio: auto !important;
-  border-radius: var(--product-corner-radius);
-
+  color: var(--color-foreground);
   font-size: var(--font-size--2xl);
   line-height: var(--line-height--display-loose);
-
   overflow-wrap: anywhere;
 }
 
@@ -594,7 +617,45 @@ ul.product-grid > li,
   overflow: hidden;
 }
 
-/* ---------- Slideshow controls ---------- */
+/* Theme zoom-out view */
+[product-grid-view="zoom-out"]
+.card-gallery
+.product-card-gallery__title-placeholder {
+  padding: var(--padding-xs) !important;
+  font-size: var(--font-size--xs);
+}
+
+[product-grid-view="zoom-out"]
+.card-gallery
+.slideshow-control {
+  min-width: auto;
+}
+
+ul[product-grid-view="zoom-out"]
+.product-grid__card
+.card-gallery {
+  display: block;
+}
+
+[product-grid-view="zoom-out"]
+.card-gallery
+> :is(
+  quick-add-component,
+  .product-badges,
+  slideshow-component > slideshow-controls
+) {
+  display: none;
+}
+
+ul[product-grid-view="zoom-out"]
+.card-gallery
+> img {
+  display: block;
+}
+
+/* =========================================
+   CAROUSEL ARROWS
+========================================= */
 
 .card-gallery slideshow-arrows .slideshow-control {
   padding-inline: var(--padding-xl);
@@ -605,212 +666,35 @@ ul.product-grid > li,
     padding-inline: 0 var(--padding-sm);
   }
 
-  [dir="rtl"] .card-gallery slideshow-arrows .slideshow-control {
+  [dir="rtl"]
+  .card-gallery
+  slideshow-arrows
+  .slideshow-control {
     padding-inline: var(--padding-sm) 0;
   }
 }
 
-/* ---------- Lazy slideshow slides ---------- */
+/* =========================================
+   SLIDESHOW CONTENT VISIBILITY
+========================================= */
 
 .card-gallery
-  :is(
-    slideshow-slide:has(+ slideshow-slide[aria-hidden="false"]),
-    slideshow-slide[aria-hidden="false"] + slideshow-slide
-  ) {
+:is(
+  slideshow-slide:has(+ slideshow-slide[aria-hidden="false"]),
+  slideshow-slide[aria-hidden="false"] + slideshow-slide
+) {
   content-visibility: auto;
 }
 
-.card-gallery slideshow-component[actioned]
-  slideshow-slide {
+.card-gallery
+slideshow-component[actioned]
+slideshow-slide {
   content-visibility: visible;
 }
 
-/* ---------- Zoom-out view compatibility ---------- */
-
-[product-grid-view="zoom-out"] .card-gallery
-  .product-card-gallery__title-placeholder {
-  padding: var(--padding-xs) !important;
-  font-size: var(--font-size--xs);
-}
-
-[product-grid-view="zoom-out"] .card-gallery
-  .slideshow-control {
-  min-width: auto;
-}
-
-ul[product-grid-view="zoom-out"]
-  .product-grid__card
-  .card-gallery {
-  display: block;
-}
-
-[product-grid-view="zoom-out"]
-  .card-gallery
-  > :is(
-    quick-add-component,
-    .product-badges,
-    slideshow-component > slideshow-controls
-  ) {
-  display: none;
-}
-
-ul[product-grid-view="zoom-out"]
-  .card-gallery > img {
-  display: block;
-}
-
-/* =========================================================
-   RESPONSIVE MASONRY BREAKPOINTS
-   ========================================================= */
-
-/* Large desktop */
-@media screen and (min-width: 1400px) {
-  ul.product-grid,
-  .product-grid {
-    columns: 4;
-  }
-}
-
-/* Desktop / laptop */
-@media screen and (min-width: 990px) and (max-width: 1399px) {
-  ul.product-grid,
-  .product-grid {
-    columns: 4;
-    column-gap: 14px;
-  }
-
-  ul.product-grid > li,
-  .product-grid > li,
-  .product-grid > .product-grid__item {
-    margin-bottom: 14px !important;
-  }
-
-  .card-gallery {
-    border-radius: 16px;
-  }
-}
-
-/* Tablet */
-@media screen and (min-width: 750px) and (max-width: 989px) {
-  ul.product-grid,
-  .product-grid {
-    columns: 3;
-    column-gap: 14px;
-  }
-
-  ul.product-grid > li,
-  .product-grid > li,
-  .product-grid > .product-grid__item {
-    margin-bottom: 14px !important;
-  }
-
-  .card-gallery {
-    border-radius: 14px;
-  }
-
-  .cg-hover-top {
-    padding: 9px;
-  }
-
-  .cg-hover-top__price {
-    font-size: 11px;
-  }
-
-  .cg-hover-bottom {
-    padding: 36px 12px 12px;
-  }
-
-  .cg-hover-bottom__title {
-    font-size: 13px;
-  }
-}
-
-/* Mobile */
-@media screen and (max-width: 749px) {
-  ul.product-grid,
-  .product-grid {
-    columns: 2;
-    column-gap: 12px;
-  }
-
-  ul.product-grid > li,
-  .product-grid > li,
-  .product-grid > .product-grid__item {
-    margin-bottom: 12px !important;
-  }
-
-  .card-gallery {
-    border-radius: 12px;
-  }
-
-  .cg-hover-top {
-    padding: 8px;
-  }
-
-  .cg-hover-top__price {
-    padding: 4px 8px;
-    font-size: 10px;
-  }
-
-  .cg-hover-bottom {
-    padding: 32px 10px 10px;
-  }
-
-  .cg-hover-bottom__title {
-    margin-bottom: 7px;
-    font-size: 12px;
-    line-height: 1.35;
-  }
-
-  .cg-hover-bottom__btn {
-    min-height: 36px;
-    padding: 8px 12px;
-    font-size: 11px;
-  }
-}
-
-/* Very narrow phones */
-@media screen and (max-width: 359px) {
-  ul.product-grid,
-  .product-grid {
-    columns: 1;
-    column-gap: 0;
-  }
-
-  ul.product-grid > li,
-  .product-grid > li,
-  .product-grid > .product-grid__item {
-    margin-bottom: 14px !important;
-  }
-
-  .card-gallery {
-    border-radius: 12px;
-  }
-
-  .cg-hover-top {
-    padding: 10px;
-  }
-
-  .cg-hover-top__price {
-    font-size: 12px;
-  }
-
-  .cg-hover-bottom {
-    padding: 42px 14px 14px;
-  }
-
-  .cg-hover-bottom__title {
-    font-size: 14px;
-  }
-
-  .cg-hover-bottom__btn {
-    min-height: 42px;
-    padding: 10px 18px;
-    font-size: 13px;
-  }
-}
-
-/* ---------- Reduced motion ---------- */
+/* =========================================
+   ACCESSIBILITY — REDUCED MOTION
+========================================= */
 
 @media (prefers-reduced-motion: reduce) {
   .card-gallery *,
@@ -820,5 +704,11 @@ ul[product-grid-view="zoom-out"]
     transition: none !important;
     scroll-behavior: auto !important;
   }
+
+  .card-gallery:hover .product-media-container img,
+  .card-gallery:hover .product-media-container video {
+    transform: none !important;
+  }
 }
+
 {% endstylesheet %}
