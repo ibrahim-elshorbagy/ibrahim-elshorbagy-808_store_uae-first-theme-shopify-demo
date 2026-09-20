@@ -1,5 +1,9 @@
 {% assign ai_gen_id = section.id | replace: '_', '' | downcase %}
 {% assign current_variant = product.selected_or_first_available_variant %}
+{% assign hide_variants = false %}
+{% if product.variants.size == 1 and product.variants.first.title == 'Default Title' %}
+  {% assign hide_variants = true %}
+{% endif %}
 
 {% style %}
   .ai-luxury-product-{{ ai_gen_id }} { display:block; width:100%; background:#F5F2EE; color:#2C2C2C; }
@@ -123,22 +127,24 @@
 
       <form action="/cart/add" method="post" data-product-form>
 
-        {% for option in product.options_with_values %}
-          <div class="ai-luxury-product-{{ ai_gen_id }}__option-group">
-            <span class="ai-luxury-product-{{ ai_gen_id }}__label">{{ option.name | escape }}</span>
-            <div class="ai-luxury-product-{{ ai_gen_id }}__variants">
-              {% for value in option.values %}
-                <button
-                  type="button"
-                  class="ai-luxury-product-{{ ai_gen_id }}__variant"
-                  data-option-index="{{ forloop.parentloop.index0 }}"
-                  data-option-value="{{ value | escape }}"
-                  aria-pressed="{% if option.selected_value == value %}true{% else %}false{% endif %}"
-                >{{ value | escape }}</button>
-              {% endfor %}
+        {% unless hide_variants %}
+          {% for option in product.options_with_values %}
+            <div class="ai-luxury-product-{{ ai_gen_id }}__option-group">
+              <span class="ai-luxury-product-{{ ai_gen_id }}__label">{{ option.name | escape }}</span>
+              <div class="ai-luxury-product-{{ ai_gen_id }}__variants">
+                {% for value in option.values %}
+                  <button
+                    type="button"
+                    class="ai-luxury-product-{{ ai_gen_id }}__variant"
+                    data-option-index="{{ forloop.parentloop.index0 }}"
+                    data-option-value="{{ value | escape }}"
+                    aria-pressed="{% if option.selected_value == value %}true{% else %}false{% endif %}"
+                  >{{ value | escape }}</button>
+                {% endfor %}
+              </div>
             </div>
-          </div>
-        {% endfor %}
+          {% endfor %}
+        {% endunless %}
 
         <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-input>
 
@@ -149,8 +155,14 @@
           <button type="button" data-plus aria-label="Increase quantity">+</button>
         </div>
 
-        <button class="ai-luxury-product-{{ ai_gen_id }}__add" type="submit" name="add" data-add-btn>
-          Add to cart
+        <button
+          class="ai-luxury-product-{{ ai_gen_id }}__add"
+          type="submit"
+          name="add"
+          data-add-btn
+          {% unless current_variant.available %}disabled{% endunless %}
+        >
+          {% if current_variant.available %}Add to cart{% else %}Sold out{% endif %}
         </button>
 
       </form>
@@ -194,6 +206,7 @@
 (function () {
   const ALL_VARIANTS = window['luxuryVariants_{{ ai_gen_id }}'] || [];
   const MONEY_FORMAT = window['luxuryMoneyFormat_{{ ai_gen_id }}'] || '{{amount}}';
+  const HIDE_VARIANTS = {{ hide_variants | json }};
 
   class LuxuryProduct extends HTMLElement {
     connectedCallback() {
@@ -212,17 +225,19 @@
         });
       });
 
-      this.querySelectorAll('[data-option-value]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const idx = parseInt(btn.dataset.optionIndex, 10);
-          this._selectedOptions[idx] = btn.dataset.optionValue;
-          btn.closest('.ai-luxury-product-{{ ai_gen_id }}__variants')
-            .querySelectorAll('[data-option-value]')
-            .forEach(b => b.setAttribute('aria-pressed', 'false'));
-          btn.setAttribute('aria-pressed', 'true');
-          this._matchVariant();
+      if (!HIDE_VARIANTS) {
+        this.querySelectorAll('[data-option-value]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const idx = parseInt(btn.dataset.optionIndex, 10);
+            this._selectedOptions[idx] = btn.dataset.optionValue;
+            btn.closest('.ai-luxury-product-{{ ai_gen_id }}__variants')
+              .querySelectorAll('[data-option-value]')
+              .forEach(b => b.setAttribute('aria-pressed', 'false'));
+            btn.setAttribute('aria-pressed', 'true');
+            this._matchVariant();
+          });
         });
-      });
+      }
 
       const qty = this.querySelector('[data-quantity]');
       this.querySelector('[data-minus]').addEventListener('click', () => {
@@ -263,9 +278,10 @@
     }
 
     _money(cents) {
-      const amount        = (cents / 100).toFixed(2);
-      const amountNoDec   = String(Math.floor(cents / 100));
-      const amountComma   = amount.replace('.', ',');
+      const amount      = (cents / 100).toFixed(2);
+      const amountNoDec = String(Math.floor(cents / 100));
+      const amountComma = amount.replace('.', ',');
+      const amountNoDecComma = amountNoDec.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       return MONEY_FORMAT
         .replace('{{amount}}', amount)
         .replace('{{amount_no_decimals}}', amountNoDec)
