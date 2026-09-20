@@ -1,16 +1,3 @@
-{%- if section.settings.store_name_text != blank and section.settings.center_display_mode == 'text' -%}
-  <div style="
-    text-align: center;
-    font-family: {{ section.settings.store_name_font.family }}, serif;
-    font-size: {{ section.settings.store_name_size }}px;
-    color: {{ section.settings.store_name_color }};
-    letter-spacing: 2px;
-    font-weight: 400;
-  ">
-    {{ section.settings.store_name_text }}
-  </div>
-{%- endif -%}
-
 {% liquid
   assign block_settings = block.settings
   assign use_inverse_logo = false
@@ -32,68 +19,80 @@
   endif
 
   assign alt_text_fallback = 'accessibility.home_logo_alt' | t: store_name: shop.name
+  assign display_mode = block_settings.center_display_mode | default: 'logo'
 %}
 
-<a
-  {% if section.settings.center_display_mode == 'text' %}
-    style="display: none;"
-  {% endif %}
-  {% if template.name == 'index' and block_settings.hide_logo_on_home_page %}
-    data-hidden-on-home-page
-  {% endif %}
-  href="{{ routes.root_url }}"
-  class="size-style spacing-style header-logo"
-  style="
-    {% render 'size-style', settings: block_settings %}
-    {% render 'spacing-style', settings: block_settings %}
-    --font-family: var(--font-body--family);
-    --font-style: var(--font-body--style);
-    --font-weight: 600;
-    {% if section.settings.center_display_mode == 'text' %}display: none;{% endif %}
-  "
-  {{ block.shopify_attributes }}
->
-  {% liquid
-    assign logo_width = settings.logo_height | times: settings.logo.aspect_ratio | ceil
-    assign logo_width_mobile = settings.logo_height_mobile | times: settings.logo.aspect_ratio | ceil
-    assign inverse_logo_width = settings.logo_height | times: inverse_logo.aspect_ratio | ceil
-    assign inverse_logo_width_mobile = settings.logo_height_mobile | times: inverse_logo.aspect_ratio | ceil
-    assign logo_style = '--header-logo-image-width: ' | append: logo_width | append: 'px;' | append: '--header-logo-image-width-mobile: ' | append: logo_width_mobile | append: 'px; --header-logo-image-height: ' | append: settings.logo_height | append: 'px; --header-logo-image-height-mobile: ' | append: settings.logo_height_mobile | append: 'px;'
-    assign inverse_logo_style = '--header-logo-image-width: ' | append: inverse_logo_width | append: 'px;' | append: '--header-logo-image-width-mobile: ' | append: inverse_logo_width_mobile | append: 'px; --header-logo-image-height: ' | append: settings.logo_height | append: 'px; --header-logo-image-height-mobile: ' | append: settings.logo_height_mobile | append: 'px;'
-  %}
+{%- if display_mode != 'logo' and block_settings.store_name_text != blank -%}
+  <div style="
+    text-align: center;
+    font-family: {{ block_settings.store_name_font.family }}, serif;
+    font-size: {{ block_settings.store_name_size }}px;
+    color: {{ block_settings.store_name_color }};
+    letter-spacing: 2px;
+    font-weight: 400;
+  ">
+    {{ block_settings.store_name_text }}
+  </div>
+{%- endif -%}
 
-  <span
-    {% if use_inverse_logo %}
-      class="header-logo__solid-header-image-container"
+{%- if display_mode != 'text' -%}
+  <a
+    {% if template.name == 'index' and block_settings.hide_logo_on_home_page %}
+      data-hidden-on-home-page
     {% endif %}
-    data-testid="header-logo"
+    href="{{ routes.root_url }}"
+    class="size-style spacing-style header-logo"
+    style="
+      {% render 'size-style', settings: block_settings %}
+      {% render 'spacing-style', settings: block_settings %}
+      --font-family: var(--font-body--family);
+      --font-style: var(--font-body--style);
+      --font-weight: 600;
+    "
+    {{ block.shopify_attributes }}
   >
-    {% render 'image',
-      image: settings.logo,
-      class: 'header-logo__image',
-      height: settings.logo_height,
-      alt_text_fallback: alt_text_fallback,
-      text_fallback: shop.name,
-      style: logo_style
+    {% liquid
+      assign logo_width = settings.logo_height | times: settings.logo.aspect_ratio | ceil
+      assign logo_width_mobile = settings.logo_height_mobile | times: settings.logo.aspect_ratio | ceil
+      assign inverse_logo_width = settings.logo_height | times: inverse_logo.aspect_ratio | ceil
+      assign inverse_logo_width_mobile = settings.logo_height_mobile | times: inverse_logo.aspect_ratio | ceil
+      assign logo_style = '--header-logo-image-width: ' | append: logo_width | append: 'px;' | append: '--header-logo-image-width-mobile: ' | append: logo_width_mobile | append: 'px; --header-logo-image-height: ' | append: settings.logo_height | append: 'px; --header-logo-image-height-mobile: ' | append: settings.logo_height_mobile | append: 'px;'
+      assign inverse_logo_style = '--header-logo-image-width: ' | append: inverse_logo_width | append: 'px;' | append: '--header-logo-image-width-mobile: ' | append: inverse_logo_width_mobile | append: 'px; --header-logo-image-height: ' | append: settings.logo_height | append: 'px; --header-logo-image-height-mobile: ' | append: settings.logo_height_mobile | append: 'px;'
     %}
-  </span>
 
-  {% if use_inverse_logo %}
     <span
-      class="header-logo__transparent-header-image-container"
-      data-testid="header-logo-inverse"
+      {% if use_inverse_logo %}
+        class="header-logo__solid-header-image-container"
+      {% endif %}
+      data-testid="header-logo"
     >
       {% render 'image',
-        image: inverse_logo,
+        image: settings.logo,
         class: 'header-logo__image',
         height: settings.logo_height,
         alt_text_fallback: alt_text_fallback,
         text_fallback: shop.name,
-        style: inverse_logo_style
+        style: logo_style
       %}
     </span>
-  {% endif %}
-</a>
+
+    {% if use_inverse_logo %}
+      <span
+        class="header-logo__transparent-header-image-container"
+        data-testid="header-logo-inverse"
+      >
+        {% render 'image',
+          image: inverse_logo,
+          class: 'header-logo__image',
+          height: settings.logo_height,
+          alt_text_fallback: alt_text_fallback,
+          text_fallback: shop.name,
+          style: inverse_logo_style
+        %}
+      </span>
+    {% endif %}
+  </a>
+{%- endif -%}
 
 {% stylesheet %}
   .header-logo {
@@ -160,8 +159,43 @@
   "class": "header-logo",
   "settings": [
     {
-      "type": "paragraph",
-      "content": "t:content.edit_logo_in_theme_settings"
+      "type": "select",
+      "id": "center_display_mode",
+      "label": "Show in center",
+      "options": [
+        { "value": "logo", "label": "Logo image only" },
+        { "value": "text", "label": "Store name only" },
+        { "value": "both", "label": "Logo + Store name" }
+      ],
+      "default": "logo"
+    },
+    {
+      "type": "text",
+      "id": "store_name_text",
+      "label": "Store name",
+      "default": "808 Store"
+    },
+    {
+      "type": "font_picker",
+      "id": "store_name_font",
+      "label": "Store name font",
+      "default": "fraunces_n4"
+    },
+    {
+      "type": "color",
+      "id": "store_name_color",
+      "label": "Store name color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "range",
+      "id": "store_name_size",
+      "label": "Store name size",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 28
     },
     {
       "type": "header",
