@@ -1,4 +1,4 @@
-{%- if section.settings.store_name_text != blank -%}
+{%- if section.settings.store_name_text != blank and section.settings.center_display_mode == 'text' -%}
   <div style="
     text-align: center;
     font-family: {{ section.settings.store_name_font.family }}, serif;
@@ -10,7 +10,6 @@
     {{ section.settings.store_name_text }}
   </div>
 {%- endif -%}
-
 
 {% liquid
   assign block_settings = block.settings
@@ -35,11 +34,10 @@
   assign alt_text_fallback = 'accessibility.home_logo_alt' | t: store_name: shop.name
 %}
 
-{% comment %}
-  Output all logo variants, use CSS to hide/show the appropriate one
-  based on the .header[transparent] selector
-{% endcomment %}
 <a
+  {% if section.settings.center_display_mode == 'text' %}
+    style="display: none;"
+  {% endif %}
   {% if template.name == 'index' and block_settings.hide_logo_on_home_page %}
     data-hidden-on-home-page
   {% endif %}
@@ -51,6 +49,7 @@
     --font-family: var(--font-body--family);
     --font-style: var(--font-body--style);
     --font-weight: 600;
+    {% if section.settings.center_display_mode == 'text' %}display: none;{% endif %}
   "
   {{ block.shopify_attributes }}
 >
