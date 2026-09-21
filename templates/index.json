@@ -9,27 +9,27 @@
  */
 {
   "sections": {
-    "leather_slash_hero_d7zWDH": {
+    "leather_slash_hero_gHHtyg": {
       "type": "leather-slash-hero",
       "name": "Leather slash hero",
       "settings": {
-        "eyebrow": "Cut N°17 — Full grain",
-        "heading_line_one": "Hand",
-        "heading_line_two": "Burnished.",
-        "heading_line_three": "Machine none.",
-        "description": "Tan leather, hand-rubbed edges. Ages like a good story.",
-        "button_label": "Shop leather",
+        "eyebrow": "808 STORE · MEN'S FOOTWEAR",
+        "heading_line_one": "Make",
+        "heading_line_two": "Every",
+        "heading_line_three": "Step Count.",
+        "description": "Find your style with men's loafers, sneakers, and sandals made for every occasion.",
+        "button_label": "Find Your Next Pair",
         "button_link": "shopify://collections/all",
-        "product": "beige-lace-up-sneaker",
+        "product": "",
         "image": "shopify://shop_images/dark-brown-suede-loafer.webp",
         "background_color": "#201812",
-        "text_color": "#f3e7d3",
-        "heading_color": "#f3e7d3",
-        "accent_color": "#e0a458",
-        "muted_text_color": "#c9b797",
+        "text_color": "#F3E7D3",
+        "heading_color": "#F3E7D3",
+        "accent_color": "#E0A458",
+        "muted_text_color": "#C9B797",
         "button_text_color": "#201812",
-        "focus_color": "#ffffff",
-        "image_placeholder_color": "#6b4a35"
+        "focus_color": "#FFFFFF",
+        "image_placeholder_color": "#6B4A35"
       }
     },
     "masonry_product_carousel_jyDdWr": {
@@ -124,7 +124,7 @@
     }
   },
   "order": [
-    "leather_slash_hero_d7zWDH",
+    "leather_slash_hero_gHHtyg",
     "masonry_product_carousel_jyDdWr",
     "about_brand_split_XmtqJe",
     "giant_type_lookbook_zNDarw",
