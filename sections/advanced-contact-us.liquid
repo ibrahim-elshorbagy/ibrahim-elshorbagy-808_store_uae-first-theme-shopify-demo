@@ -1,0 +1,438 @@
+{{ 'section-contact-form.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  /* ── 808 Contact Design ── */
+  .contact-808-wrap {
+    max-width: 1280px;
+    margin: 0 auto;
+    font-family: 'Inter', sans-serif;
+  }
+  .contact-808-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    border: 1px solid #222;
+  }
+  .contact-808-visual {
+    position: relative;
+    background: #111;
+    overflow: hidden;
+    min-height: 680px;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+  }
+  .contact-808-visual img {
+    width: 100%;
+    height: 520px;
+    object-fit: contain;
+    filter: grayscale(1);
+    mix-blend-mode: lighten;
+  }
+  .contact-808-frame {
+    position: absolute;
+    inset: 18px;
+    border: 1px solid rgba(255,255,255,.12);
+    pointer-events: none;
+  }
+  .contact-808-caption {
+    position: absolute;
+    left: 18px;
+    bottom: 18px;
+    background: #fff;
+    color: #000;
+    padding: 8px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+  .contact-808-big-title {
+    position: absolute;
+    top: 34px;
+    left: 28px;
+    font-size: 72px;
+    line-height: .85;
+    letter-spacing: -.06em;
+    font-weight: 300;
+    color: #fff;
+    mix-blend-mode: difference;
+    pointer-events: none;
+  }
+  .contact-808-big-title strong {
+    font-weight: 600;
+  }
+  .contact-808-form-panel {
+    padding: 28px;
+    background: #F8F8F6;
+    color: #111;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .contact-808-form-panel h2 {
+    font-size: 34px;
+    letter-spacing: -.04em;
+    line-height: .9;
+    margin-bottom: 0;
+    font-family: 'Inter', sans-serif;
+  }
+  .contact-808-form-panel h2 i {
+    font-weight: 300;
+    font-style: normal;
+    color: #888;
+  }
+  .contact-808-form-panel p {
+    font-size: 13px;
+    color: #666;
+    margin: 8px 0 18px;
+    line-height: 1.6;
+  }
+  .contact-808-form-panel .form-status,
+  .contact-808-form-panel .form-status-list {
+    margin-bottom: 16px;
+    font-size: 13px;
+  }
+  .contact-808-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: #888;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .contact-808-input {
+    width: 100%;
+    padding: 12px 0;
+    border: none;
+    border-bottom: 1px solid #DDD;
+    background: transparent;
+    font-size: 14px;
+    outline: none;
+    border-radius: 0;
+    color: #111;
+    font-family: 'Inter', sans-serif;
+  }
+  .contact-808-input:focus {
+    border-bottom-color: #111;
+  }
+  .contact-808-field {
+    margin-bottom: 16px;
+  }
+  .contact-808-grid2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .contact-808-grid2 .contact-808-field {
+    margin-bottom: 0;
+  }
+  textarea.contact-808-input {
+    height: 70px;
+    resize: none;
+  }
+  .contact-808-btn {
+    margin-top: 8px;
+    width: 100%;
+    background: #111;
+    color: #fff;
+    border: none;
+    padding: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .contact-808-btn:hover {
+    background: #000;
+  }
+  .contact-808-foot {
+    margin-top: 14px;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: #888;
+  }
+  .contact-808-field-error {
+    color: #c00;
+    font-size: 11px;
+    margin-top: 4px;
+    display: block;
+  }
+  @media (max-width: 900px) {
+    .contact-808-grid {
+      grid-template-columns: 1fr;
+    }
+    .contact-808-visual {
+      min-height: 460px;
+    }
+    .contact-808-big-title {
+      font-size: 48px;
+    }
+    .contact-808-visual img {
+      height: 360px;
+    }
+  }
+{%- endstyle -%}
+
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;500;600&display=swap" rel="stylesheet">
+
+<div class="color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
+  <div class="contact-808-wrap">
+    <div class="contact-808-grid">
+
+      <!-- LEFT: Visual Panel -->
+      <div class="contact-808-visual">
+        <div class="contact-808-big-title">MAKE<br><strong>CONTACT</strong></div>
+        {%- if section.settings.visual_image != blank -%}
+          {{ section.settings.visual_image | image_url: width: 800 | image_tag: loading: 'lazy', style: 'width:100%;height:520px;object-fit:contain;filter:grayscale(1);mix-blend-mode:lighten' }}
+        {%- endif -%}
+        <div class="contact-808-frame"></div>
+        <div class="contact-808-caption">{{ section.settings.caption_text }}</div>
+      </div>
+
+      <!-- RIGHT: Form Panel -->
+      <div class="contact-808-form-panel">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="{% if settings.animations_reveal_on_scroll %}scroll-trigger animate--slide-in{% endif %}">
+            {{ section.settings.heading }}
+          </h2>
+        {%- else -%}
+          <h2 class="visually-hidden">Contact</h2>
+        {%- endif -%}
+
+        {%- if section.settings.subtext != blank -%}
+          <p>{{ section.settings.subtext }}</p>
+        {%- endif -%}
+
+        {%- liquid
+          assign contact_form_class = 'isolate'
+          if settings.animations_reveal_on_scroll
+            assign contact_form_class = 'isolate scroll-trigger animate--slide-in'
+          endif
+        -%}
+
+        {%- form 'contact', id: 'ContactForm', class: contact_form_class -%}
+
+          {%- if form.posted_successfully? -%}
+            <h2 class="form-status form-status-list form__message" tabindex="-1" autofocus>
+              {{- 'icon-success.svg' | inline_asset_content -}}
+              Thanks! We'll be in touch soon.
+            </h2>
+          {%- elsif form.errors -%}
+            <div class="form__message">
+              <h2 class="form-status caption-large text-body" role="alert" tabindex="-1" autofocus>
+                {{- 'icon-error.svg' | inline_asset_content -}}
+                Please fix the errors below.
+              </h2>
+            </div>
+            <ul class="form-status-list caption-large" role="list">
+              <li>
+                <a href="#ContactForm-email" class="link">
+                  {{ form.errors.translated_fields.email | capitalize }}
+                  {{ form.errors.messages.email }}
+                </a>
+              </li>
+            </ul>
+          {%- endif -%}
+
+          <!-- Row 1: Name + Phone -->
+          <div class="contact-808-grid2">
+            <div class="contact-808-field">
+              <label class="contact-808-label" for="ContactForm-name">Name</label>
+              <input
+                class="contact-808-input"
+                autocomplete="name"
+                type="text"
+                id="ContactForm-name"
+                name="contact[Name]"
+                value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+                placeholder="Full name"
+              >
+            </div>
+            <div class="contact-808-field">
+              <label class="contact-808-label" for="ContactForm-phone">Phone</label>
+              <input
+                type="tel"
+                id="ContactForm-phone"
+                class="contact-808-input"
+                autocomplete="tel"
+                name="contact[Phone]"
+                pattern="[0-9\-]*"
+                value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+                placeholder="+971"
+              >
+            </div>
+          </div>
+
+          <!-- Row 2: Email -->
+          <div class="contact-808-field">
+            <label class="contact-808-label" for="ContactForm-email">
+              Email <span aria-hidden="true">*</span>
+            </label>
+            <input
+              autocomplete="email"
+              type="email"
+              id="ContactForm-email"
+              class="contact-808-input"
+              name="contact[email]"
+              spellcheck="false"
+              autocapitalize="off"
+              value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+              aria-required="true"
+              {% if form.errors contains 'email' %}
+                aria-invalid="true"
+                aria-describedby="ContactForm-email-error"
+              {% endif %}
+              placeholder="you@—"
+            >
+            {%- if form.errors contains 'email' -%}
+              <small class="contact-808-field-error" id="ContactForm-email-error">
+                <span class="visually-hidden">Error</span>
+                <span class="form__message">
+                  <span class="svg-wrapper">{{- 'icon-error.svg' | inline_asset_content -}}</span>
+                  {{- form.errors.translated_fields.email | capitalize }}
+                  {{ form.errors.messages.email -}}
+                </span>
+              </small>
+            {%- endif -%}
+          </div>
+
+          <!-- Row 3: Message -->
+          <div class="contact-808-field">
+            <label class="contact-808-label" for="ContactForm-body">Message</label>
+            <textarea
+              rows="10"
+              id="ContactForm-body"
+              class="contact-808-input text-area"
+              name="contact[Message]"
+              placeholder="Hi, I need..."
+            >{{- form.body -}}</textarea>
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" class="contact-808-btn">
+            Send Message —→
+          </button>
+
+          <div class="contact-808-foot">
+            <span>{{ section.settings.reply_note }}</span>
+            <span>{{ section.settings.phone_display }}</span>
+          </div>
+
+        {%- endform -%}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Contact Form 808",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "Talk to <i>the studio</i>",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h0", "label": "Large" },
+        { "value": "hxl", "label": "Extra large" },
+        { "value": "hxxl", "label": "Double extra large" }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "No ticket system. Your message goes to the cutting table. We reply from the workshop floor."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "image_picker",
+      "id": "visual_image",
+      "label": "Visual panel image"
+    },
+    {
+      "type": "text",
+      "id": "caption_text",
+      "label": "Image caption",
+      "default": "Shot 08 — Grey Sneaker / Floating — Studio 808"
+    },
+    {
+      "type": "text",
+      "id": "reply_note",
+      "label": "Reply time note",
+      "default": "Reply < 4 hours"
+    },
+    {
+      "type": "text",
+      "id": "phone_display",
+      "label": "Phone display",
+      "default": "+971 50 808 008"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Form 808"
+    }
+  ]
+}
+{% endschema %}
