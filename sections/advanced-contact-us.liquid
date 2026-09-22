@@ -196,7 +196,9 @@
       <div class="contact-808-visual">
         <div class="contact-808-big-title">MAKE<br><strong>CONTACT</strong></div>
         {%- if section.settings.visual_image != blank -%}
-          {{ section.settings.visual_image | image_url: width: 800 | image_tag: loading: 'lazy', style: 'width:100%;height:520px;object-fit:contain;filter:grayscale(1);mix-blend-mode:lighten' }}
+          {%- assign contact_display_width = section.settings.visual_image.width | at_most: 800 -%}
+          {%- assign contact_display_height = contact_display_width | divided_by: section.settings.visual_image.aspect_ratio | round -%}
+          {{ section.settings.visual_image | image_url: width: 800 | image_tag: width: contact_display_width, height: contact_display_height, alt: section.settings.visual_image.alt, loading: 'lazy', style: 'width:100%;height:520px;object-fit:contain;filter:grayscale(1);mix-blend-mode:lighten' }}
         {%- endif -%}
         <div class="contact-808-frame"></div>
         <div class="contact-808-caption">{{ section.settings.caption_text }}</div>
