@@ -3,6 +3,11 @@
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    width: 100%;
+    max-width: 100%;
+    box-shadow: 0 0 0 100vmax var(--color-background);
+    clip-path: inset(0 -100vmax);
+    overflow-x: clip;
   }
   @media screen and (min-width: 750px) {
     .section-{{ section.id }}-padding {
@@ -131,7 +136,7 @@
   }
   .contact-808-grid2 {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 16px;
     margin-bottom: 16px;
   }
@@ -175,6 +180,9 @@
   @media (max-width: 900px) {
     .contact-808-grid {
       grid-template-columns: 1fr;
+    }
+    .contact-808-grid2 {
+      grid-template-columns: minmax(0, 1fr);
     }
     .contact-808-visual {
       min-height: 460px;

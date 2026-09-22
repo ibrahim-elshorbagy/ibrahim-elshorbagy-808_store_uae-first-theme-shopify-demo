@@ -2,6 +2,25 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+@supports not (overflow: clip) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+}
+
+img,
+svg,
+table {
+  max-width: 100%;
+}
+
 body {
   color: var(--color-foreground);
   background: var(--color-background);
