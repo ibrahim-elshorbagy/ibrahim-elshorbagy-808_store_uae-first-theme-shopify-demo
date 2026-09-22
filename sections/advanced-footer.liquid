@@ -23,7 +23,7 @@
       <input name="contact[tags]" type="hidden" value="newsletter">
 
       {%- if form.posted_successfully? -%}
-        <p class="af-success">{{ 'blocks.email_signup.post_success' | t }}</p>
+        <p class="af-success">{{ 'blocks.email_signup.success' | t }}</p>
       {%- elsif form.errors -%}
         <p class="af-error">
           {{ form.errors.translated_fields.email | capitalize }}
@@ -185,6 +185,7 @@
 
 
 {% stylesheet %}
+
   .af-footer {
     position: relative;
     width: 100%;
