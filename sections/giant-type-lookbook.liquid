@@ -270,19 +270,8 @@
 
         <div class="ai-lookbook-{{ ai_gen_id }}__image ai-lookbook-{{ ai_gen_id }}__image--one">
           {% if section.settings.image_one %}
-            <img
-              src="{{ section.settings.image_one | image_url: width: 700 }}"
-              srcset="
-                {{ section.settings.image_one | image_url: width: 400 }} 400w,
-                {{ section.settings.image_one | image_url: width: 700 }} 700w,
-                {{ section.settings.image_one | image_url: width: 900 }} 900w
-              "
-              sizes="(max-width: 800px) 78vw, 300px"
-              alt="{{ section.settings.image_one.alt | default: section.settings.title_text | escape }}"
-              width="{{ section.settings.image_one.width }}"
-              height="{{ section.settings.image_one.height }}"
-              loading="lazy"
-            >
+            {%- assign lb_alt_one = section.settings.image_one.alt | default: section.settings.title_text | escape -%}
+            {{ section.settings.image_one | image_url: width: 900 | image_tag: widths: '400, 700, 900', sizes: '(max-width: 800px) 78vw, 300px', alt: lb_alt_one, loading: 'lazy' }}
           {% else %}
             <div class="ai-lookbook-{{ ai_gen_id }}__placeholder">{{ 'image' | placeholder_svg_tag }}</div>
           {% endif %}
@@ -290,19 +279,8 @@
 
         <div class="ai-lookbook-{{ ai_gen_id }}__image ai-lookbook-{{ ai_gen_id }}__image--two">
           {% if section.settings.image_two %}
-            <img
-              src="{{ section.settings.image_two | image_url: width: 700 }}"
-              srcset="
-                {{ section.settings.image_two | image_url: width: 400 }} 400w,
-                {{ section.settings.image_two | image_url: width: 700 }} 700w,
-                {{ section.settings.image_two | image_url: width: 900 }} 900w
-              "
-              sizes="(max-width: 800px) 78vw, 340px"
-              alt="{{ section.settings.image_two.alt | default: section.settings.title_text | escape }}"
-              width="{{ section.settings.image_two.width }}"
-              height="{{ section.settings.image_two.height }}"
-              loading="lazy"
-            >
+            {%- assign lb_alt_two = section.settings.image_two.alt | default: section.settings.title_text | escape -%}
+            {{ section.settings.image_two | image_url: width: 900 | image_tag: widths: '400, 700, 900', sizes: '(max-width: 800px) 78vw, 340px', alt: lb_alt_two, loading: 'lazy' }}
           {% else %}
             <div class="ai-lookbook-{{ ai_gen_id }}__placeholder">{{ 'image' | placeholder_svg_tag }}</div>
           {% endif %}
@@ -310,19 +288,8 @@
 
         <div class="ai-lookbook-{{ ai_gen_id }}__image ai-lookbook-{{ ai_gen_id }}__image--three">
           {% if section.settings.image_three %}
-            <img
-              src="{{ section.settings.image_three | image_url: width: 700 }}"
-              srcset="
-                {{ section.settings.image_three | image_url: width: 400 }} 400w,
-                {{ section.settings.image_three | image_url: width: 700 }} 700w,
-                {{ section.settings.image_three | image_url: width: 900 }} 900w
-              "
-              sizes="(max-width: 800px) 78vw, 260px"
-              alt="{{ section.settings.image_three.alt | default: section.settings.title_text | escape }}"
-              width="{{ section.settings.image_three.width }}"
-              height="{{ section.settings.image_three.height }}"
-              loading="lazy"
-            >
+            {%- assign lb_alt_three = section.settings.image_three.alt | default: section.settings.title_text | escape -%}
+            {{ section.settings.image_three | image_url: width: 900 | image_tag: widths: '400, 700, 900', sizes: '(max-width: 800px) 78vw, 260px', alt: lb_alt_three, loading: 'lazy' }}
           {% else %}
             <div class="ai-lookbook-{{ ai_gen_id }}__placeholder">{{ 'image' | placeholder_svg_tag }}</div>
           {% endif %}

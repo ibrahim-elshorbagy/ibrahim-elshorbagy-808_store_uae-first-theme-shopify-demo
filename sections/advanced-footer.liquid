@@ -1,14 +1,7 @@
 <footer class="af-footer" style="background-color: {{ section.settings.background_color }};">
   <div class="af-inner {% if section.settings.center_content %}af-centered{% endif %}">
     {%- if section.settings.show_logo and section.settings.logo != blank -%}
-      <img
-        class="af-logo"
-        src="{{ section.settings.logo | image_url: width: 128 }}"
-        alt="{{ shop.name | escape }}"
-        width="64"
-        height="64"
-        loading="lazy"
-      >
+      {{ section.settings.logo | image_url: width: 256 | image_tag: widths: '64, 128, 256', sizes: '64px', alt: shop.name, width: 64, height: 64, loading: 'lazy', class: 'af-logo' }}
     {%- endif -%}
 
     {%- if section.settings.heading != blank -%}

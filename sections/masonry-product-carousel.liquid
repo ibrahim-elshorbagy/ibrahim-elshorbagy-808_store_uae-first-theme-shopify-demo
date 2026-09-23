@@ -106,19 +106,8 @@
               <a class="ai-masonry-carousel-{{ ai_gen_id }}__card" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
                 <div class="ai-masonry-carousel-{{ ai_gen_id }}__media">
                   {% if product.featured_image %}
-                    <img
-                      src="{{ product.featured_image | image_url: width: 900 }}"
-                      srcset="
-                        {{ product.featured_image | image_url: width: 400 }} 400w,
-                        {{ product.featured_image | image_url: width: 600 }} 600w,
-                        {{ product.featured_image | image_url: width: 900 }} 900w
-                      "
-                      sizes="(max-width: 850px) 100vw, 25vw"
-                      alt="{{ product.featured_image.alt | default: product.title | escape }}"
-                      width="{{ product.featured_image.width }}"
-                      height="{{ section.settings.image_height }}"
-                      loading="lazy"
-                    >
+                    {%- assign card_alt = product.featured_image.alt | default: product.title | escape -%}
+                    {{ product.featured_image | image_url: width: 900 | image_tag: widths: '400, 600, 900', sizes: '(max-width: 850px) 100vw, 25vw', alt: card_alt, width: product.featured_image.width, height: section.settings.image_height, loading: 'lazy' }}
                   {% else %}
                     <div class="ai-masonry-carousel-{{ ai_gen_id }}__placeholder">{{ 'product-apparel-1' | placeholder_svg_tag }}</div>
                   {% endif %}

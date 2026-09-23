@@ -132,20 +132,9 @@
 
     <div class="ai-about-brand-{{ ai_gen_id }}__copy">
       {% if section.settings.logo %}
-        <img
-          class="ai-about-brand-{{ ai_gen_id }}__logo"
-          src="{{ section.settings.logo | image_url: width: 160 }}"
-          srcset="
-            {{ section.settings.logo | image_url: width: 62 }} 62w,
-            {{ section.settings.logo | image_url: width: 124 }} 124w,
-            {{ section.settings.logo | image_url: width: 160 }} 160w
-          "
-          sizes="62px"
-          alt="{{ section.settings.logo.alt | default: section.settings.brand_name | escape }}"
-          width="62"
-          height="62"
-          loading="lazy"
-        >
+        {%- assign logo_alt = section.settings.logo.alt | default: section.settings.brand_name | escape -%}
+        {%- assign logo_class = 'ai-about-brand-' | append: ai_gen_id | append: '__logo' -%}
+        {{ section.settings.logo | image_url: width: 248 | image_tag: widths: '62, 124, 248', sizes: '62px', alt: logo_alt, width: 62, height: 62, loading: 'lazy', class: logo_class }}
       {% else %}
         <div class="ai-about-brand-{{ ai_gen_id }}__logo-placeholder" aria-hidden="true">
           {{ 'image' | placeholder_svg_tag }}
@@ -170,20 +159,8 @@
 
     <div class="ai-about-brand-{{ ai_gen_id }}__photo">
       {% if section.settings.photo %}
-        <img
-          src="{{ section.settings.photo | image_url: width: 900 }}"
-          srcset="
-            {{ section.settings.photo | image_url: width: 400 }} 400w,
-            {{ section.settings.photo | image_url: width: 700 }} 700w,
-            {{ section.settings.photo | image_url: width: 900 }} 900w,
-            {{ section.settings.photo | image_url: width: 1200 }} 1200w
-          "
-          sizes="(max-width: 800px) 100vw, 420px"
-          alt="{{ section.settings.photo.alt | default: section.settings.photo_alt | escape }}"
-          width="{{ section.settings.photo.width }}"
-          height="{{ section.settings.photo.height }}"
-          loading="lazy"
-        >
+        {%- assign photo_alt = section.settings.photo.alt | default: section.settings.photo_alt | escape -%}
+        {{ section.settings.photo | image_url: width: 1200 | image_tag: widths: '400, 700, 900, 1200', sizes: '(max-width: 800px) 100vw, 420px', alt: photo_alt, loading: 'lazy' }}
       {% else %}
         <div class="ai-about-brand-{{ ai_gen_id }}__photo-placeholder">
           {{ 'image' | placeholder_svg_tag }}
